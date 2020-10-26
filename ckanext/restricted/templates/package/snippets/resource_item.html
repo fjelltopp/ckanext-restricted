@@ -13,14 +13,13 @@
 {% block resource_item_title %}
 {% resource 'ckanext-restricted/restricted_ui.js' %}
   {% if authorized %}
-    <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
-      {{ h.resource_display_name(res) | truncate(50) }}<span class="format-label" property="dc:format" data-format="{{ resource_type }}">{{ h.get_translated(res, 'format') }}</span>
-      {{ h.popular('views', res.tracking_summary.total, min=10) }}
-    </a>
+    {{super()}}
   {% else %}
   <span class="restricted-item">
-    <a class="heading restricted-item" disabled="true" href="#" title="{{ res.name or res.description }}">{{ h.resource_display_name(res) | truncate(35) }} {{ _('Unauthorized') }} <span class="format-label" property="dc:format" data-format="{{ resource_type }}">{{ res.format }}</span>{{ h.popular('views', res.tracking_summary.total, min=10) }}</a></span>
+    <a class="heading restricted-item" disabled="true" href="#" title="{{ res.name or res.description }}">{{ h.resource_display_name(res) | truncate(35) }} {{ _('Unauthorized') }} <span class="format-label" property="dc:format" data-format="{{ resource_type }}">{{ res.format }}</span>{{ h.popular('views', res.tracking_summary.total, min=10) }}</a>
+  </span>
   {% endif %}
+
 {% endblock %}
 {% block resource_item_description %}
 {% if res.description %}
