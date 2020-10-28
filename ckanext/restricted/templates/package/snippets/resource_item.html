@@ -16,7 +16,8 @@
     {{super()}}
   {% else %}
   <span class="restricted-item">
-    <a class="heading restricted-item" disabled="true" href="#" title="{{ res.name or res.description }}">{{ h.resource_display_name(res) | truncate(35) }} {{ _('Unauthorized') }} <span class="format-label" property="dc:format" data-format="{{ resource_type }}">{{ res.format }}</span>{{ h.popular('views', res.tracking_summary.total, min=10) }}</a>
+    <a class="heading restricted-item" disabled="true" href="#" title="{{ res.name or res.description }}">{{ h.resource_display_name(res) | truncate(35) }} <span class="format-label" property="dc:format" data-format="{{ resource_type }}">{{ res.format }}</span>{{ h.popular('views', res.tracking_summary.total, min=10) }}</a>
+    <p class="description" >[{{_('Unauthorized')}}]</p>
   </span>
   {% endif %}
 
