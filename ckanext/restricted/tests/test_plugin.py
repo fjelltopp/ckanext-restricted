@@ -1,33 +1,35 @@
 """Tests for plugin.py."""
 # encoding: utf-8
 from ckan.tests import helpers
-from nose.tools import assert_raises
 import ckan.tests.factories as factories
 import ckan.logic as logic
 import logging
 from ckan.lib.base import render_snippet
 from pprint import pformat
-from ckanext.restricted.tests.mock_pylons_request import mock_pylons_request
+import pytest
 
 log = logging.getLogger(__name__)
 
 
-class TestRestrictedPlugin(helpers.FunctionalTestBase):
-    '''Tests for the ckanext.example_iauthfunctions.plugin module.
+@pytest.mark.usefixtures(u'clean_db')
+@pytest.mark.usefixtures(u'clean_index')
+@pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
+@pytest.mark.usefixtures(u'with_plugins')
+@pytest.mark.usefixtures(u'with_request_context')
+class TestRestrictedPlugin(object):
+    """Tests for the ckanext.example_iauthfunctions.plugin module.
     Specifically tests that overriding parent auth functions will cause
     child auth functions to use the overridden version.
-    '''
-
-    _load_plugins = ['restricted']
+    """
 
     def test_basic_access(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -39,19 +41,19 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
 
         assert logic.check_access('package_show', {'user': owner['name']}, {'id': dataset['id']})
         assert logic.check_access('resource_show', {'user': owner['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('package_show', {'user': access['name']}, {'id': dataset['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_package_restricted_resource(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         org_user = factories.User()
@@ -66,17 +68,17 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
         assert logic.check_access('package_show', {'user': access['name']}, {'id': dataset['id']})
         assert logic.check_access('resource_show', {'user': org_user['name']}, {'id': resource['id']})
 
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_resource(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -92,13 +94,13 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_allow_users(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -113,17 +115,17 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
                                       restricted=restrict_string)
 
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access2['name']}, {'id': resource['id']})
 
     def test_allow_organizations(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -142,7 +144,7 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
                                       restricted=restrict_string)
 
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access2['name']}, {'id': resource['id']})
 
     def _two_users_with_two_restricted_resources(self):
@@ -364,60 +366,59 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
             restricted=restricted4
         )
 
-        with mock_pylons_request():
-            html1 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource1,
-                pkg=dataset
-            )
-            log.debug(pformat(html1))
-            expected = (
-                "Access restricted to specific <a href='#' data-module"
-                "='restricted_popup' data-module-title='Access granted to "
-                "organizations' data-module-content='fjelltopp<br />unaids"
-                "<br />" + org['name'] + "'>organizations</a>"
-            )
-            assert expected in html1
+        html1 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource1,
+            pkg=dataset
+        )
+        log.debug(pformat(html1))
+        expected = (
+            "Access restricted to specific <a href='#' data-module"
+            "='restricted_popup' data-module-title='Access granted to "
+            "organizations' data-module-content='fjelltopp<br />unaids"
+            "<br />" + org['name'] + "'>organizations</a>"
+        )
+        assert expected in html1
 
-            html2 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource2,
-                pkg=dataset
-            )
-            log.debug(pformat(html2))
-            expected = (
-                "Access restricted to specific <a href='#' "
-                "data-module='restricted_popup' data-module-title='Access "
-                "granted to users' data-module-content='test_user_0<br />"
-                "test_user_1'>users</a>"
-            )
-            assert expected in html2
+        html2 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource2,
+            pkg=dataset
+        )
+        log.debug(pformat(html2))
+        expected = (
+            "Access restricted to specific <a href='#' "
+            "data-module='restricted_popup' data-module-title='Access "
+            "granted to users' data-module-content='test_user_0<br />"
+            "test_user_1'>users</a>"
+        )
+        assert expected in html2
 
-            html3 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource3,
-                pkg=dataset
-            )
-            log.debug(pformat(html3))
-            expected = (
-                "Access restricted to specific <a href='#' "
-                "data-module='restricted_popup' data-module-title='Access "
-                "granted to organizations' data-module-content='fjelltopp<br />"
-                "unaids<br />" + org['name'] + "'>organizations</a> and "
-                "<a href='#' data-module='restricted_popup' "
-                "data-module-title='Access granted to users' "
-                "data-module-content='test_user_0<br />test_user_1'>users</a>."
-            )
-            assert expected in html3
+        html3 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource3,
+            pkg=dataset
+        )
+        log.debug(pformat(html3))
+        expected = (
+            "Access restricted to specific <a href='#' "
+            "data-module='restricted_popup' data-module-title='Access "
+            "granted to organizations' data-module-content='fjelltopp<br />"
+            "unaids<br />" + org['name'] + "'>organizations</a> and "
+            "<a href='#' data-module='restricted_popup' "
+            "data-module-title='Access granted to users' "
+            "data-module-content='test_user_0<br />test_user_1'>users</a>."
+        )
+        assert expected in html3
 
-            html4 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource4,
-                pkg=dataset
-            )
-            log.debug(pformat(html4))
-            expected = (
-                'Access restricted to members of <a href="/organization/'
-                '{}">{}</a>'.format(org['name'], org['title'])
-            )
-            assert expected in html4
+        html4 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource4,
+            pkg=dataset
+        )
+        log.debug(pformat(html4))
+        expected = (
+            'Access restricted to members of <a href="/organization/'
+            '{}">{}</a>'.format(org['name'], org['title'])
+        )
+        assert expected in html4
