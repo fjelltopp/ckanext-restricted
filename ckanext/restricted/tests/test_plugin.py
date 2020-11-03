@@ -7,13 +7,9 @@ import logging
 from ckan.lib.base import render_snippet
 from pprint import pformat
 import pytest
-from ckanext.restricted.tests.mock_pylons_request import mock_pylons_request
-import ckan.model as model
 
 log = logging.getLogger(__name__)
 
-import pydevd_pycharm
-pydevd_pycharm.settrace('host.docker.internal', port=9876, stdoutToServer=True, stderrToServer=True)
 
 @pytest.mark.usefixtures(u'clean_db')
 @pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
@@ -369,60 +365,59 @@ class TestRestrictedPlugin(object):
             restricted=restricted4
         )
 
-        with mock_pylons_request():
-            html1 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource1,
-                pkg=dataset
-            )
-            log.debug(pformat(html1))
-            expected = (
-                "Access restricted to specific <a href='#' data-module"
-                "='restricted_popup' data-module-title='Access granted to "
-                "organizations' data-module-content='fjelltopp<br />unaids"
-                "<br />" + org['name'] + "'>organizations</a>"
-            )
-            assert expected in html1
+        html1 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource1,
+            pkg=dataset
+        )
+        log.debug(pformat(html1))
+        expected = (
+            "Access restricted to specific <a href='#' data-module"
+            "='restricted_popup' data-module-title='Access granted to "
+            "organizations' data-module-content='fjelltopp<br />unaids"
+            "<br />" + org['name'] + "'>organizations</a>"
+        )
+        assert expected in html1
 
-            html2 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource2,
-                pkg=dataset
-            )
-            log.debug(pformat(html2))
-            expected = (
-                "Access restricted to specific <a href='#' "
-                "data-module='restricted_popup' data-module-title='Access "
-                "granted to users' data-module-content='test_user_0<br />"
-                "test_user_1'>users</a>"
-            )
-            assert expected in html2
+        html2 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource2,
+            pkg=dataset
+        )
+        log.debug(pformat(html2))
+        expected = (
+            "Access restricted to specific <a href='#' "
+            "data-module='restricted_popup' data-module-title='Access "
+            "granted to users' data-module-content='test_user_0<br />"
+            "test_user_1'>users</a>"
+        )
+        assert expected in html2
 
-            html3 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource3,
-                pkg=dataset
-            )
-            log.debug(pformat(html3))
-            expected = (
-                "Access restricted to specific <a href='#' "
-                "data-module='restricted_popup' data-module-title='Access "
-                "granted to organizations' data-module-content='fjelltopp<br />"
-                "unaids<br />" + org['name'] + "'>organizations</a> and "
-                "<a href='#' data-module='restricted_popup' "
-                "data-module-title='Access granted to users' "
-                "data-module-content='test_user_0<br />test_user_1'>users</a>."
-            )
-            assert expected in html3
+        html3 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource3,
+            pkg=dataset
+        )
+        log.debug(pformat(html3))
+        expected = (
+            "Access restricted to specific <a href='#' "
+            "data-module='restricted_popup' data-module-title='Access "
+            "granted to organizations' data-module-content='fjelltopp<br />"
+            "unaids<br />" + org['name'] + "'>organizations</a> and "
+            "<a href='#' data-module='restricted_popup' "
+            "data-module-title='Access granted to users' "
+            "data-module-content='test_user_0<br />test_user_1'>users</a>."
+        )
+        assert expected in html3
 
-            html4 = render_snippet(
-                'restricted/restricted_string.html',
-                res=resource4,
-                pkg=dataset
-            )
-            log.debug(pformat(html4))
-            expected = (
-                'Access restricted to members of <a href="/organization/'
-                '{}">{}</a>'.format(org['name'], org['title'])
-            )
-            assert expected in html4
+        html4 = render_snippet(
+            'restricted/restricted_string.html',
+            res=resource4,
+            pkg=dataset
+        )
+        log.debug(pformat(html4))
+        expected = (
+            'Access restricted to members of <a href="/organization/'
+            '{}">{}</a>'.format(org['name'], org['title'])
+        )
+        assert expected in html4
