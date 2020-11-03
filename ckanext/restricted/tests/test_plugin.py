@@ -17,19 +17,19 @@ log = logging.getLogger(__name__)
 @pytest.mark.usefixtures(u'with_plugins')
 @pytest.mark.usefixtures(u'with_request_context')
 class TestRestrictedPlugin(object):
-    '''Tests for the ckanext.example_iauthfunctions.plugin module.
+    """Tests for the ckanext.example_iauthfunctions.plugin module.
     Specifically tests that overriding parent auth functions will cause
     child auth functions to use the overridden version.
-    '''
+    """
 
     def test_basic_access(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -47,13 +47,13 @@ class TestRestrictedPlugin(object):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_package_restricted_resource(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         org_user = factories.User()
@@ -72,13 +72,13 @@ class TestRestrictedPlugin(object):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_resource(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -94,13 +94,13 @@ class TestRestrictedPlugin(object):
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_allow_users(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
@@ -119,13 +119,13 @@ class TestRestrictedPlugin(object):
             logic.check_access('resource_show', {'user': access2['name']}, {'id': resource['id']})
 
     def test_allow_organizations(self):
-        '''Normally organization admins can delete resources
+        """Normally organization admins can delete resources
         Our plugin prevents this by blocking delete organization.
 
         Ensure the delete button is not displayed (as only resource delete
         is checked for showing this)
 
-        '''
+        """
 
         owner = factories.User()
         access = factories.User()
