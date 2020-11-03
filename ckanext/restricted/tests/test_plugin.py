@@ -1,24 +1,29 @@
 """Tests for plugin.py."""
 # encoding: utf-8
 from ckan.tests import helpers
-from nose.tools import assert_raises
 import ckan.tests.factories as factories
 import ckan.logic as logic
 import logging
 from ckan.lib.base import render_snippet
 from pprint import pformat
+import pytest
 from ckanext.restricted.tests.mock_pylons_request import mock_pylons_request
+import ckan.model as model
 
 log = logging.getLogger(__name__)
 
+import pydevd_pycharm
+pydevd_pycharm.settrace('host.docker.internal', port=9876, stdoutToServer=True, stderrToServer=True)
 
-class TestRestrictedPlugin(helpers.FunctionalTestBase):
+@pytest.mark.usefixtures(u'clean_db')
+@pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
+@pytest.mark.usefixtures(u'with_plugins')
+@pytest.mark.usefixtures(u'with_request_context')
+class TestRestrictedPlugin(object):
     '''Tests for the ckanext.example_iauthfunctions.plugin module.
     Specifically tests that overriding parent auth functions will cause
     child auth functions to use the overridden version.
     '''
-
-    _load_plugins = ['restricted']
 
     def test_basic_access(self):
         '''Normally organization admins can delete resources
@@ -39,9 +44,9 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
 
         assert logic.check_access('package_show', {'user': owner['name']}, {'id': dataset['id']})
         assert logic.check_access('resource_show', {'user': owner['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('package_show', {'user': access['name']}, {'id': dataset['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_package_restricted_resource(self):
@@ -66,7 +71,7 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
         assert logic.check_access('package_show', {'user': access['name']}, {'id': dataset['id']})
         assert logic.check_access('resource_show', {'user': org_user['name']}, {'id': resource['id']})
 
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
 
     def test_public_resource(self):
@@ -113,7 +118,7 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
                                       restricted=restrict_string)
 
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access2['name']}, {'id': resource['id']})
 
     def test_allow_organizations(self):
@@ -142,7 +147,7 @@ class TestRestrictedPlugin(helpers.FunctionalTestBase):
                                       restricted=restrict_string)
 
         assert logic.check_access('resource_show', {'user': access['name']}, {'id': resource['id']})
-        with assert_raises(logic.NotAuthorized):
+        with pytest.raises(logic.NotAuthorized):
             logic.check_access('resource_show', {'user': access2['name']}, {'id': resource['id']})
 
     def _two_users_with_two_restricted_resources(self):
