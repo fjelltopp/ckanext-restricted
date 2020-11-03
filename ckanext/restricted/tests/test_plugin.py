@@ -12,6 +12,7 @@ log = logging.getLogger(__name__)
 
 
 @pytest.mark.usefixtures(u'clean_db')
+@pytest.mark.usefixtures(u'clean_index')
 @pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
 @pytest.mark.usefixtures(u'with_plugins')
 @pytest.mark.usefixtures(u'with_request_context')
