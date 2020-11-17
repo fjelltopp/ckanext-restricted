@@ -282,6 +282,20 @@ class TestRestrictedPlugin(object):
         assert len(package['resources']) == 1
         assert package['resources'][0]['id'] == other_resource['id']
 
+    @pytest.mark.ckan_config(u'ckan.auth.allow_dataset_collaborators', 'true')
+    def test_collaborator_overrides_restricted_settings(self):
+        dataset, other, other_resource, org_resource = self._two_users_one_package_two_resources_one_restricted()
+        helpers.call_action(
+            'package_collaborator_create',
+            id=dataset['id'], user_id=other['name'], capacity='member'
+        )
+        context = {
+            'ignore_auth': False,
+            'user': other['name']
+        }
+        assert logic.check_access('resource_show', context, {'id': org_resource['id']})
+        assert logic.check_access('resource_show', context, {'id': other_resource['id']})
+
     def test_org_member_see_only_accessible_resources_in_package_search(self):
         """
         A bug was flagged where the hide_inaccessible_resources param in
