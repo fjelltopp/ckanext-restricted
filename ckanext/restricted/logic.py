@@ -74,9 +74,10 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict):
                        {'id': package_dict['id']})
     restricted_dict = restricted_get_restricted_dict(resource_dict)
 
-    user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
-    if authz.user_is_collaborator_on_dataset(user_id, package_dict['id']):
-        return {'success': True}
+    if user:
+        user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
+        if authz.user_is_collaborator_on_dataset(user_id, package_dict['id']):
+            return {'success': True}
 
     restricted_level = restricted_dict.get('level', 'restricted')
     allowed_users = restricted_dict.get('allowed_users', [])
