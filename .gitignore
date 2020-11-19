@@ -41,5 +41,8 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-# OSX 
+# OSX
 .DS_Store
+
+# Translations
+*.pot
