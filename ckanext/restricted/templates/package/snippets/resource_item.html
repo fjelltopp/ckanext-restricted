@@ -23,16 +23,12 @@
 
 {% endblock %}
 {% block resource_item_description %}
-{% if res.description %}
-<p class="description">
-  {{ h.markdown_extract(h.get_translated(res, 'description'), extract_length=80) }}
-</p>
-{% endif %}
-{% if can_edit %}
-  <p class="description">
-      {% include 'restricted/restricted_string.html' %}
-  </p>
-{% endif %}
+  {{super()}}
+  {% if can_edit %}
+    <p class="description">
+        {% include 'restricted/restricted_string.html' %}
+    </p>
+  {% endif %}
 {% endblock %}
 {% block resource_item_explore %}
   {% if authorized %}
