@@ -440,7 +440,7 @@ class TestRestrictedPlugin(object):
         assert expected in html4
 
     @mock.patch('ckan.lib.mailer.mail_recipient')
-    def test_manoj(self, mocked_mail_recipient, app):
+    def test_all_org_admins_are_emailed_on_request_access(self, mocked_mail_recipient, app):
         
         # create two admins and one regular member of an org
         user_1 = factories.User(email='user_1@example.com')
