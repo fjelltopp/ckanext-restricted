@@ -93,22 +93,19 @@ class RestrictedController(toolkit.BaseController):
             dataset = toolkit.get_action('package_show')(
                 context, {'id': data.get('package_name')}
             )
-            dataset_org = toolkit.get_action(
-                'organization_show')(context, {'id': dataset['owner_org']}
+            dataset_org = toolkit.get_action('organization_show')(
+                context, {'id': dataset['owner_org']}
             )
-            dataset_org_admins = [
+            dataset_org_admin_ids = [
                 user['id']
                 for user in dataset_org['users']
                 if user['capacity'] == 'admin'
             ]
             # fetch users directly from db to get non-hashed emails
-            dataset_org_admins = model.Session\
-                .query(model.User)\
-                .filter(
-                    model.User.id.in_(dataset_org_admins),
+            dataset_org_admins = model.Session.query(model.User).filter(
+                    model.User.id.in_(dataset_org_admin_ids),
                     model.User.email.isnot(None)
-                )\
-                .all()
+            ).all()
             email_dict.update({
                 user.email: user.name
                 for user in dataset_org_admins
