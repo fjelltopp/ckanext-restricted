@@ -5,7 +5,9 @@ import ckan.tests.factories as factories
 import ckan.logic as logic
 import logging
 from ckan.lib.base import render_snippet
+from ckan.lib.helpers import url_for
 from pprint import pformat
+import mock
 import pytest
 
 log = logging.getLogger(__name__)
@@ -13,7 +15,7 @@ log = logging.getLogger(__name__)
 
 @pytest.mark.usefixtures(u'clean_db')
 @pytest.mark.usefixtures(u'clean_index')
-@pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
+@pytest.mark.ckan_config(u'ckan.plugins', u'restricted image_view recline_view')
 @pytest.mark.usefixtures(u'with_plugins')
 @pytest.mark.usefixtures(u'with_request_context')
 class TestRestrictedPlugin(object):
@@ -436,3 +438,64 @@ class TestRestrictedPlugin(object):
             '{}">{}</a>'.format(org['name'], org['title'])
         )
         assert expected in html4
+
+    @mock.patch('ckan.lib.mailer.mail_recipient')
+    def test_manoj(self, mocked_mail_recipient, app):
+        
+        # create two admins and one regular member of an org
+        user_1 = factories.User(email='user_1@example.com')
+        user_2 = factories.User(email='user_2@example.com')
+        user_3 = factories.User(email='user_3@example.com')
+        owner_org = factories.Organization(
+            users=[
+                {'name': user_1['id'], 'capacity': 'admin'},
+                {'name': user_2['id'], 'capacity': 'admin'},
+                {'name': user_3['id'], 'capacity': 'member'}
+            ]
+        )
+
+        # user_1 creates a dataset
+        dataset = factories.Dataset(
+            owner_org=owner_org['id'],
+            name='name',
+            private=False,
+            user=user_1
+        )
+        resource = factories.Resource(
+            package_id=dataset['id'],
+            name='name',
+            restricted='{"level": "public"}'
+        )
+
+        # user_4 requests access to dataset
+        user_4 = factories.User(email='user_4@example.com')
+        maintainer_email = 'maintainer_email@example.com'
+        request_access_url = url_for(
+            controller='ckanext.restricted.controller:RestrictedController',
+            action='restricted_request_access_form',
+            package_id=dataset['id'],
+            resource_id=resource['id']
+        )
+        response = app.get(
+            url=request_access_url,
+            query_string={
+                'package_name': dataset['id'],
+                'resource': resource['id'],
+                'message': 'aaaa',
+                'maintainer_email': maintainer_email,
+                'save': 1
+            },
+            extra_environ={'REMOTE_USER': user_3['name']}
+        )
+        assert response.status_code == 200
+
+        mocked_mail_recipient.assert_called()
+        email_recipients = [
+            x[0][1] # recipient_email
+            for x in mocked_mail_recipient.call_args_list
+        ]
+        assert maintainer_email in email_recipients
+        assert user_1['email'] in email_recipients
+        assert user_2['email'] in email_recipients
+        assert user_3['email'] not in email_recipients, \
+            'Only org admins should be emailed'
