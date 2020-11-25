@@ -441,7 +441,7 @@ class TestRestrictedPlugin(object):
 
     @mock.patch('ckan.lib.mailer.mail_recipient')
     def test_all_org_admins_are_emailed_on_request_access(self, mocked_mail_recipient, app):
-        
+
         # create two admins and one regular member of an org
         user_1 = factories.User(email='user_1@example.com')
         user_2 = factories.User(email='user_2@example.com')
@@ -485,13 +485,13 @@ class TestRestrictedPlugin(object):
                 'maintainer_email': maintainer_email,
                 'save': 1
             },
-            extra_environ={'REMOTE_USER': user_3['name']}
+            extra_environ={'REMOTE_USER': user_4['name']}
         )
         assert response.status_code == 200
 
         mocked_mail_recipient.assert_called()
         email_recipients = [
-            x[0][1] # recipient_email
+            x[0][1]  # recipient_email
             for x in mocked_mail_recipient.call_args_list
         ]
         assert maintainer_email in email_recipients

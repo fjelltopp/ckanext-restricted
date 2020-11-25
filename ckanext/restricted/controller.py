@@ -93,8 +93,8 @@ class RestrictedController(toolkit.BaseController):
             dataset = toolkit.get_action('package_show')(
                 context, {'id': data.get('package_name')}
             )
-            dataset_org = toolkit.get_action(
-                'organization_show')(context, {'id': dataset['owner_org']}
+            dataset_org = toolkit.get_action('organization_show')(
+                context, {'id': dataset['owner_org']}
             )
             dataset_org_admins = [
                 user['id']
