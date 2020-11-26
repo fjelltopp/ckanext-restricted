@@ -494,6 +494,6 @@ class TestRestrictedPlugin(object):
             for x in mocked_mail_recipient.call_args_list
         ]
         assert maintainer_email in email_recipients
-        assert admin_1['email'] in email_recipients
+        assert user_1['email'] in email_recipients
         assert admin_2['email'] in email_recipients
         assert member['email'] not in email_recipients, 'Only org admins should be emailed'
