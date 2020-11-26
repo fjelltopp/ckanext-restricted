@@ -444,11 +444,13 @@ class TestRestrictedPlugin(object):
 
         admin_1 = factories.User(email='admin_1@example.com')
         admin_2 = factories.User(email='admin_2@example.com')
+        editor = factories.User(email='editor@example.com')
         member = factories.User(email='member@example.com')
         owner_org = factories.Organization(
             users=[
                 {'name': admin_1['id'], 'capacity': 'admin'},
                 {'name': admin_2['id'], 'capacity': 'admin'},
+                {'name': editor['id'], 'capacity': 'editor'},
                 {'name': member['id'], 'capacity': 'member'}
             ]
         )
@@ -496,4 +498,5 @@ class TestRestrictedPlugin(object):
         assert maintainer_email in email_recipients
         assert admin_1['email'] in email_recipients
         assert admin_2['email'] in email_recipients
-        assert member['email'] not in email_recipients, 'Only org admins should be emailed'
+        assert editor['email'] not in email_recipients, 'Only org admins should be emailed, not editors'
+        assert member['email'] not in email_recipients, 'Only org admins should be emailed, not members'
