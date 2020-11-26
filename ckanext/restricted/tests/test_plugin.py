@@ -442,24 +442,23 @@ class TestRestrictedPlugin(object):
     @mock.patch('ckan.lib.mailer.mail_recipient')
     def test_all_org_admins_are_emailed_on_request_access(self, mocked_mail_recipient, app):
 
-        # create two admins and one regular member of an org
-        user_1 = factories.User(email='user_1@example.com')
-        user_2 = factories.User(email='user_2@example.com')
-        user_3 = factories.User(email='user_3@example.com')
+        admin_1 = factories.User(email='admin_1@example.com')
+        admin_2 = factories.User(email='admin_2@example.com')
+        member = factories.User(email='member@example.com')
         owner_org = factories.Organization(
             users=[
-                {'name': user_1['id'], 'capacity': 'admin'},
-                {'name': user_2['id'], 'capacity': 'admin'},
-                {'name': user_3['id'], 'capacity': 'member'}
+                {'name': admin_1['id'], 'capacity': 'admin'},
+                {'name': admin_2['id'], 'capacity': 'admin'},
+                {'name': member['id'], 'capacity': 'member'}
             ]
         )
 
-        # user_1 creates a dataset
+        # admin_1 creates a dataset
         dataset = factories.Dataset(
             owner_org=owner_org['id'],
             name='name',
             private=False,
-            user=user_1
+            user=admin_1
         )
         resource = factories.Resource(
             package_id=dataset['id'],
@@ -467,8 +466,8 @@ class TestRestrictedPlugin(object):
             restricted='{"level": "public"}'
         )
 
-        # user_4 requests access to dataset
-        user_4 = factories.User(email='user_4@example.com')
+        # stranger requests access to dataset
+        stranger = factories.User(email='stranger@example.com')
         maintainer_email = 'maintainer_email@example.com'
         request_access_url = url_for(
             controller='ckanext.restricted.controller:RestrictedController',
@@ -485,7 +484,7 @@ class TestRestrictedPlugin(object):
                 'maintainer_email': maintainer_email,
                 'save': 1
             },
-            extra_environ={'REMOTE_USER': user_4['name']}
+            extra_environ={'REMOTE_USER': stranger['name']}
         )
         assert response.status_code == 200
 
@@ -495,7 +494,6 @@ class TestRestrictedPlugin(object):
             for x in mocked_mail_recipient.call_args_list
         ]
         assert maintainer_email in email_recipients
-        assert user_1['email'] in email_recipients
-        assert user_2['email'] in email_recipients
-        assert user_3['email'] not in email_recipients, \
-            'Only org admins should be emailed'
+        assert admin_1['email'] in email_recipients
+        assert admin_2['email'] in email_recipients
+        assert member['email'] not in email_recipients, 'Only org admins should be emailed'
