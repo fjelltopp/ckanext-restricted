@@ -138,9 +138,9 @@ class RestrictedController(toolkit.BaseController):
                     name, email, 'Fwd: ' + subject, body_user, headers=headers)
                 success = True
 
-            except mailer.MailerException as mailer_exception:
-                log.error('Can not access request mail after registration.')
-                log.error(mailer_exception)
+        except mailer.MailerException as mailer_exception:
+            log.error('Can not access request mail after registration.')
+            log.error(mailer_exception)
 
         return success
 
