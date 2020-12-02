@@ -48,17 +48,23 @@ class RestrictedController(toolkit.BaseController):
         success = False
         try:
 
-            resource_link = toolkit.url_for(
-                action='resource_read',
-                controller='package',
-                id=data.get('package_name'),
-                resource_id=data.get('resource_id'))
+            context = {
+                'model': model,
+                'session': model.Session,
+                'ignore_auth': True
+            }
+            dataset = toolkit.get_action('package_show')(
+                context, {'id': data.get('package_name')}
+            )
 
+            resource_link = toolkit.url_for(
+                '{}_resource.read'.format(dataset['type']),
+                id=dataset['name'],
+                resource_id=data.get('resource'))
             resource_edit_link = toolkit.url_for(
-                action='resource_edit',
-                controller='package',
-                id=data.get('package_name'),
-                resource_id=data.get('resource_id'))
+                '{}_resource.edit'.format(dataset['type']),
+                id=dataset['name'],
+                resource_id=data.get('resource'))
 
             extra_vars = {
                 'site_title': config.get('ckan.site_title'),
@@ -85,14 +91,6 @@ class RestrictedController(toolkit.BaseController):
                 data.get('maintainer_email'): extra_vars.get('maintainer_name'),
                 extra_vars.get('admin_email_to'): '{} Admin'.format(extra_vars.get('site_title'))}
 
-            context = {
-                'model': model,
-                'session': model.Session,
-                'ignore_auth': True
-            }
-            dataset = toolkit.get_action('package_show')(
-                context, {'id': data.get('package_name')}
-            )
             dataset_org = toolkit.get_action('organization_show')(
                 context, {'id': dataset['owner_org']}
             )
