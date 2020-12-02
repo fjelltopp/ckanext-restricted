@@ -96,50 +96,51 @@ class RestrictedController(toolkit.BaseController):
             dataset_org = toolkit.get_action('organization_show')(
                 context, {'id': dataset['owner_org']}
             )
-            dataset_org_admin_ids = [
-                user['id']
-                for user in dataset_org['users']
-                if user['capacity'] == 'admin'
-            ]
-            # fetch users directly from db to get non-hashed emails
-            dataset_org_admins = model.Session.query(model.User).filter(
-                    model.User.id.in_(dataset_org_admin_ids),
-                    model.User.email.isnot(None)
-            ).all()
-            email_dict.update({
-                user.email: user.name
-                for user in dataset_org_admins
-            })
+            if 'users' in dataset_org:
+                dataset_org_admin_ids = [
+                    user['id']
+                    for user in dataset_org['users']
+                    if user['capacity'] == 'admin'
+                ]
+                # fetch users directly from db to get non-hashed emails
+                dataset_org_admins = model.Session.query(model.User).filter(
+                        model.User.id.in_(dataset_org_admin_ids),
+                        model.User.email.isnot(None)
+                ).all()
+                email_dict.update({
+                    user.email: user.name
+                    for user in dataset_org_admins
+                })
 
-            headers = {
-                'CC': ",".join(email_dict.keys()),
-                'reply-to': data.get('user_email')}
+                headers = {
+                    'CC': ",".join(email_dict.keys()),
+                    'reply-to': data.get('user_email')}
 
-            # CC doesn't work and mailer cannot send to multiple addresses
-            for email, name in email_dict.iteritems():
-                mailer.mail_recipient(name, email, subject, body, headers=headers)
+                # CC doesn't work and mailer cannot send to multiple addresses
+                for email, name in email_dict.iteritems():
+                    mailer.mail_recipient(name, email, subject, body, headers=headers)
 
-            # Special copy for the user (no links)
-            email = data.get('user_email')
-            name = data.get('user_name', 'User')
+                # Special copy for the user (no links)
+                email = data.get('user_email')
+                name = data.get('user_name', 'User')
 
-            extra_vars['resource_link'] = '[...]'
-            extra_vars['resource_edit_link'] = '[...]'
-            body = render_jinja2(
-                'restricted/emails/restricted_access_request.txt', extra_vars)
+                extra_vars['resource_link'] = '[...]'
+                extra_vars['resource_edit_link'] = '[...]'
+                body = render_jinja2(
+                    'restricted/emails/restricted_access_request.txt', extra_vars)
 
-            body_user = _(
-                'Please find below a copy of the access '
-                'request mail sent. \n\n >> {}'
-            ).format(body.replace("\n", "\n >> "))
+                body_user = _(
+                    'Please find below a copy of the access '
+                    'request mail sent. \n\n >> {}'
+                ).format(body.replace("\n", "\n >> "))
 
-            mailer.mail_recipient(
-                name, email, 'Fwd: ' + subject, body_user, headers=headers)
-            success = True
+                mailer.mail_recipient(
+                    name, email, 'Fwd: ' + subject, body_user, headers=headers)
+                success = True
 
-        except mailer.MailerException as mailer_exception:
-            log.error('Can not access request mail after registration.')
-            log.error(mailer_exception)
+            except mailer.MailerException as mailer_exception:
+                log.error('Can not access request mail after registration.')
+                log.error(mailer_exception)
 
         return success
 
