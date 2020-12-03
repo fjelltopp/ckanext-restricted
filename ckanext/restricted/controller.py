@@ -94,7 +94,10 @@ class RestrictedController(toolkit.BaseController):
                 context, {'id': data.get('package_name')}
             )
             dataset_org = toolkit.get_action('organization_show')(
-                context, {'id': dataset['owner_org']}
+                context, {
+                    'id': dataset['owner_org'],
+                    'include_users': True
+                }
             )
             dataset_org_admin_ids = [
                 user['id']
