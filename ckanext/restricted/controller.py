@@ -23,8 +23,8 @@ except ImportError:
 import simplejson as json
 
 from logging import getLogger
-log = getLogger(__name__)
 
+log = getLogger(__name__)
 
 DataError = dictization_functions.DataError
 unflatten = dictization_functions.unflatten
@@ -33,6 +33,7 @@ render = base.render
 
 SEND_SUCCESS = True
 SEND_FAILED = False
+
 
 class RestrictedController(toolkit.BaseController):
 
@@ -103,8 +104,8 @@ class RestrictedController(toolkit.BaseController):
             ]
             # fetch users directly from db to get non-hashed emails
             dataset_org_admins = model.Session.query(model.User).filter(
-                    model.User.id.in_(dataset_org_admin_ids),
-                    model.User.email.isnot(None)
+                model.User.id.in_(dataset_org_admin_ids),
+                model.User.email.isnot(None)
             ).all()
             email_dict.update({
                 user.email: user.name
