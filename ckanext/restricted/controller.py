@@ -31,6 +31,8 @@ unflatten = dictization_functions.unflatten
 
 render = base.render
 
+SEND_SUCCESS = True
+SEND_FAILED = False
 
 class RestrictedController(toolkit.BaseController):
 
@@ -45,26 +47,26 @@ class RestrictedController(toolkit.BaseController):
             base.abort(401, _('Not authorized to see this page'))
 
     def _send_request_mail(self, data):
-        success = False
         try:
-
+            dataset_name = data['package_name']
+            resource_id = data['resource_id']
             context = {
                 'model': model,
                 'session': model.Session,
                 'ignore_auth': True
             }
             dataset = toolkit.get_action('package_show')(
-                context, {'id': data.get('package_name')}
+                context, {'id': dataset_name}
             )
 
             resource_link = toolkit.url_for(
                 '{}_resource.read'.format(dataset['type']),
-                id=dataset['name'],
-                resource_id=data.get('resource'))
+                id=dataset_name,
+                resource_id=resource_id)
             resource_edit_link = toolkit.url_for(
                 '{}_resource.edit'.format(dataset['type']),
-                id=dataset['name'],
-                resource_id=data.get('resource'))
+                id=dataset_name,
+                resource_id=resource_id)
 
             extra_vars = {
                 'site_title': config.get('ckan.site_title'),
@@ -133,13 +135,14 @@ class RestrictedController(toolkit.BaseController):
 
             mailer.mail_recipient(
                 name, email, 'Fwd: ' + subject, body_user, headers=headers)
-            success = True
-
+            return SEND_SUCCESS
         except mailer.MailerException as mailer_exception:
             log.error('Can not access request mail after registration.')
             log.error(mailer_exception)
+        except Exception as e:
+            log.exception("Failed to prepare the request email.", e)
 
-        return success
+        return SEND_FAILED
 
     def _send_request(self, context):
 
