@@ -23,13 +23,16 @@ except ImportError:
 import simplejson as json
 
 from logging import getLogger
-log = getLogger(__name__)
 
+log = getLogger(__name__)
 
 DataError = dictization_functions.DataError
 unflatten = dictization_functions.unflatten
 
 render = base.render
+
+SEND_SUCCESS = True
+SEND_FAILED = False
 
 
 class RestrictedController(toolkit.BaseController):
@@ -45,20 +48,26 @@ class RestrictedController(toolkit.BaseController):
             base.abort(401, _('Not authorized to see this page'))
 
     def _send_request_mail(self, data):
-        success = False
         try:
+            dataset_name = data['package_name']
+            resource_id = data['resource_id']
+            context = {
+                'model': model,
+                'session': model.Session,
+                'ignore_auth': True
+            }
+            dataset = toolkit.get_action('package_show')(
+                context, {'id': dataset_name}
+            )
 
             resource_link = toolkit.url_for(
-                action='resource_read',
-                controller='package',
-                id=data.get('package_name'),
-                resource_id=data.get('resource_id'))
-
+                '{}_resource.read'.format(dataset['type']),
+                id=dataset_name,
+                resource_id=resource_id)
             resource_edit_link = toolkit.url_for(
-                action='resource_edit',
-                controller='package',
-                id=data.get('package_name'),
-                resource_id=data.get('resource_id'))
+                '{}_resource.edit'.format(dataset['type']),
+                id=dataset_name,
+                resource_id=resource_id)
 
             extra_vars = {
                 'site_title': config.get('ckan.site_title'),
@@ -85,14 +94,6 @@ class RestrictedController(toolkit.BaseController):
                 data.get('maintainer_email'): extra_vars.get('maintainer_name'),
                 extra_vars.get('admin_email_to'): '{} Admin'.format(extra_vars.get('site_title'))}
 
-            context = {
-                'model': model,
-                'session': model.Session,
-                'ignore_auth': True
-            }
-            dataset = toolkit.get_action('package_show')(
-                context, {'id': data.get('package_name')}
-            )
             dataset_org = toolkit.get_action('organization_show')(
                 context, {
                     'id': dataset['owner_org'],
@@ -106,8 +107,8 @@ class RestrictedController(toolkit.BaseController):
             ]
             # fetch users directly from db to get non-hashed emails
             dataset_org_admins = model.Session.query(model.User).filter(
-                    model.User.id.in_(dataset_org_admin_ids),
-                    model.User.email.isnot(None)
+                model.User.id.in_(dataset_org_admin_ids),
+                model.User.email.isnot(None)
             ).all()
             email_dict.update({
                 user.email: user.name
@@ -138,13 +139,14 @@ class RestrictedController(toolkit.BaseController):
 
             mailer.mail_recipient(
                 name, email, 'Fwd: ' + subject, body_user, headers=headers)
-            success = True
-
+            return SEND_SUCCESS
         except mailer.MailerException as mailer_exception:
             log.error('Can not access request mail after registration.')
             log.error(mailer_exception)
+        except Exception as e:
+            log.exception("Failed to prepare the request email.", e)
 
-        return success
+        return SEND_FAILED
 
     def _send_request(self, context):
 
