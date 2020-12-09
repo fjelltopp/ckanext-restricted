@@ -307,7 +307,7 @@ class RestrictedController(toolkit.BaseController):
 
         return render(
             'restricted/restricted_request_organization_result.html',
-            extra_vars={'data': data_dict, 'success': success}
+            extra_vars={'data': data_dict, 'pkg_dict': {}, 'success': success}
         )
 
     def _send_organization_request_mail(self, data):
@@ -399,7 +399,7 @@ class RestrictedController(toolkit.BaseController):
         data['user_email'] = user.get('email', '')
 
         extra_vars = {
-            'data': data, 'group_type': "organization",
+            'data': data, 'group_type': "organization", 'pkg_dict': {},
             'errors': errors, 'error_summary': error_summary
         }
         return render(
