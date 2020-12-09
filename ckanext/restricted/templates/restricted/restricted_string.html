@@ -1,12 +1,11 @@
 {% resource 'ckanext-restricted/restricted_ui.js' %}
 
 {% set organization_link = h.link_to(pkg.organization.title, h.url_for(controller="organization", action="read", id=pkg.organization.name)) %}
-{% set private_resource_string = _("Access restricted to members of {organisation_name}").format(organisation_name=organization_link|safe) %}
 
 {% if "restricted" not in res or pkg["private"] %}
-
-  {{private_resource_string|safe }}
-
+  {% trans organization=organization_link|safe %}
+    Access restricted to members of {{ organization }}.
+  {% endtrans %}
 {% else %}
 
   {% set restricted = h.restricted_json_loads(res["restricted"]) %}
@@ -17,7 +16,7 @@
 
   {% else %}
 
-    {% set popup_link = "<a href='#' data-module='restricted_popup' data-module-title='{}' data-module-content='{}'>{}</a>" %}
+    {% set popup_link = "<a href='#' data-module='restricted_popup' data-module-title='%s' data-module-content='%s'>%s</a>" %}
     {% set org_string = False %}
     {% set usr_string = False %}
 
@@ -25,25 +24,33 @@
       {% set organizations = (restricted.get("allowed_organizations").split(",") + [pkg.organization.name])|unique|list %}
       {% set organizations_popup_title = _('Access granted to organizations') %}
       {% set organizations_popup_content = "<br />".join(organizations ) %}
-      {% set organizations_popup = popup_link.format(organizations_popup_title, organizations_popup_content, _('organizations')) %}
+      {% set organizations_popup = popup_link % (organizations_popup_title, organizations_popup_content, _('organizations')) %}
     {% endif %}
 
     {% if restricted.get("allowed_users") %}
       {% set users = restricted.get("allowed_users").split(",") %}
       {% set users_popup_title = _('Access granted to users') %}
       {% set users_popup_content = "<br />".join(users) %}
-      {% set users_popup = popup_link.format(users_popup_title, users_popup_content, _('users')) %}
+      {% set users_popup = popup_link % (users_popup_title, users_popup_content, _('users')) %}
     {% endif %}
     {% set x = "<b>Hello</b>"%}
 
     {% if organizations_popup and users_popup %}
-        {{_("Access restricted to specific {organizations} and {users}.").format(organizations=organizations_popup|safe, users=users_popup|safe) }}
+        {% trans organizations=organizations_popup|safe, users=users_popup|safe %}
+            Access restricted to specific {{ organizations }} and {{ users }}.
+        {% endtrans %}
     {% elif organizations_popup %}
-        {{_("Access restricted to specific {organizations}").format(organizations=organizations_popup|safe) }}
+       {% trans organizations=organizations_popup|safe %}
+           Access restricted to specific {{ organizations }}.
+       {% endtrans %}
     {% elif users_popup %}
-        {{_("Access restricted to specific {users}").format(users=users_popup|safe) }}
+        {% trans users=users_popup|safe %}
+            Access restricted to specific {{ users }}.
+        {% endtrans %}
     {% else %}
-        {{private_resource_string }}
+      {% trans  organization=organization_link|safe %}
+        Access restricted to members of {{ organization }}.
+      {% endtrans %}
     {% endif %}
 
   {% endif %}
