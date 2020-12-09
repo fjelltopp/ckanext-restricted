@@ -1,6 +1,6 @@
 {% resource 'ckanext-restricted/restricted_ui.js' %}
 
-{% set organization_link = h.link_to(pkg.organization.title, h.url_for(controller="organization", action="read", id=pkg.organization.name)) %}
+{% set organization_link = h.link_to(pkg.organization.title, h.url_for("organization.read", id=pkg.organization.name)) %}
 
 {% if "restricted" not in res or pkg["private"] %}
   {% trans organization=organization_link|safe %}
