@@ -49,8 +49,8 @@ class TestAccessRequest(object):
         response = app.get(
             url=request_access_url,
             query_string={
-                'package_name': dataset['id'],
-                'resource': resource['id'],
+                'package_name': dataset['name'],
+                'resource_id': resource['id'],
                 'message': 'aaaa',
                 'maintainer_email': maintainer_email,
                 'save': 1
@@ -107,8 +107,8 @@ class TestAccessRequest(object):
         response = app.get(
             url=request_access_url,
             query_string={
-                'package_name': dataset['id'],
-                'resource': resource['id'],
+                'package_name': dataset['name'],
+                'resource_id': resource['id'],
                 'message': 'aaaa',
                 'maintainer_email': maintainer_email,
                 'save': 1
@@ -158,8 +158,8 @@ class TestAccessRequest(object):
         response = app.get(
             url=request_access_url,
             query_string={
-                'package_name': dataset['id'],
-                'resource': resource['id'],
+                'package_name': dataset['name'],
+                'resource_id': resource['id'],
                 'message': 'aaaa',
                 'maintainer_email': '',
                 'save': 1
