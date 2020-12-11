@@ -17,12 +17,8 @@ class TestAccessRequestEmailTemplate(object):
     def test_restricted_access_request_template_vars(self, mocked_mail_recipient, app):
 
         admin_1 = factories.User()
-        admin_2 = factories.User()
         owner_org = factories.Organization(
-            users=[
-                {'name': admin_1['id'], 'capacity': 'admin'},
-                {'name': admin_2['id'], 'capacity': 'admin'},
-            ]
+            users=[{'name': admin_1['id'], 'capacity': 'admin'}]
         )
 
         # admin_1 creates a dataset
@@ -39,8 +35,7 @@ class TestAccessRequestEmailTemplate(object):
         )
 
         # stranger requests access to dataset
-        stranger = factories.User()
-
+        stranger = factories.User(email='stranger@example.com')
         request_access_url = url_for(
             controller='ckanext.restricted.controller:RestrictedController',
             action='restricted_request_access_form',
@@ -50,6 +45,8 @@ class TestAccessRequestEmailTemplate(object):
         response = app.get(
             url=request_access_url,
             query_string={
+                'package_name': dataset['name'],
+                'resource_id': resource['id'],
                 'message': 'give me access!',
                 'maintainer_email': '',
                 'save': 1
@@ -58,9 +55,12 @@ class TestAccessRequestEmailTemplate(object):
         )
         assert response.status_code == 200
         mocked_mail_recipient.assert_called()
-        first_email = mocked_mail_recipient.call_args_list[0]
-        email_body = first_email[0][3]
 
+        email_body = [
+            email[0][3]
+            for email in mocked_mail_recipient.call_args_list
+            if email[0][0] == admin_1['name']
+        ][0]
         resource_edit_link = toolkit.url_for(
             '{}_resource.edit'.format(dataset['type']),
             id=dataset['name'],
@@ -103,8 +103,8 @@ class TestAccessRequestEmailTemplate(object):
         response = app.get(
             url=request_access_url,
             query_string={
-                'package_name': dataset['id'],
-                'resource': resource['id'],
+                'package_name': dataset['name'],
+                'resource_id': resource['id'],
                 'message': 'aaaa',
                 'maintainer_email': '',
                 'save': 1
