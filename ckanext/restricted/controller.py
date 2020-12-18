@@ -307,7 +307,7 @@ class RestrictedController(toolkit.BaseController):
 
         return render(
             'restricted/restricted_request_organization_result.html',
-            extra_vars={'data': data_dict, 'success': success}
+            extra_vars={'data': data_dict, 'pkg_dict': {}, 'success': success}
         )
 
     def _send_organization_request_mail(self, data):
@@ -346,7 +346,7 @@ class RestrictedController(toolkit.BaseController):
 
             # CC doesn't work and mailer cannot send to multiple addresses
             for email, name in email_dict.iteritems():
-                mailer.mail_recipient(name, email, subject, body, headers)
+                mailer.mail_recipient(name, email, subject, body, headers=headers)
 
             # Special copy for the user (no links)
             email = data.get('user_email')
@@ -361,7 +361,7 @@ class RestrictedController(toolkit.BaseController):
             ).format(body.replace("\n", "\n >> "))
 
             mailer.mail_recipient(
-                name, email, 'Fwd: ' + subject, body_user, headers)
+                name, email, 'Fwd: ' + subject, body_user, headers=headers)
             success = True
 
         except mailer.MailerException as mailer_exception:
