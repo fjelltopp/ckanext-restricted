@@ -399,7 +399,7 @@ class RestrictedController(toolkit.BaseController):
         data['user_email'] = user.get('email', '')
 
         extra_vars = {
-            'data': data, 'group_type': "organization", 'pkg_dict': {},
+            'data': data, 'group_type': "organization",
             'errors': errors, 'error_summary': error_summary
         }
         return render(
