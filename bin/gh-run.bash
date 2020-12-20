@@ -7,7 +7,7 @@ export CKAN_STORAGE_PATH=/var/lib/ckan
 
 export PATH=/home/runner/.local/bin:$PATH
 . $CKAN_VENV/bin/activate
-pip install nosetests
+pip install nose
 nosetests --ckan \
           --nologcapture \
           --with-pylons=subdir/test.ini \
