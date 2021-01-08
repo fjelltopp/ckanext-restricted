@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: ckanext-restricted 0.0.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2020-11-19 14:16+0000\n"
-"PO-Revision-Date: 2018-03-02 10:53+0100\n"
+"PO-Revision-Date: 2020-12-15 10:29+0300\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.7.0\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: ckanext/restricted/action.py:51
 msgid "CKAN System Administrator"
@@ -41,18 +42,16 @@ msgid "Access Request to resource {0} ({1}) from {2}"
 msgstr "Demande d’accès à la ressource {0} ({1}) par {2}"
 
 #: ckanext/restricted/controller.py:105
-msgid ""
-"Please find below a copy of the access request mail sent. \n"
+msgid "Please find below a copy of the access request mail sent. \n"
 "\n"
 " >> {}"
-msgstr ""
-"Veuillez trouver ci-dessous une copie de l’e-mail de demande d’accès.\n"
+msgstr "Veuillez trouver ci-dessous une copie de l’e-mail de demande d’accès.\n"
 "\n"
 " >> {}"
 
 #: ckanext/restricted/controller.py:131 ckanext/restricted/controller.py:245
 msgid "Bad Captcha. Please try again."
-msgstr "CAPTCHA incorrect. Essayez à nouveau."
+msgstr "CODE incorrect. Essayez à nouveau."
 
 #: ckanext/restricted/controller.py:143 ckanext/restricted/controller.py:214
 msgid "Dataset not found"
@@ -68,9 +67,7 @@ msgstr "Valeur manquante"
 
 #: ckanext/restricted/controller.py:176
 msgid "Access request form is available to logged in users only."
-msgstr ""
-"Le formulaire de demande d’accès n’est accessible qu’aux utilisateurs "
-"identifiés."
+msgstr "Le formulaire de demande d’accès n’est accessible qu’aux utilisateurs identifiés."
 
 #: ckanext/restricted/controller.py:217
 msgid "Exception retrieving dataset for the form ({})"
@@ -78,31 +75,23 @@ msgstr "Erreur lors de la récupération du jeu de données pour le formulaire (
 
 #: ckanext/restricted/controller.py:219
 msgid "Unknown exception retrieving dataset for the form"
-msgstr ""
-"Erreur inconnue lors de la récupération du jeu de données pour le "
-"formulaire"
+msgstr "Erreur inconnue lors de la récupération du jeu de données pour le formulaire"
 
 #: ckanext/restricted/controller.py:303
 msgid "Request to create new organisation {0}"
 msgstr "Demande de création d’une nouvelle organisation {0}"
 
 #: ckanext/restricted/controller.py:327
-msgid ""
-"Please find below a copy of the new organization request sent to the "
-"system administrators. \n"
+msgid "Please find below a copy of the new organization request sent to the system administrators. \n"
 "\n"
 " >> {}"
-msgstr ""
-"Veuillez trouver ci-dessous une copie de la demande de création d’une "
-"nouvelle organisation envoyée aux administrateurs système.\n"
+msgstr "Veuillez trouver ci-dessous une copie de la demande de création d’une nouvelle organisation envoyée aux administrateurs système.\n"
 "\n"
 " >> {}"
 
 #: ckanext/restricted/controller.py:349
 msgid "Request organization form is available to logged in users only."
-msgstr ""
-"Le formulaire de demande de création d’une nouvelle organisation n’est "
-"accessible qu’aux utilisateurs identifiés."
+msgstr "Le formulaire de demande de création d’une nouvelle organisation n’est accessible qu’aux utilisateurs identifiés."
 
 #: ckanext/restricted/logic.py:134
 msgid "Access granted to resource {}"
@@ -159,17 +148,8 @@ msgid "How to get access to data resources?"
 msgstr "Comment accéder aux données ?"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:25
-msgid ""
-"Some data has restricted access due to embargo periods, sensitivity of "
-"the data, unpublished material, etc. Please fill up this form to send a "
-"mail request to the dataset maintainer indicating as detailed as possible"
-" who you are and what do you plan to use the data for."
-msgstr ""
-"Certaines données peuvent avoir un accès restreint avant leur publication"
-" ou en raison de leur confidentialité, etc. Merci de remplir ce "
-"formulaire pour envoyer une demande au gestionnaire du jeu de données en "
-"indiquant de façon détaillée qui vous êtes et l’usage que vous comptez "
-"faire des données."
+msgid "Some data has restricted access due to embargo periods, sensitivity of the data, unpublished material, etc. Please fill up this form to send a mail request to the dataset maintainer indicating as detailed as possible who you are and what do you plan to use the data for."
+msgstr "Certaines données peuvent avoir un accès restreint avant leur publication ou en raison de leur confidentialité, etc. Merci de remplir ce formulaire pour envoyer une demande au gestionnaire du jeu de données en indiquant de façon détaillée qui vous êtes et l’usage que vous comptez faire des données."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:20
 msgid "Request Access to: "
@@ -203,22 +183,12 @@ msgstr "Message"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:33
 msgid "Message to request data (project, research group, planned usage, etc.)"
-msgstr ""
-"Message pour demander l’accès aux données (projet, groupe de recherche, "
-"usage prévu, etc.)"
+msgstr "Message pour demander l’accès aux données (projet, groupe de recherche, usage prévu, etc.)"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:43
 #, python-format
-msgid ""
-"The <i>data license</i> applies to the contents of any resource files "
-"that you request from this dataset. By submitting this form, you agree to"
-" usage restrictions under the <a "
-"href=%(license_url)s>%(license_title)s</a>."
-msgstr ""
-"La <i>licence</i> s’applique au contenu de tous les fichiers de ressource"
-" que vous avez demandés pour ce jeu de données. En validant ce "
-"formulaire, vous acceptez les restrictions d’utilisation de <a "
-"\"href=%(license_url)s>%(license_title)s</a>."
+msgid "The <i>data license</i> applies to the contents of any resource files that you request from this dataset. By submitting this form, you agree to usage restrictions under the <a href=%(license_url)s>%(license_title)s</a>."
+msgstr "La <i>licence</i> s’applique au contenu de tous les fichiers de ressource que vous avez demandés pour ce jeu de données. En validant ce formulaire, vous acceptez les restrictions d’utilisation de <a \"href=%(license_url)s>%(license_title)s</a>."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:50
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:78
@@ -242,13 +212,8 @@ msgstr "Votre demande a bien été envoyée, veuillez vérifier votre messagerie
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:10
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:20
-msgid ""
-"WARNING: There were problems sending your request, please contact the "
-"administrator providing the information below."
-msgstr ""
-"ATTENTION, un problème est survenu lors de l’envoi de votre demande, "
-"veuillez contacter l’administrateur en lui fournissant les informations "
-"ci-dessous."
+msgid "WARNING: There were problems sending your request, please contact the administrator providing the information below."
+msgstr "ATTENTION, un problème est survenu lors de l’envoi de votre demande, veuillez contacter l’administrateur en lui fournissant les informations ci-dessous."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:13
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:23
@@ -295,11 +260,6 @@ msgid "What are Organizations?"
 msgstr "Qu’est-ce que les organisations ?"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:35
-#, fuzzy
-#| msgid "" " CKAN Organizations are used to create, manage and publish
-#| collections of" " datasets. Users can have different roles within an
-#| Organization, " "depending on their level of authorisation to create, edit
-#| and publish. "
 msgid ""
 "CKAN Organizations are used to create, manage and publish collections of "
 "datasets. Users can have different roles within an Organization, "
@@ -311,11 +271,6 @@ msgstr ""
 "et publier du contenu."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:42
-#, fuzzy
-#| msgid "" " New organizations can only be created by system administrators.
-#| If you " "would like your organization to join the AIDS Data Repository,
-#| please " "submit a request via this form and a system administrator will
-#| contact " "you via email with any further queries. "
 msgid ""
 "New organizations can only be created by system administrators.  If you "
 "would like your organization to join the AIDS Data Repository, please "
@@ -395,16 +350,12 @@ msgstr "Motif de la demande d’ajout :"
 
 # | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:4
-#, fuzzy
-#| msgid "Access granted to organizations"
 msgid "Access restricted to members of {organisation_name}"
 msgstr "Accès accordé aux organisations"
 
 #: ckanext/restricted/templates/restricted/restricted_string.html:16
-#, fuzzy
-#| msgid "Resource"
 msgid "Public resource"
-msgstr "Ressource"
+msgstr "Ressource publique"
 
 # | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:26
@@ -413,8 +364,6 @@ msgstr "Accès accordé aux organisations"
 
 # | msgid "Organizations"
 #: ckanext/restricted/templates/restricted/restricted_string.html:28
-#, fuzzy
-#| msgid "organisations"
 msgid "organizations"
 msgstr "organisations"
 
@@ -430,24 +379,18 @@ msgstr "utilisateurs"
 
 # | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:40
-#, fuzzy
-#| msgid "Access granted to organizations"
 msgid "Access restricted to specific {organizations} and {users}."
-msgstr "Accès accordé aux organisations"
+msgstr "Accès limité à des {users} et {orgnaizations} spécifiques"
 
 # | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:42
-#, fuzzy
-#| msgid "Access granted to organizations"
 msgid "Access restricted to specific {organizations}"
-msgstr "Accès accordé aux organisations"
+msgstr "Accès limité à des {organizations} spécifiques "
 
 # | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:44
-#, fuzzy
-#| msgid "Access granted to users"
 msgid "Access restricted to specific {users}"
-msgstr "Accès accordé aux utilisateurs"
+msgstr "Accès limité à des {users} spécifiques"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:1
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:1
@@ -560,8 +503,7 @@ msgstr "Vous pouvez accéder à la ressource via ce lien : %(resource_link)s"
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:3
 msgid "A new user registered, please review the information:"
 msgstr ""
-"Un nouvel utilisateur a été enregistré, merci de vérifier les "
-"informations :"
+"Un nouvel utilisateur a été enregistré, merci de vérifier les informations:"
 
 #: ckanext/restricted/templates/scheming/form_snippets/restricted_fields.html:22
 msgid "Level"
@@ -574,53 +516,3 @@ msgstr "Utilisateurs autorisés"
 #: ckanext/restricted/templates/scheming/form_snippets/restricted_fields.html:49
 msgid "Allowed Organisations"
 msgstr "Organisations autorisées"
-
-#~ msgid "(Only accessible by users in your organisation)"
-#~ msgstr "(Accessible uniquement aux utilisateurs de votre organisation)"
-
-#~ msgid "(Public)"
-#~ msgstr "(Public)"
-
-# | msgid "Accsesible by specified "
-#~ msgid "Accessible by specified "
-#~ msgstr "Accessible aux utilisateurs définis"
-
-# | msgid "Accsesible by specified "
-#~ msgid ""
-#~ "Accessible by specified <a href='#' "
-#~ "data-module='restricted_popup' data-module-"
-#~ "title='Access granted to organizations' "
-#~ "data-module-content='{}'>organisations</a> and <a"
-#~ " href='#' data-module='restricted_popup' data-"
-#~ "module-title='Access granted to users' "
-#~ "data-module-content='{}'>users</a>."
-#~ msgstr ""
-#~ "Accessible aux <a href='#' data-"
-#~ "module='restricted_popup' data-module-title='Accès"
-#~ " accordé aux organisations' data-module-"
-#~ "content='{}'>organisations</a> et <a href='#' "
-#~ "data-module='restricted_popup' data-module-"
-#~ "title='Accès accordé aux utilisateurs' "
-#~ "data-module-content='{}'>utilisateurs </a> "
-#~ "définis."
-
-#~ msgid "and"
-#~ msgstr "et"
-
-#~ msgid ""
-#~ " By submitting this form you agree"
-#~ " to abide by the terms and "
-#~ "conditions of use for The AIDS "
-#~ "Data Repository and also confirm that"
-#~ " you are duly authorized by the "
-#~ "organization in question to administer "
-#~ "all of their affairs concerning The "
-#~ "AIDS Data Repository. "
-#~ msgstr ""
-#~ "En validant ce formulaire, vous acceptez"
-#~ " les conditions générales d’ADR et "
-#~ "vous confirmez que vous possédez les "
-#~ "autorisations nécessaires au sein de "
-#~ "cette organisation pour gérer toutes les"
-#~ " questions en lien avec ADR."
-
