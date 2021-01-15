@@ -51,7 +51,7 @@ msgstr "Veuillez trouver ci-dessous une copie de l’e-mail de demande d’accè
 
 #: ckanext/restricted/controller.py:131 ckanext/restricted/controller.py:245
 msgid "Bad Captcha. Please try again."
-msgstr "CODE incorrect. Essayez à nouveau."
+msgstr "CAPTCHA incorrect. Essayez à nouveau."
 
 #: ckanext/restricted/controller.py:143 ckanext/restricted/controller.py:214
 msgid "Dataset not found"
