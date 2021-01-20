@@ -34,6 +34,8 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_actions(self):
         return {'user_create': action.restricted_user_create_and_notify,
                 'resource_view_list': action.restricted_resource_view_list,
+                # ckanext-versioning also implements package_show action
+                # the resricted_package_show function should be called from there
                 # 'package_show': action.restricted_package_show,
                 'resource_search': action.restricted_resource_search,
                 'package_search': action.restricted_package_search,
