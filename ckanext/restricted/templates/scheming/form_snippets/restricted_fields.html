@@ -3,7 +3,7 @@
 <fieldset class="composite-fieldset">
 
 <div class="composite-subfield-group" data-field="restricted" data-group-index="0">
-{% resource 'ckanext-restricted/restricted_ui.js' %}
+{% asset 'ckanext-restricted/main_js' %}
 
 {%- set options=[] -%}
 {% set restricted = h.restricted_json_loads(data.get("restricted", field.get("default"))) %}
