@@ -1,0 +1,7 @@
+main_js:
+  output: restricted/%(version)s.js
+  contents:
+    - js/restricted_ui.js
+  extra:
+    preload:
+      - base/main
