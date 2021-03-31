@@ -89,10 +89,10 @@ def restricted_resource_view_list(context, data_dict):
 
 
 @side_effect_free
-def restricted_package_show(context, data_dict):
+def restricted_package_show(context, data_dict, package_metadata=None):
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
-
-    package_metadata = package_show(context, data_dict)
+    if not package_metadata:
+        package_metadata = package_show(context, data_dict)
 
     # Ensure user who can edit can see the resource
     if authz.is_authorized(
@@ -109,7 +109,7 @@ def restricted_package_show(context, data_dict):
     #     context, restricted_package_metadata.get('resources', []))
     resources = restricted_package_metadata.get('resources', [])
     if hide_inaccessible_resources:
-        resources = _restricted_resource_list_accessible_by_user(context, resources)
+        resources = _restricted_resource_list_accessible_by_user(context, resources, package_dict=package_metadata)
         restricted_package_metadata['num_resources'] = len(resources)
     resources = _restricted_resource_list_hide_fields(context, resources)
     restricted_package_metadata['resources'] = resources
@@ -117,13 +117,15 @@ def restricted_package_show(context, data_dict):
     return (restricted_package_metadata)
 
 
-def _restricted_resource_list_accessible_by_user(context, resource_list):
+def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None):
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
+    user_obj = context.get('auth_user_obj')
     for resource in resource_list:
         resource_dict = dict(resource)
-        package_dict = package_show(context, {'id': resource_dict['package_id']})
-        if logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict).get('success', False):
+        if not package_dict:
+            package_dict = package_show(context, {'id': resource_dict['package_id']})
+        if logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict, user_obj=user_obj).get('success', False):
             restricted_resources_list.append(resource_dict)
 
     return restricted_resources_list
@@ -158,7 +160,7 @@ def restricted_package_search(context, data_dict):
             for package in value:
                 restricted_package_search_result_list.append(
                     restricted_package_show(
-                        context, {'id': package.get('id'), 'hide_inaccessible_resources': hide_inaccessible_resources})
+                        context, {'id': package.get('id'), 'hide_inaccessible_resources': hide_inaccessible_resources}, package_metadata=package)
                 )
             restricted_package_search_result[key] = \
                 restricted_package_search_result_list
