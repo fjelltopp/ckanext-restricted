@@ -68,14 +68,17 @@ def restricted_get_restricted_dict(resource_dict):
     return restricted_dict
 
 
-def restricted_check_user_resource_access(user, resource_dict, package_dict):
+def restricted_check_user_resource_access(user, resource_dict, package_dict, user_obj=None):
     # Check access to package
     logic.check_access('package_show', {'user': user},
                        {'id': package_dict['id']})
     restricted_dict = restricted_get_restricted_dict(resource_dict)
 
     if user:
-        user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
+        if user_obj:
+            user_id = user_obj.id
+        else:
+            user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
         if authz.user_is_collaborator_on_dataset(user_id, package_dict['id']):
             return {'success': True}
 
