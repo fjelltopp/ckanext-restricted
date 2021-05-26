@@ -43,6 +43,7 @@
     error=errors['restricted'],
     classes=["control-medium"],
     attrs=field.get("form_attrs_users", {}),
+    placeholder=h.scheming_language_text(field.get("placeholder_users", "")),
     is_required=False
     )
 %}
@@ -57,6 +58,7 @@
     error=errors['restricted'],
     classes=["control-medium"],
     attrs=field.get("form_attrs_orgs", {}),
+    placeholder=h.scheming_language_text(field.get("placeholder_orgs", "")),
     is_required=False
     )
 %}
