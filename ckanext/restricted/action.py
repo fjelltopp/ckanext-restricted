@@ -13,8 +13,8 @@ from ckan.logic.action.create import user_create
 from ckan.logic.action.get import package_search
 from ckan.logic.action.get import package_show
 from ckan.logic.action.get import resource_search
-from ckan.logic.action.get import resource_view_list
-from ckan.logic import side_effect_free
+from ckan.plugins import toolkit
+
 from ckanext.restricted import auth
 from ckanext.restricted import logic
 import json
@@ -72,23 +72,16 @@ def restricted_user_create_and_notify(context, data_dict):
 
     return (user_dict)
 
-
-@side_effect_free
-def restricted_resource_view_list(context, data_dict):
-    model = context['model']
-    id = _get_or_bust(data_dict, 'id')
-    resource = model.Resource.get(id)
-    if not resource:
-        raise NotFound
-    authorized = auth.restricted_resource_show(
-        context, {'id': resource.get('id'), 'resource': resource}).get('success', False)
-    if not authorized:
-        return []
-    else:
+@toolkit.chained_action
+@toolkit.side_effect_free
+def resource_view_list(resource_view_list, context, data_dict):
+    try:
         return resource_view_list(context, data_dict)
+    except toolkit.NotAuthorized:
+        return []
 
 
-@side_effect_free
+@toolkit.side_effect_free
 def restricted_package_show(context, data_dict, package_metadata=None):
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
     if not package_metadata:
@@ -131,7 +124,7 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, package
     return restricted_resources_list
 
 
-@side_effect_free
+@toolkit.side_effect_free
 def restricted_resource_search(context, data_dict):
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
 
@@ -146,7 +139,7 @@ def restricted_resource_search(context, data_dict):
     return resource_search_result
 
 
-@side_effect_free
+@toolkit.side_effect_free
 def restricted_package_search(context, data_dict):
     # pop the param as ckan package search action doesn't support any extra parameters
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.pop('hide_inaccessible_resources', False))
@@ -170,7 +163,7 @@ def restricted_package_search(context, data_dict):
     return restricted_package_search_result
 
 
-@side_effect_free
+@toolkit.side_effect_free
 def restricted_check_access(context, data_dict):
 
     package_id = data_dict.get('package_id', False)
