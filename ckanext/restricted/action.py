@@ -206,11 +206,6 @@ def _restricted_resource_list_hide_fields(context, resource_list):
         # get the restricted fields
         restricted_dict = logic.restricted_get_restricted_dict(restricted_resource)
 
-        # hide fields to unauthorized users
-        auth.restricted_resource_show(
-            context, {'id': resource.get('id'), 'resource': resource}
-        ).get('success', False)
-
         # hide other fields in restricted to everyone but dataset owner(s)
         if not authz.is_authorized(
                 'package_update', context, {'id': resource.get('package_id')}
