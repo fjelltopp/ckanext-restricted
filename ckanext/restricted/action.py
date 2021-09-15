@@ -120,7 +120,14 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, package
         resource_dict = dict(resource)
         if not package_dict:
             package_dict = package_show(context, {'id': resource_dict['package_id']})
-        if logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict, user_obj=user_obj, pkg_show=False).get('success', False):
+        auth_result = logic.restricted_check_user_resource_access(
+            user_name,
+            resource_dict,
+            package_dict,
+            user_obj=user_obj,
+            pkg_show=False
+        )
+        if auth_result.get('success', False):
             restricted_resources_list.append(resource_dict)
 
     return restricted_resources_list
