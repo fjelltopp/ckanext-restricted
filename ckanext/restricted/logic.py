@@ -68,10 +68,12 @@ def restricted_get_restricted_dict(resource_dict):
     return restricted_dict
 
 
-def restricted_check_user_resource_access(user, resource_dict, package_dict, user_obj=None):
+def restricted_check_user_resource_access(user, resource_dict, package_dict, user_obj=None, pkg_show=True):
     # Check access to package
-    logic.check_access('package_show', {'user': user},
-                       {'id': package_dict['id']})
+    if pkg_show:
+        logic.check_access('package_show', {'user': user},
+                           {'id': package_dict['id']})
+
     restricted_dict = restricted_get_restricted_dict(resource_dict)
 
     if user:
@@ -98,16 +100,17 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict, use
         return {'success': True}
 
     # Get organization list
-    user_organization_dict = {}
+    user_organization_dict = getattr(user_obj, 'org_dict', {})
 
     context = {'user': user}
     data_dict = {'permission': 'read'}
 
-    for org in logic.get_action('organization_list_for_user')(context, data_dict):
-        name = org.get('name', '')
-        id = org.get('id', '')
-        if name and id:
-            user_organization_dict[id] = name
+    if not user_organization_dict:
+        for org in logic.get_action('organization_list_for_user')(context, data_dict):
+            name = org.get('name', '')
+            id = org.get('id', '')
+            if name and id:
+                user_organization_dict[id] = name
 
     pkg_organization_id = package_dict.get('owner_org', '')
     # Same Organization Members
