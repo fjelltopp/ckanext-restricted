@@ -114,35 +114,22 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, package
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
-    if user_obj:
-        user_obj.org_dict = _get_org_dict(user_name)
     for resource in resource_list:
         resource_dict = dict(resource)
         if not package_dict:
             package_dict = package_show(context, {'id': resource_dict['package_id']})
-        auth_result = logic.restricted_check_user_resource_access(
+        user_has_resource_access = logic.restricted_check_user_resource_access(
             user_name,
             resource_dict,
             package_dict,
             user_obj=user_obj,
-            pkg_show=False
-        )
-        if auth_result.get('success', False):
+            check_access_package_show=False,
+            user_organization_dict=logic.get_organization_dict(user_name)
+        ).get('success', False)
+        if user_has_resource_access:
             restricted_resources_list.append(resource_dict)
-
     return restricted_resources_list
 
-
-def _get_org_dict(user_name):
-    user_organization_dict = {}
-    context = {'user': user_name}
-    data_dict = {'permission': 'read'}
-    for org in ckan.logic.get_action('organization_list_for_user')(context, data_dict):
-        name = org.get('name', '')
-        id = org.get('id', '')
-        if name and id:
-            user_organization_dict[id] = name
-    return user_organization_dict
 
 
 @toolkit.side_effect_free
