@@ -118,10 +118,18 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, package
         resource_dict = dict(resource)
         if not package_dict:
             package_dict = package_show(context, {'id': resource_dict['package_id']})
-        if logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict, user_obj=user_obj).get('success', False):
+        user_has_resource_access = logic.restricted_check_user_resource_access(
+            user_name,
+            resource_dict,
+            package_dict,
+            user_obj=user_obj,
+            check_access_package_show=False,
+            user_organization_dict=logic.get_organization_dict(user_name)
+        ).get('success', False)
+        if user_has_resource_access:
             restricted_resources_list.append(resource_dict)
-
     return restricted_resources_list
+
 
 
 @toolkit.side_effect_free
