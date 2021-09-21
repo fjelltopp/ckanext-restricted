@@ -68,10 +68,14 @@ def restricted_get_restricted_dict(resource_dict):
     return restricted_dict
 
 
-def restricted_check_user_resource_access(user, resource_dict, package_dict, user_obj=None):
+def restricted_check_user_resource_access(user, resource_dict, package_dict,
+                                          user_obj=None, check_access_package_show=True,
+                                          user_organization_dict={}):
     # Check access to package
-    logic.check_access('package_show', {'user': user},
-                       {'id': package_dict['id']})
+    if check_access_package_show:
+        logic.check_access('package_show', {'user': user},
+                           {'id': package_dict['id']})
+
     restricted_dict = restricted_get_restricted_dict(resource_dict)
 
     if user:
@@ -97,17 +101,8 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict, use
     if user in allowed_users:
         return {'success': True}
 
-    # Get organization list
-    user_organization_dict = {}
-
-    context = {'user': user}
-    data_dict = {'permission': 'read'}
-
-    for org in logic.get_action('organization_list_for_user')(context, data_dict):
-        name = org.get('name', '')
-        id = org.get('id', '')
-        if name and id:
-            user_organization_dict[id] = name
+    if not user_organization_dict:
+        user_organization_dict = get_organization_dict(user_id)
 
     pkg_organization_id = package_dict.get('owner_org', '')
     # Same Organization Members
@@ -117,6 +112,18 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict, use
     return {
         'success': False,
         'msg': ('Resource access restricted')}
+
+
+def get_organization_dict(user_name):
+    user_organization_dict = {}
+    context = {'user': user_name}
+    data_dict = {'permission': 'read'}
+    for org in logic.get_action('organization_list_for_user')(context, data_dict):
+        name = org.get('name', '')
+        id = org.get('id', '')
+        if name and id:
+            user_organization_dict[id] = name
+    return user_organization_dict
 
 
 def restricted_mail_allowed_user(user_id, resource):
@@ -132,7 +139,6 @@ def restricted_mail_allowed_user(user_id, resource):
         resource_name = resource.get('name', resource['id'])
 
         # maybe check user[activity_streams_email_notifications]==True
-
         mail_body = restricted_allowed_user_mail_body(user, resource)
         mail_subject = _('Access granted to resource {}').format(resource_name)
 
