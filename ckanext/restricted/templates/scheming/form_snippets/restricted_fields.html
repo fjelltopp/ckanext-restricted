@@ -7,11 +7,11 @@
 
 {%- set options=[] -%}
 
-{%- if data.get('id') -%}
-  {% set restricted = h.restricted_json_loads(data.get("restricted")) %}
-{%- else -%}
+{% if data.get('id') %}
+  {%- set restricted = h.restricted_json_loads(data.get("restricted")) -%}
+{% else %}
   {%- set restricted = h.restricted_json_loads(field.get("default_restricted")) -%}
-{%- endif -%}
+{% endif %}
 
 {%- for c in h.scheming_field_choices(field) -%}
   {%- if not form_restrict_choices_to or c.value in form_restrict_choices_to -%}
