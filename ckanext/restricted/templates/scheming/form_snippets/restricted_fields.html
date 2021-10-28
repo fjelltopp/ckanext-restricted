@@ -6,7 +6,12 @@
 {% asset 'ckanext-restricted/main_js' %}
 
 {%- set options=[] -%}
-{% set restricted = h.restricted_json_loads(data.get("restricted", field.get("default"))) %}
+
+{% if data.get('id') %}
+  {%- set restricted = h.restricted_json_loads(data.get("restricted")) -%}
+{% else %}
+  {%- set restricted = h.restricted_json_loads(field.get("default_restricted")) -%}
+{% endif %}
 
 {%- for c in h.scheming_field_choices(field) -%}
   {%- if not form_restrict_choices_to or c.value in form_restrict_choices_to -%}
@@ -49,7 +54,6 @@
 %}
 {%- snippet 'scheming/form_snippets/help_text.html', field='allowed_users' -%}
 {% endcall %}
-
 {% call form.input(
     '',
     id='field-restricted_allowed_orgs',
