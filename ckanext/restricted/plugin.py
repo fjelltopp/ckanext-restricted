@@ -76,7 +76,7 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
             _load_json(new_restricted_str)
         except ValueError as e:
             log.exception("Invalid restricted json string", exc_info=True)
-            raise toolkit.ValidationError(["Invalid restricted json string."])
+            raise toolkit.ValidationError([toolkit._("Invalid restricted json string.")])
         previous_restricted_str = current.get('restricted')
         context['__restricted_previous_value'] = previous_restricted_str
 
