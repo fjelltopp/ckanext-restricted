@@ -1,6 +1,9 @@
 # coding: utf8
 
 from __future__ import unicode_literals
+
+import logging
+
 from ckan.lib.plugins import DefaultTranslation
 import ckan.logic
 import ckan.plugins as plugins
@@ -12,6 +15,7 @@ from ckanext.restricted import logic
 import json
 
 _get_or_bust = ckan.logic.get_or_bust
+log = logging.getLogger(__name__)
 
 
 class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
@@ -43,7 +47,7 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
     def get_helpers(self):
         return {'restricted_get_user_id': helpers.restricted_get_user_id,
                 'get_package_from_id': helpers.get_package_from_id,
-                'restricted_json_loads': load_json}
+                'restricted_json_loads': load_json_helper}
 
     # IAuthFunctions
     def get_auth_functions(self):
@@ -67,15 +71,29 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
 
     # IResourceController
     def before_update(self, context, current, resource):
-        context['__restricted_previous_value'] = current.get('restricted')
+        new_restricted_str = resource.get('restricted')
+        try:
+            _load_json(new_restricted_str)
+        except ValueError as e:
+            log.exception("Invalid restricted json string", exc_info=True)
+            raise toolkit.ValidationError([toolkit._("Invalid restricted json string.")])
+        previous_restricted_str = current.get('restricted')
+        context['__restricted_previous_value'] = previous_restricted_str
 
     def after_update(self, context, resource):
         previous_value = context.get('__restricted_previous_value')
         logic.restricted_notify_allowed_users(previous_value, resource)
 
 
-def load_json(json_string):
+def _load_json(json_string):
     if json_string:
         return json.loads(json_string)
     else:
+        return {}
+
+
+def load_json_helper(json_string):
+    try:
+        return _load_json(json_string)
+    except ValueError:
         return {}
