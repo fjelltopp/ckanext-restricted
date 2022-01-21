@@ -17,8 +17,6 @@ class TestAllowedUserEmail(object):
         owner_org = factories.Organization(
             users=[{'name': admin['id'], 'capacity': 'admin'}]
         )
-
-        # admin_1 creates a dataset
         dataset = factories.Dataset(
             owner_org=owner_org['id'],
             name='dataset-name',
@@ -30,7 +28,6 @@ class TestAllowedUserEmail(object):
             name='resource-name',
             restricted='{"level": "public"}'
         )
-
         stranger = factories.User(email='stranger@example.com')
         result = restricted_allowed_user_mail_body(stranger, resource)
         expected_resource_link = "{}/dataset/{}/resource/{}".format(
