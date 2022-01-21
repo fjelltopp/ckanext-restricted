@@ -496,9 +496,10 @@ msgid "The contact person of the package has granted you access."
 msgstr "La personne contactée a autorisé votre accès."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:6
-#, python-format
-msgid "Please click the following link: %(resource_link)s"
-msgstr "Vous pouvez accéder à la ressource via ce lien : %(resource_link)s"
+#, fuzzy, python-format
+#| msgid "Please click the following link"
+msgid "Please click the following link to access the resource"
+msgstr "Vous pouvez accéder à la ressource via ce lien"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:3
 msgid "A new user registered, please review the information:"
