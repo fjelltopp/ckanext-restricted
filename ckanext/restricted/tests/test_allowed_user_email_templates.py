@@ -30,10 +30,10 @@ class TestAllowedUserEmail(object):
         )
         stranger = factories.User(email='stranger@example.com')
         result = restricted_allowed_user_mail_body(stranger, resource)
-        expected_resource_link = "{}/dataset/{}/resource/{}".format(
-            toolkit.config.get('ckan.site_url'),
-            dataset['id'],
-            resource['id']
+        expected_resource_link = toolkit.url_for(
+            "resource.read",
+            id=resource.get('package_id'),
+            resource_id=resource.get('id')
         )
         assert stranger['fullname'] in result
         assert expected_resource_link in result
