@@ -1,19 +1,19 @@
-# French translations for ckanext-restricted.
-# Copyright (C) 2018 ORGANIZATION
+# Portuguese (Portugal) translations for ckanext-restricted.
+# Copyright (C) 2022 ORGANIZATION
 # This file is distributed under the same license as the ckanext-restricted
 # project.
-# FIRST AUTHOR <contact@neogeo.fr>, 2018.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-restricted 0.0.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2022-01-11 08:51+0000\n"
-"PO-Revision-Date: 2020-12-15 10:29+0300\n"
-"Last-Translator: \n"
-"Language: fr\n"
-"Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"PO-Revision-Date: 2022-01-11 08:31+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_PT\n"
+"Language-Team: pt_PT <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,24 +21,24 @@ msgstr ""
 
 #: ckanext/restricted/action.py:51
 msgid "CKAN System Administrator"
-msgstr "Administrateur système CKAN"
+msgstr "Administrador de sistema CKAN"
 
 #: ckanext/restricted/action.py:56
 msgid "New Registration: {0} ({1})"
-msgstr "Nouvel enregistrement : {0} ({1})"
+msgstr "Novo registo: {0} ({1})"
 
 #: ckanext/restricted/action.py:57
 msgid "new user"
-msgstr "nouvel utilisateur"
+msgstr "novo utilizador"
 
 #: ckanext/restricted/controller.py:48 ckanext/restricted/controller.py:160
 #: ckanext/restricted/controller.py:274
 msgid "Not authorized to see this page"
-msgstr "Vous n’êtes pas autorisé à voir cette page"
+msgstr "Não autorizado a ver esta página"
 
 #: ckanext/restricted/controller.py:88
 msgid "Access Request to resource {0} ({1}) from {2}"
-msgstr "Demande d’accès à la ressource {0} ({1}) depuis {2}"
+msgstr "Pedido de acesso ao recurso {0} ({1}) a partir de {2}"
 
 #: ckanext/restricted/controller.py:135
 msgid ""
@@ -46,41 +46,41 @@ msgid ""
 "\n"
 " >> {}"
 msgstr ""
-"Veuillez trouver ci-dessous une copie de l’e-mail de demande d’accès.\n"
+"Por favor, encontre abaixo uma cópia do correio de pedido de acesso enviado. \n"
 "\n"
 " >> {}"
 
 #: ckanext/restricted/controller.py:162 ckanext/restricted/controller.py:276
 msgid "Bad Captcha. Please try again."
-msgstr "CAPTCHA incorrect. Veuillez réessayer."
+msgstr "Captcha incorreto. Por favor, tente novamente."
 
 #: ckanext/restricted/controller.py:174 ckanext/restricted/controller.py:245
 msgid "Dataset not found"
-msgstr "Ensemble de données introuvable"
+msgstr "Conjunto de dados não encontrado"
 
 #: ckanext/restricted/controller.py:176
 msgid "Exception retrieving dataset to send mail"
-msgstr "Erreur lors de la récupération de l’ensemble de données pour envoyer l’e-mail"
+msgstr "Exceção recuperando o conjunto de dados para envio de correio"
 
 #: ckanext/restricted/controller.py:183 ckanext/restricted/controller.py:295
 msgid "Missing Value"
-msgstr "Valeur manquante"
+msgstr "Valor requerido"
 
 #: ckanext/restricted/controller.py:207
 msgid "Access request form is available to logged in users only."
-msgstr "Le formulaire de demande d’accès n’est accessible qu’aux utilisateurs identifiés."
+msgstr "O formulário de pedido de acesso está disponível apenas para utilizadores autenticados."
 
 #: ckanext/restricted/controller.py:248
 msgid "Exception retrieving dataset for the form ({})"
-msgstr "Erreur lors de la récupération de l'ensemble de données pour le formulaire ({})"
+msgstr "Conjunto de dados de recuperação de exceções para o formulário ({})"
 
 #: ckanext/restricted/controller.py:250
 msgid "Unknown exception retrieving dataset for the form"
-msgstr "Erreur inconnue lors de la récupération de l'ensemble de données pour le formulaire"
+msgstr "Exceção desconhecida que recupera o conjunto de dados para o formulário"
 
 #: ckanext/restricted/controller.py:334
 msgid "Request to create new organisation {0}"
-msgstr "Demande de création d’une nouvelle organisation {0}"
+msgstr "Pedido de criação de nova organização {0}"
 
 #: ckanext/restricted/controller.py:358
 msgid ""
@@ -89,45 +89,45 @@ msgid ""
 "\n"
 " >> {}"
 msgstr ""
-"Veuillez trouver ci-dessous une copie de la demande de création d’une nouvelle organisation envoyée aux administrateurs système.\n"
+"Por favor, encontre abaixo uma cópia da nova solicitação da organização enviada para os administradores do sistema. \n"
 "\n"
 " >> {}"
 
 #: ckanext/restricted/controller.py:380
 msgid "Request organization form is available to logged in users only."
-msgstr "Le formulaire de demande de création d’une nouvelle organisation n’est accessible qu’aux utilisateurs identifiés."
+msgstr "O formulário de pedido da organização está disponível apenas para utilizadores autenticados."
 
 #: ckanext/restricted/logic.py:143
 msgid "Access granted to resource {}"
-msgstr "Accès autorisé à la ressource {}"
+msgstr "Acesso concedido ao recurso {}"
 
 #: ckanext/restricted/plugin.py:79
 msgid "Invalid restricted json string."
-msgstr "Chaîne json restreinte invalide."
+msgstr "Cadeia de caracteres json restrita inválida."
 
 #: ckanext/restricted/templates/organization/index.html:5
 msgid "Add Organization"
-msgstr "Ajouter une organisation"
+msgstr "Adicionar Organização"
 
 #: ckanext/restricted/templates/organization/index.html:7
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:9
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:6
 msgid "Request Organization"
-msgstr "Demander une organisation"
+msgstr "Solicitar Organização"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:21
 msgid "Unauthorized"
-msgstr "Non autorisé"
+msgstr "Não autorizado"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:40
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:3
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:15
 msgid "Request Access"
-msgstr "Demander l’accès"
+msgstr "Solicitar Acesso"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:46
 msgid "Log in"
-msgstr "S’identifier"
+msgstr "Iniciar Sessão"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:46
 msgid "or"
@@ -135,25 +135,25 @@ msgstr "ou"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:46
 msgid "Register"
-msgstr "s’inscrire"
+msgstr "Registe-se"
 
 #: ckanext/restricted/templates/package/snippets/resource_item.html:46
 msgid "to access resource"
-msgstr "afin d’accéder à la ressource"
+msgstr "para acessar o recurso"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:9
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:7
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:4
 msgid "Organizations"
-msgstr "Organisations"
+msgstr "Organizações"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:12
 msgid "Datasets"
-msgstr "Ensembles de données"
+msgstr "Conjuntos de dados"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:22
 msgid "How to get access to data resources?"
-msgstr "Comment accéder aux ressources de données ?"
+msgstr "Como obter acesso aos recursos de dados?"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_base.html:25
 msgid ""
@@ -162,41 +162,41 @@ msgid ""
 "mail request to the dataset maintainer indicating as detailed as possible"
 " who you are and what do you plan to use the data for."
 msgstr ""
-"Certaines données peuvent avoir un accès restreint avant leur publication ou en raison de leur confidentialité, etc. Merci de remplir ce formulaire pour envoyer une demande au gestionnaire de l'ensemble de données en indiquant de façon détaillée qui vous êtes et l’usage que vous comptez faire des données."
+"Alguns dados têm acesso restrito devido a períodos de embargo, sensibilidade dos dados, material não publicado, etc. Por favor, preencha este formulário para enviar um pedido por correio ao responsável pelo conjunto de dados indicando o mais detalhadamente possível quem é o requerente e para que pretende utilizar os dados."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:20
 msgid "Request Access to: "
-msgstr "Demande d’accès à :"
+msgstr "Solicitar acesso a:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:28
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:55
 msgid "User"
-msgstr "Utilisateur"
+msgstr "Utilizador"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:29
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:56
 msgid "User Mail"
-msgstr "E-mail de l’utilisateur"
+msgstr "Correio do utilizador"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:30
 msgid "Dataset"
-msgstr "Ensemble de données"
+msgstr "Conjunto de dados"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:31
 msgid "Resource"
-msgstr "Ressource"
+msgstr "Recurso"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:32
 msgid "Contact Email"
-msgstr "E-mail de contact"
+msgstr "E-mail de contato"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:33
 msgid "Message"
-msgstr "Message"
+msgstr "Mensagem"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:33
 msgid "Message to request data (project, research group, planned usage, etc.)"
-msgstr "Message pour demander l’accès aux données (projet, groupe de recherche, usage prévu, etc.)"
+msgstr "Mensagem para solicitar dados (projecto, grupo de pesquisa, utilização planeada, etc.)"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:43
 #, python-format
@@ -206,27 +206,27 @@ msgid ""
 " usage restrictions under the <a "
 "href=%(license_url)s>%(license_title)s</a>."
 msgstr ""
-"La <i>licence</i> s’applique au contenu de tous les fichiers de ressource que vous avez demandés pour ce jeu de données. En validant ce formulaire, vous acceptez les restrictions d’utilisation de <a href=%(license_url)s>%(license_title)s</a>."
+"A <i>licença de dados</i> aplica-se ao conteúdo de quaisquer ficheiros de recursos que possa solicitar a partir deste conjunto de dados. Ao submeter este formulário, o requerente concorda com as restrições de utilização em conformidade com a <a href=%(license_url)s>%(license_title)s</a>."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:50
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:78
 msgid "Send Request"
-msgstr "Envoyer la demande"
+msgstr "Enviar Pedido"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_form.html:53
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:81
 msgid "Cancel"
-msgstr "Annuler"
+msgstr "Cancelar"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:4
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:14
 msgid "Request Access Form Sent"
-msgstr "Demande d’accès envoyée"
+msgstr "Formulário de Pedido de Acesso Enviado"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:8
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:18
 msgid "Your request has been sent, please check your provided mail account."
-msgstr "Votre demande a bien été envoyée, veuillez vérifier votre messagerie."
+msgstr "O seu pedido foi enviado, verifique a sua conta de correio atribuída."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:10
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:20
@@ -234,51 +234,51 @@ msgid ""
 "WARNING: There were problems sending your request, please contact the "
 "administrator providing the information below."
 msgstr ""
-"AVERTISSEMENT : un problème est survenu lors de l’envoi de votre demande, veuillez contacter l’administrateur en lui fournissant les informations ci-dessous."
+"AVISO: Houve problemas no envio do seu pedido, entre em contato com o administrador fornecendo as informações abaixo."
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:13
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:23
 msgid "Access Request Data"
-msgstr "Données de la demande d’accès"
+msgstr "Dados de Pedido de Acesso"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:6
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:15
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:25
 msgid "User:"
-msgstr "Utilisateur :"
+msgstr "Utilizador:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:16
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:26
 msgid "User Mail:"
-msgstr "E-mail de l’utilisateur :"
+msgstr "Correio do utilizador:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:5
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:17
 msgid "Dataset:"
-msgstr "Jeu de données :"
+msgstr "Conjunto de dados:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:4
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:18
 msgid "Resource:"
-msgstr "Ressource :"
+msgstr "Recurso:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:19
 msgid "Contact Email:"
-msgstr "E-mail de contact :"
+msgstr "E-mail de contacto:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:7
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:20
 msgid "Message:"
-msgstr "Message :"
+msgstr "Mensagem:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_access_result.html:28
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:37
 msgid "Close"
-msgstr "Fermer"
+msgstr "Fechar"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:31
 msgid "What are Organizations?"
-msgstr "Qu’est-ce que les organisations ?"
+msgstr "O que são as Organizações?"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:35
 msgid ""
@@ -286,7 +286,7 @@ msgid ""
 "datasets. Users can have different roles within an Organization, "
 "depending on their level of authorisation to create, edit and publish."
 msgstr ""
-"Les organisations CKAN permettent de créer, gérer et publier des jeux de données. Les utilisateurs peuvent occuper différents rôles au sein des organisations, selon les droits dont ils disposent pour créer, modifier et publier du contenu."
+"As organizações CKAN são utilizadas para criar, gerir e publicar coleções de conjuntos de dados. Os utilizadores podem ter diferentes funções dentro de uma Organização, em função do seu nível de autorização, para criar, editar e publicar."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:42
 msgid ""
@@ -295,42 +295,42 @@ msgid ""
 "submit a request via this form and a system administrator will contact "
 "you via email with any further queries."
 msgstr ""
-"Seuls les administrateurs système peuvent créer de nouvelles organisations. Si vous souhaitez ajouter votre organisation dans le fichier de données sur le sida (ADR), veuillez envoyer une demande en remplissant ce formulaire. Un administrateur vous contactera par e-mail."
+"Novas organizações só podem ser criadas por administradores de sistemas. Se quiser que a sua organização se junte ao Repositório de Dados sobre a SIDA, por favor, submeta um pedido através deste formulário e um administrador de sistema entrará em contacto consigo por correio eletrónico com outras perguntas."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:51
 msgid "Request a New Organization"
-msgstr "Demande d’ajout d’une nouvelle organisation"
+msgstr "Solicitar uma Nova Organização"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:57
 msgid "New Organization Name"
-msgstr "Nom de la nouvelle organisation"
+msgstr "Nome da Nova Organização"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:57
 msgid "The name of the new organization."
-msgstr "Le nom de la nouvelle organisation."
+msgstr "O nome da nova organização."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:59
 msgid "New Organization Website"
-msgstr "Site Internet de la nouvelle organisation"
+msgstr "Novo site da Organização"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:59
 msgid "e.g. https://unaids.org"
-msgstr "par ex., https://unaids.org"
+msgstr "por exemplo, https://unaids.org"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:61
 msgid "Organization Description"
-msgstr "Description de l’organisation"
+msgstr "Descrição da Organização"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:61
 msgid ""
 "A brief description of the new organisation (location, purpose, parent "
 "organizations, etc...)"
 msgstr ""
-"Courte description de la nouvelle organisation (localisation, objectif, organisation mère, etc...)"
+"Uma breve descrição da nova organização (localização, finalidade, organizações que a controlam, etc.)"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:62
 msgid "Reason for joining"
-msgstr "Motif de la demande d’ajout"
+msgstr "Motivo da adesão"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:62
 msgid ""
@@ -338,7 +338,7 @@ msgid ""
 "Data Repository, and what sort of data the organisation will share "
 "through the platform."
 msgstr ""
-"Expliquez brièvement pourquoi votre organisation souhaite intégrer le fichier de données sur le sida et quel type de données votre organisation prévoit de publier via cette plateforme."
+"Uma breve explicação da razão pela qual a sua organização gostaria de aderir ao Repositório de Dados sobre a SIDA, e que tipo de dados a organização irá partilhar através da plataforma."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_form.html:72
 msgid ""
@@ -347,83 +347,71 @@ msgid ""
 "authorized by the organization in question to administer all of their "
 "affairs concerning The AIDS Data Repository."
 msgstr ""
-"En soumettant ce formulaire, vous acceptez de respecter les conditions d'utilisation du fichier de données sur le sida et confirmez également que vous êtes dûment autorisé par l'organisation en question à gérer toutes ses affaires concernant le fichier de données sur le sida."
+"Ao submeter este formulário, concorda em respeitar os termos e condições de utilização do Repositório de Dados sobre a SIDA e confirma também que está devidamente autorizado pela organização em questão a administrar todos os seus assuntos relativos ao Repositório de Dados sobre a SIDA."
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:27
 msgid "Organization Name:"
-msgstr "Nom de l’organisation :"
+msgstr "Nome da Organização:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:28
 msgid "Organization Description:"
-msgstr "Description de l’organisation :"
+msgstr "Descrição da Organização:"
 
 #: ckanext/restricted/templates/restricted/restricted_request_organization_result.html:29
 msgid "Reason for joining:"
-msgstr "Motif de la demande d’ajout :"
+msgstr "Motivo da adesão:"
 
-# | msgid "Access granted to resource {}"
-# | msgid "Access restricted to members of {organisation_name}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:6
 #: ckanext/restricted/templates/restricted/restricted_string.html:51
 #, python-format
 msgid "Access restricted to members of %(organization)s."
-msgstr "Accès accordé aux membres de %(organization)s."
+msgstr "Acesso restrito aos membros da %(organization)s."
 
 #: ckanext/restricted/templates/restricted/restricted_string.html:15
 msgid "Public resource"
-msgstr "Ressource publique"
+msgstr "Recurso público"
 
-# | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:25
 msgid "Access granted to organizations"
-msgstr "Accès accordé aux organisations"
+msgstr "Acesso concedido às organizações"
 
-# | msgid "Organizations"
 #: ckanext/restricted/templates/restricted/restricted_string.html:27
 msgid "organizations"
-msgstr "organisations"
+msgstr "organizações"
 
-# | msgid "Access granted to resource {}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:32
 msgid "Access granted to users"
-msgstr "Accès accordé aux utilisateurs"
+msgstr "Acesso concedido aos utilizadores"
 
-# | msgid "User"
 #: ckanext/restricted/templates/restricted/restricted_string.html:34
 msgid "users"
-msgstr "utilisateurs"
+msgstr "utilizadores"
 
-# | msgid "Access granted to resource {}"
-# | msgid "Access restricted to specific {organizations} and {users}."
 #: ckanext/restricted/templates/restricted/restricted_string.html:39
 #, python-format
 msgid "Access restricted to specific %(organizations)s and %(users)s."
-msgstr "Accès limité à des %(organizations)s et des %(users)s. spécifiques."
+msgstr "Acesso restrito a %(organizations)s específicas e %(users)s."
 
-# | msgid "Access granted to resource {}"
-# | msgid "Access restricted to specific {organizations}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:43
 #, python-format
 msgid "Access restricted to specific %(organizations)s."
-msgstr "Accès limité à des %(organizations)s spécifiques "
+msgstr "Acesso restrito a %(organizações)s específicas."
 
-# | msgid "Access granted to resource {}"
-# | msgid "Access restricted to specific {users}"
 #: ckanext/restricted/templates/restricted/restricted_string.html:47
 #, python-format
 msgid "Access restricted to specific %(users)s."
-msgstr "Accès limité à des %(users)s spécifiques."
+msgstr "Acesso restrito a %(users)s específicos."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:1
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:1
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:1
 msgid "Dear"
-msgstr "Cher/chère"
+msgstr "Caro(a)"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:3
 #, python-format
 msgid "A user has requested access to your data in %(site_title)s:"
-msgstr "Un utilisateur demande l’accès à vos données dans %(site_title)s :"
+msgstr "Um utilizador solicitou o acesso aos seus dados em %(site_title)s:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:9
 #, python-format
@@ -431,14 +419,11 @@ msgid ""
 "You can allow this user to access you resource by adding %(user_id)s to "
 "the list of allowed users."
 msgstr ""
-"Vous pouvez autoriser cet utilisateur à consulter cette ressource en ajoutant %(user_id)s à la liste des utilisateurs autorisés."
+"Pode permitir que este utilizador aceda ao seu recurso, adicionando %(user_id)s à lista de utilizadores autorizados."
 
-# | msgid "" "If you have editor rights, you can edit the resource in this
-# link:
-# | " "%(resource_edit_link)s."
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:10
 msgid "If you have editor rights, you can edit the resource in this link"
-msgstr "Si vous êtes autorisé à effectuer des modifications, vous pouvez modifier la ressource via ce lien"
+msgstr "Se tiver direitos de editor, pode editar o recurso neste link"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:11
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:9
@@ -447,14 +432,14 @@ msgid ""
 "If you have any questions about how to proceed with this request, please "
 "contact the %(site_title)s support at %(admin_email_to)s."
 msgstr ""
-"Si vous avez des questions sur la façon de traiter cette demande, merci de contacter l’assistance de %(site_title)s à %(admin_email_to)s."
+"Se tiver alguma dúvida sobre como proceder com este pedido, queira contactar a assistência %(site_title)s em %(admin_email_to)s."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:13
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:11
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:8
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:6
 msgid "Best regards,"
-msgstr "Cordialement,"
+msgstr "Com os melhores cumprimentos,"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:14
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:12
@@ -462,14 +447,14 @@ msgstr "Cordialement,"
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:7
 #, python-format
 msgid "%(site_title)s Administrator"
-msgstr "Administrateur %(site_title)s"
+msgstr "Administrador do %(site_title)s"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:17
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:15
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:12
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:10
 msgid "This is an automatically generated e-mail, please do not reply to it."
-msgstr "Ceci est un message automatique, merci de ne pas y répondre."
+msgstr "Este é um e-mail gerado automaticamente, agradecemos que não responda."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_access_request.txt:19
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:16
@@ -477,7 +462,7 @@ msgstr "Ceci est un message automatique, merci de ne pas y répondre."
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:12
 #, python-format
 msgid "Message sent from %(site_title)s (%(site_url)s)"
-msgstr "Message envoyé par %(site_title)s (%(site_url)s)"
+msgstr "Mensagem enviada de %(site_title)s (%(site_url)s)"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:1
 #, python-format
@@ -485,19 +470,19 @@ msgid ""
 "%(user_name)s (%(user_email)s) has requested that you create a new "
 "organization for %(site_title)s:"
 msgstr ""
-"%(user_name)s (%(user_email)s) vous demande de créer une nouvelle organisation pour %(site_title)s :"
+"%(user_name)s (%(user_email)s) solicitou a criação de uma nova organização para %(site_title)s:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:3
 msgid "Name:"
-msgstr "Nom :"
+msgstr "Nome:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:5
 msgid "Description:"
-msgstr "Description :"
+msgstr "Descrição:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_organization_request.txt:7
 msgid "Reason:"
-msgstr "Motif :"
+msgstr "Razão:"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:3
 #, python-format
@@ -505,28 +490,28 @@ msgid ""
 "You have requested access on %(site_title)s to the resource: "
 "%(resource_name)s."
 msgstr ""
-"Vous avez demandé l’accès sur %(site_title)s à la ressource : %(resource_name)s."
+"Solicitou o acesso em %(site_title)s ao recurso: %(resource_name)s."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:4
 msgid "The contact person of the package has granted you access."
-msgstr "La personne de contact du paquet vous a accordé l'accès."
+msgstr "A pessoa de contacto do pacote concedeu-lhe o acesso."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:6
-msgid "Please click the following link to access the resource"
-msgstr "Vous pouvez accéder à la ressource via ce lien"
+msgid "Please click the following link"
+msgstr "Por favor, clique no seguinte link"
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_registered.txt:3
 msgid "A new user registered, please review the information:"
-msgstr "Un nouvel utilisateur a été enregistré, merci de vérifier les informations :"
+msgstr "Um novo utilizador registado, por favor reveja as informações:"
 
 #: ckanext/restricted/templates/scheming/form_snippets/restricted_fields.html:25
 msgid "Level"
-msgstr "Niveau"
+msgstr "Nível"
 
 #: ckanext/restricted/templates/scheming/form_snippets/restricted_fields.html:39
 msgid "Allowed Users"
-msgstr "Utilisateurs autorisés"
+msgstr "Utilizadores Autorizados"
 
 #: ckanext/restricted/templates/scheming/form_snippets/restricted_fields.html:52
 msgid "Allowed Organisations"
-msgstr "Organisations autorisées"
+msgstr "Organizações Autorizadas"
