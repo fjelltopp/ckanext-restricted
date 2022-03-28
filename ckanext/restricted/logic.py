@@ -70,7 +70,7 @@ def restricted_get_restricted_dict(resource_dict):
 
 def restricted_check_user_resource_access(user, resource_dict, package_dict,
                                           user_obj=None, check_access_package_show=True,
-                                          user_organization_dict={}):
+                                          user_organization_dict=None):
     # Check access to package
     if check_access_package_show:
         logic.check_access('package_show', {'user': user},
