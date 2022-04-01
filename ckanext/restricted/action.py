@@ -27,8 +27,9 @@ except ImportError:
     from pylons import config
 
 from logging import getLogger
-log = getLogger(__name__)
 
+log = getLogger(__name__)
+debug_log = getLogger('debug')
 
 _get_or_bust = ckan.logic.get_or_bust
 
@@ -83,13 +84,29 @@ def resource_view_list(resource_view_list, context, data_dict):
 
 @toolkit.side_effect_free
 def restricted_package_show(context, data_dict, package_metadata=None):
+
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
+    debug_logging = p.toolkit.asbool(data_dict.pop('debug_logging', False))
+    debug_request_id = data_dict.pop('debug_request_id', "")
+
     if not package_metadata:
         package_metadata = package_show(context, data_dict)
+
+    if debug_logging:
+        debug_log.debug("{} restricted_package_show for package {}".format(
+            debug_request_id,
+            package_metadata.get('name')
+        ))
 
     # Ensure user who can edit can see the resource
     if authz.is_authorized(
             'package_update', context, package_metadata).get('success', False):
+        if debug_logging:
+            debug_log.debug(
+                "{} restricted_package_show granted - user authorised to edit dataset".format(
+                    debug_request_id
+                )
+            )
         return package_metadata
 
     # Custom authorization
@@ -101,8 +118,21 @@ def restricted_package_show(context, data_dict, package_metadata=None):
     # restricted_package_metadata['resources'] = _restricted_resource_list_url(
     #     context, restricted_package_metadata.get('resources', []))
     resources = restricted_package_metadata.get('resources', [])
+
     if hide_inaccessible_resources:
-        resources = _restricted_resource_list_accessible_by_user(context, resources, package_dict=package_metadata)
+
+        if debug_logging:
+            debug_log.debug("{} restricted_package_show hiding inaccessible resources".format(
+                debug_request_id
+            ))
+
+        resources = _restricted_resource_list_accessible_by_user(
+            context,
+            resources,
+            package_dict=package_metadata,
+            debug_logging=debug_logging,
+            debug_request_id=debug_request_id
+        )
         restricted_package_metadata['num_resources'] = len(resources)
     resources = _restricted_resource_list_hide_fields(context, resources)
     restricted_package_metadata['resources'] = resources
@@ -110,10 +140,17 @@ def restricted_package_show(context, data_dict, package_metadata=None):
     return (restricted_package_metadata)
 
 
-def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None):
+def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None, debug_logging=False, debug_request_id=""):
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
+
+    if debug_logging:
+        debug_log.debug("{} _restricted_resource_list_accessible_by_user user_name {}".format(
+            debug_request_id,
+            user_name
+        ))
+
     for resource in resource_list:
         resource_dict = dict(resource)
         if not package_dict:
@@ -124,12 +161,14 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, package
             package_dict,
             user_obj=user_obj,
             check_access_package_show=False,
-            user_organization_dict=logic.get_organization_dict(user_name)
+            user_organization_dict=logic.get_organization_dict(user_name),
+            debug_logging=debug_logging,
+            debug_request_id=debug_request_id
         ).get('success', False)
+
         if user_has_resource_access:
             restricted_resources_list.append(resource_dict)
     return restricted_resources_list
-
 
 
 @toolkit.side_effect_free
@@ -151,6 +190,21 @@ def restricted_resource_search(context, data_dict):
 def restricted_package_search(context, data_dict):
     # pop the param as ckan package search action doesn't support any extra parameters
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.pop('hide_inaccessible_resources', False))
+
+    debug_logging = p.toolkit.asbool(data_dict.pop('debug_logging', False))
+    debug_request_id = data_dict.pop('debug_request_id', "")
+
+    if debug_logging:
+        debug_log.debug("{} restricted_package_search data_dict {}".format(
+            debug_request_id,
+            data_dict
+        ))
+        debug_log.debug("{} restricted_package_search hide_inaccessible_resources {}".format(
+            debug_request_id,
+            hide_inaccessible_resources
+        ))
+
+
     package_search_result = package_search(context, data_dict)
 
     restricted_package_search_result = {}
@@ -161,7 +215,15 @@ def restricted_package_search(context, data_dict):
             for package in value:
                 restricted_package_search_result_list.append(
                     restricted_package_show(
-                        context, {'id': package.get('id'), 'hide_inaccessible_resources': hide_inaccessible_resources}, package_metadata=package)
+                        context,
+                        {
+                            'id': package.get('id'),
+                            'hide_inaccessible_resources': hide_inaccessible_resources,
+                            'debug_logging': debug_logging,
+                            'debug_request_id': debug_request_id
+                        },
+                        package_metadata=package
+                    )
                 )
             restricted_package_search_result[key] = \
                 restricted_package_search_result_list
