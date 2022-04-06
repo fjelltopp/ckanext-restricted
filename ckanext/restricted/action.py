@@ -203,9 +203,19 @@ def restricted_package_search(context, data_dict):
             debug_request_id,
             hide_inaccessible_resources
         ))
+        debug_log.debug("{} restricted_package_search context {}".format(
+            debug_request_id,
+            context
+        ))
 
 
     package_search_result = package_search(context, data_dict)
+
+    if debug_logging:
+        debug_log.debug("{} restricted_package_search context after package search {}".format(
+            debug_request_id,
+            context
+        ))
 
     restricted_package_search_result = {}
 
