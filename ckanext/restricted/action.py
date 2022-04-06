@@ -132,6 +132,12 @@ def restricted_package_show(context, data_dict, package_metadata=None):
                             debug_request_id
                         )
                     )
+                else:
+                    debug_log.debug(
+                        u"{} restricted_package_show user is not a collaborator or editor of owner_org".format(
+                            debug_request_id
+                        )
+                    )
 
             debug_log.debug(context)
 
