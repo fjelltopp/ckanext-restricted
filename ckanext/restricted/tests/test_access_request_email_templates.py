@@ -37,12 +37,12 @@ class TestAccessRequestEmailTemplate(object):
         # stranger requests access to dataset
         stranger = factories.User(email='stranger@example.com')
         request_access_url = url_for(
-            controller='ckanext.restricted.controller:RestrictedController',
+            controller='restricted',
             action='restricted_request_access_form',
             package_id=dataset['name'],
             resource_id=resource['id']
         )
-        response = app.get(
+        response = app.post(
             url=request_access_url,
             query_string={
                 'package_name': dataset['name'],
@@ -95,12 +95,12 @@ class TestAccessRequestEmailTemplate(object):
         # stranger requests access to dataset
         stranger = factories.User()
         request_access_url = url_for(
-            controller='ckanext.restricted.controller:RestrictedController',
+            controller='restricted',
             action='restricted_request_access_form',
             package_id=dataset['id'],
             resource_id=resource['id']
         )
-        response = app.get(
+        response = app.post(
             url=request_access_url,
             query_string={
                 'package_name': dataset['name'],

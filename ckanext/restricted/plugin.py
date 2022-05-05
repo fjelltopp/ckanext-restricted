@@ -12,6 +12,7 @@ from ckanext.restricted import action
 from ckanext.restricted import auth
 from ckanext.restricted import helpers
 from ckanext.restricted import logic
+from . import views
 import json
 
 _get_or_bust = ckan.logic.get_or_bust
@@ -25,7 +26,7 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IAuthFunctions)
-    plugins.implements(plugins.IRoutes, inherit=True)
+    plugins.implements(plugins.IBlueprint)
     plugins.implements(plugins.IResourceController, inherit=True)
 
     # IConfigurer
@@ -55,26 +56,16 @@ class RestrictedPlugin(plugins.SingletonPlugin, DefaultTranslation):
                 'resource_view_show': auth.restricted_resource_show,
                 'logged_in': auth.logged_in}
 
-    # IRoutes
-    def before_map(self, map_):
-        map_.connect(
-            'restricted_request_access',
-            '/dataset/{package_id}/restricted_request_access/{resource_id}',
-            controller='ckanext.restricted.controller:RestrictedController',
-            action='restricted_request_access_form')
-        map_.connect(
-            'restricted_request_organization',
-            '/request_organization',
-            controller='ckanext.restricted.controller:RestrictedController',
-            action='restricted_request_organization_form')
-        return map_
+    # IBlueprint
+    def get_blueprint(self):
+        return views.get_blueprint()
 
     # IResourceController
     def before_update(self, context, current, resource):
         new_restricted_str = resource.get('restricted')
         try:
             _load_json(new_restricted_str)
-        except ValueError as e:
+        except ValueError:
             log.exception("Invalid restricted json string", exc_info=True)
             raise toolkit.ValidationError([toolkit._("Invalid restricted json string.")])
         previous_restricted_str = current.get('restricted')

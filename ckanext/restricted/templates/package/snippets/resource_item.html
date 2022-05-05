@@ -37,7 +37,7 @@
   {% else %}
     {% if user_id %}
   <div class="dropdown btn-group">
-    <a href="{{ h.url_for('restricted_request_access', package_id=pkg.name, resource_id=res.id) }}" class="btn"><i class="fa fa-icon fa-unlock-alt" style="margin-right: 5px;"></i>{{ _('Request Access') }}</a>
+    <a href="{{ h.url_for('restricted.restricted_request_access_form', package_id=pkg.name, resource_id=res.id) }}" class="btn"><i class="fa fa-icon fa-unlock-alt" style="margin-right: 5px;"></i>{{ _('Request Access') }}</a>
   </div>
     {% else %}
   <div class="dropdown btn-group restricted-link">

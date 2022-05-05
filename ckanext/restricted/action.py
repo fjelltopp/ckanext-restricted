@@ -1,12 +1,15 @@
 # coding: utf8
 
 from __future__ import unicode_literals
+
+import six
+
 import ckan.authz as authz
 import ckan.logic.auth as logic_auth
 from ckan import model
 from ckan.common import _
 
-from ckan.lib.base import render_jinja2
+import ckan.lib.base as base
 from ckan.lib.mailer import mail_recipient
 from ckan.lib.mailer import MailerException
 import ckan.logic
@@ -17,7 +20,6 @@ from ckan.logic.action.get import package_show
 from ckan.logic.action.get import resource_search
 from ckan.plugins import toolkit
 
-from ckanext.restricted import auth
 from ckanext.restricted import logic
 import json
 
@@ -27,6 +29,11 @@ try:
 except ImportError:
     # CKAN 2.6 and earlier
     from pylons import config
+
+if six.PY2:
+    render = base.render_jinja2
+else:
+    render = base.render
 
 from logging import getLogger
 
@@ -64,7 +71,7 @@ def restricted_user_create_and_notify(context, data_dict):
             'site_url': config.get('ckan.site_url'),
             'user_info': body_from_user_dict(user_dict)}
 
-        body = render_jinja2(
+        body = render(
             'restricted/emails/restricted_user_registered.txt', extra_vars)
 
         mail_recipient(name, email, subject, body)
@@ -74,6 +81,7 @@ def restricted_user_create_and_notify(context, data_dict):
         log.error(mailer_exception)
 
     return (user_dict)
+
 
 @toolkit.chained_action
 @toolkit.side_effect_free
@@ -183,7 +191,8 @@ def restricted_package_show(context, data_dict, package_metadata=None):
     return (restricted_package_metadata)
 
 
-def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None, debug_logging=False, debug_request_id=""):
+def _restricted_resource_list_accessible_by_user(
+        context, resource_list, package_dict=None, debug_logging=False, debug_request_id=""):
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
@@ -250,7 +259,6 @@ def restricted_package_search(context, data_dict):
             debug_request_id,
             context
         ))
-
 
     package_search_result = package_search(context, data_dict)
 
