@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 import ckan.authz as authz
 import ckan.logic.auth as logic_auth
+from ckan import model
 from ckan.common import _
 
 from ckan.lib.base import render_jinja2
@@ -92,6 +93,14 @@ def restricted_package_show(context, data_dict, package_metadata=None):
 
     if not package_metadata:
         package_metadata = package_show(context, data_dict)
+    else:
+        # context['package'] needs to be set for ckan package auth functions to work
+        # this is normally set by package_show, in case we use cached value package_metadata
+        # context['package'] needs to be set manually
+        pkg = model.Package.get(package_metadata['id'])
+        if not pkg:
+            raise toolkit.ObjectNotFound(toolkit._('Harvest source not found'))
+        context['package'] = pkg
 
     if debug_logging:
         debug_log.debug(u"{} restricted_package_show for package {}".format(
