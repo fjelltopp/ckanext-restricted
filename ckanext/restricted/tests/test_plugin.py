@@ -283,8 +283,10 @@ class TestRestrictedPlugin(object):
         assert package['resources'][0]['id'] == other_resource['id']
 
     def test_regression_user_can_see_only_accessible_resource_in_package_search_with_many_datasets(self):
+        # order of dataset creation affects the order of core ckan package_search results
+        # the dataset with owner_org of the context user needs to be created last for this test
+
         # given:
-        # order is important for regression test, the dataset with owner_org of the context user needs to be created last
         other_organisation = factories.Organization()
         for i in range(2):
             other_dataset = factories.Dataset(owner_org=other_organisation['id'])

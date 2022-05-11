@@ -95,11 +95,11 @@ def restricted_package_show(context, data_dict, package_metadata=None):
         package_metadata = package_show(context, data_dict)
     else:
         # context['package'] needs to be set for ckan package auth functions to work
-        # this is normally set by package_show, in case we use cached value package_metadata
-        # context['package'] needs to be set manually
+        # this is set by package_show
+        # if package_show not called, context['package'] needs to be set manually
         pkg = model.Package.get(package_metadata['id'])
         if not pkg:
-            raise toolkit.ObjectNotFound(toolkit._('Harvest source not found'))
+            raise toolkit.ObjectNotFound(toolkit._('Dataset not found'))
         context['package'] = pkg
 
     if debug_logging:
