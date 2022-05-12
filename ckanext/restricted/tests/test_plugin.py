@@ -282,6 +282,46 @@ class TestRestrictedPlugin(object):
         assert len(package['resources']) == 1
         assert package['resources'][0]['id'] == other_resource['id']
 
+    def test_regression_user_can_see_only_accessible_resource_in_package_search_with_many_datasets(self):
+        # order of dataset creation affects the order of core ckan package_search results
+        # the dataset with owner_org of the context user needs to be created last for this test
+
+        # given:
+        other_organisation = factories.Organization()
+        for i in range(2):
+            other_dataset = factories.Dataset(owner_org=other_organisation['id'])
+            factories.Resource(package_id=other_dataset['id'], restricted='{{"level": "restricted"}}')
+
+        user = factories.User()
+        organisation = factories.Organization(
+            users=[
+                {'name': user['id'], 'capacity': 'editor'}
+            ]
+
+        )
+        dataset = factories.Dataset(owner_org=organisation['id'])
+        factories.Resource(package_id=dataset['id'])
+
+        # when:
+        context = {
+            'ignore_auth': False,
+            'user': user['name']
+        }
+        package_search = helpers.call_action(
+            'package_search',
+            context,
+            q='',
+            hide_inaccessible_resources=True
+        )
+
+        # then:
+        datasets_count = 0
+        for result in package_search['results']:
+            if result['num_resources'] > 0:
+                datasets_count += 1
+        assert datasets_count == 1
+
+
     @pytest.mark.ckan_config(u'ckan.auth.allow_dataset_collaborators', 'true')
     def test_collaborator_overrides_restricted_settings(self):
         dataset, other, other_resource, org_resource = self._two_users_one_package_two_resources_one_restricted()
