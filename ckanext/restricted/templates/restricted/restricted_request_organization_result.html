@@ -3,7 +3,7 @@
 {% block breadcrumb_content %}
   <li class="active">{% link_for _('Organizations'), controller='organization', action='index', named_route='organization_index' %}</li>
   {% block breadcrumb_content_inner %}
-    <li class="active">{% link_for _('Request Organization'), controller='ckanext.restricted.controller:RestrictedController', action='restricted_request_organization_form', named_route='restricted_request_organization' %}</li>
+    <li class="active">{% link_for _('Request Organization'), controller='restricted', action='restricted_request_organization_form' %}</li>
   {% endblock %}
 {% endblock %}
 

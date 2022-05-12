@@ -4,11 +4,12 @@ from __future__ import unicode_literals
 import ckan.authz as authz
 from ckan.common import _
 
-from ckan.lib.base import render_jinja2
+import ckan.lib.base as base
 import ckan.lib.mailer as mailer
 import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
 import json
+import six
 
 try:
     # CKAN 2.7 and later
@@ -16,6 +17,11 @@ try:
 except ImportError:
     # CKAN 2.6 and earlier
     from pylons import config
+
+if six.PY2:
+    render = base.render_jinja2
+else:
+    render = base.render
 
 from logging import getLogger
 
@@ -130,7 +136,8 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict,
     for org_id, org_name in user_organization_dict.items():
         if org_id != "" and (org_id == pkg_organization_id or org_name in allowed_organizations):
             if debug_logging:
-                debug_log.debug("{} restricted_check_user_resource_access granted - allowed_organization".format(debug_request_id))
+                debug_log.debug("{} restricted_check_user_resource_access granted - allowed_organization".format(
+                    debug_request_id))
             return {'success': True}
     if debug_logging:
         debug_log.debug("{} restricted_check_user_resource_access denied - end of function".format(debug_request_id))
@@ -194,7 +201,7 @@ def restricted_allowed_user_mail_body(user, resource):
         'resource_link': config.get('ckan.site_url') + resource_link,
         'resource_url': resource.get('url')}
 
-    return render_jinja2(
+    return render(
         'restricted/emails/restricted_user_allowed.txt', extra_vars)
 
 
