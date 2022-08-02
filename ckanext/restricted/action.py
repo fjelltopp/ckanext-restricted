@@ -5,7 +5,6 @@ from __future__ import unicode_literals
 import six
 
 import ckan.authz as authz
-import ckan.logic.auth as logic_auth
 from ckan import model
 from ckan.common import _
 
@@ -111,7 +110,7 @@ def restricted_package_show(context, data_dict, package_metadata=None):
         context['package'] = pkg
 
     if debug_logging:
-        debug_log.debug(u"{} restricted_package_show for package {}".format(
+        debug_log.debug("{} restricted_package_show for package {}".format(
             debug_request_id,
             package_metadata.get('name')
         ))
@@ -119,45 +118,12 @@ def restricted_package_show(context, data_dict, package_metadata=None):
     # Ensure user who can edit can see the resource
     if authz.is_authorized(
             'package_update', context, package_metadata).get('success', False):
-
         if debug_logging:
             debug_log.debug(
-                u"{} restricted_package_show granted - user authorised to edit dataset".format(
+                "{} restricted_package_show granted - user authorised to edit dataset".format(
                     debug_request_id
                 )
             )
-
-            package = logic_auth.get_package_object(context, package_metadata)
-            user = context.get('user')
-            user_obj = context['model'].User.get(user)
-            if package.owner_org:
-                owner_org_editor = authz.has_user_permission_for_group_or_org(
-                    package.owner_org, user, 'update_dataset'
-                )
-                collaborator = authz.user_is_collaborator_on_dataset(
-                    user_obj.id, package.id, ['admin', 'editor']
-                )
-                if owner_org_editor:
-                    debug_log.debug(
-                        u"{} restricted_package_show user is an editor of owner org".format(
-                            debug_request_id
-                        )
-                    )
-                elif collaborator:
-                    debug_log.debug(
-                        u"{} restricted_package_show user is an editor collaborator of dataset".format(
-                            debug_request_id
-                        )
-                    )
-                else:
-                    debug_log.debug(
-                        u"{} restricted_package_show user is not a collaborator or editor of owner_org".format(
-                            debug_request_id
-                        )
-                    )
-
-            debug_log.debug(context)
-
         return package_metadata
 
     # Custom authorization
@@ -255,18 +221,8 @@ def restricted_package_search(context, data_dict):
             debug_request_id,
             hide_inaccessible_resources
         ))
-        debug_log.debug("{} restricted_package_search context {}".format(
-            debug_request_id,
-            context
-        ))
 
     package_search_result = package_search(context, data_dict)
-
-    if debug_logging:
-        debug_log.debug("{} restricted_package_search context after package search {}".format(
-            debug_request_id,
-            context
-        ))
 
     restricted_package_search_result = {}
 
