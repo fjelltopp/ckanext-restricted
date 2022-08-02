@@ -26,7 +26,6 @@ else:
 from logging import getLogger
 
 log = getLogger(__name__)
-debug_log = getLogger('debug')
 
 
 def restricted_get_username_from_context(context):
@@ -77,13 +76,7 @@ def restricted_get_restricted_dict(resource_dict):
 
 def restricted_check_user_resource_access(user, resource_dict, package_dict,
                                           user_obj=None, check_access_package_show=True,
-                                          user_organization_dict=None, debug_logging=False, debug_request_id=""):
-    if debug_logging:
-        debug_log.debug("{} restricted_check_user_resource_access resource {}".format(
-            debug_request_id,
-            resource_dict['id']
-        ))
-
+                                          user_organization_dict=None):
     # Check access to package
     if check_access_package_show:
         logic.check_access('package_show', {'user': user},
@@ -97,8 +90,6 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict,
         else:
             user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
         if authz.user_is_collaborator_on_dataset(user_id, package_dict['id']):
-            if debug_logging:
-                debug_log.debug("{} restricted_check_user_resource_access granted - collaborator".format(debug_request_id))
             return {'success': True}
 
     restricted_level = restricted_dict.get('level', 'restricted')
@@ -106,41 +97,24 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict,
     allowed_organizations = restricted_dict.get('allowed_organizations', [])
     # Public resources
     if restricted_level == 'public':
-        if debug_logging:
-            debug_log.debug("{} restricted_check_user_resource_access granted - public resource".format(debug_request_id))
         return {'success': True}
     # Registered user
     if not user:
-        if debug_logging:
-            debug_log.debug("{} restricted_check_user_resource_access denied - unregistered user".format(debug_request_id))
         return {
             'success': False,
             'msg': 'Resource access restricted to registered users'}
     # Since we have a user, check if it is in the allowed list
     if user in allowed_users:
-        if debug_logging:
-            debug_log.debug("{} restricted_check_user_resource_access granted - allowed user".format(debug_request_id))
         return {'success': True}
 
     if not user_organization_dict:
         user_organization_dict = get_organization_dict(user_id)
 
-    if debug_logging:
-        debug_log.debug("{} restricted_check_user_resource_access user_organization_dict {}".format(
-            debug_request_id,
-            user_organization_dict
-        ))
-
     pkg_organization_id = package_dict.get('owner_org', '')
     # Same Organization Members
     for org_id, org_name in user_organization_dict.items():
         if org_id != "" and (org_id == pkg_organization_id or org_name in allowed_organizations):
-            if debug_logging:
-                debug_log.debug("{} restricted_check_user_resource_access granted - allowed_organization".format(
-                    debug_request_id))
             return {'success': True}
-    if debug_logging:
-        debug_log.debug("{} restricted_check_user_resource_access denied - end of function".format(debug_request_id))
     return {
         'success': False,
         'msg': ('Resource access restricted')}
