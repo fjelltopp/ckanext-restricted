@@ -75,7 +75,8 @@ def restricted_user_create_and_notify(context, data_dict):
         mail_recipient(name, email, subject, body)
 
     except MailerException as mailer_exception:
-        log.error(f'Cannot send mail after registration for user {user_dict.get('name')} and email {user_dict.get('email')', exc_info=True)
+        log.error('Cannot send mail after registration for user {0} with email {1}'
+                  .format(user_dict.get('name'), user_dict.get('email')))
         log.error(mailer_exception)
 
     return (user_dict)
