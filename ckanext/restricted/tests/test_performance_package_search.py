@@ -8,6 +8,10 @@ from assertpy import assert_that
 from ckan.common import config
 import subprocess
 
+import ckanext.restricted.action
+import ckanext.restricted.plugin
+
+
 
 log = logging.getLogger(__name__)
 
@@ -27,6 +31,23 @@ def import_performance_data(clean_db, clean_index):
     subprocess.run(cmd)
 
 
+@pytest.fixture(autouse=True)
+def add_old_search_action():
+    ckanext.restricted.plugin.RestrictedPlugin.get_actions = Helper.get_actions_with_old_search
+
+
+class Helper:
+    def get_actions_with_old_search(self):
+        return {'user_create': ckanext.restricted.action.restricted_user_create_and_notify,
+                'resource_view_list': ckanext.restricted.action.resource_view_list,
+                'package_show': ckanext.restricted.action.restricted_package_show,
+                'resource_search': ckanext.restricted.action.restricted_resource_search,
+                'package_search': ckanext.restricted.action.restricted_package_search,
+                'restricted_check_access': ckanext.restricted.action.restricted_check_access,
+                'package_search_old': package_search_old}
+
+
+@pytest.mark.usefixtures(u'add_old_search_action')
 @pytest.mark.usefixtures(u'clean_db')
 @pytest.mark.usefixtures(u'clean_index')
 @pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
@@ -37,8 +58,9 @@ class TestRestrictedSearchPerformance:
 
     def test_performance(self):
         avg_time = self.get_avg_run_time(self._perform_search)
+        old_avg_time = self.get_avg_run_time(self._perform_old_search)
 
-        log.warning(f"Avg time: {avg_time}")
+        log.warning(f"Avg time: {avg_time}, old avg time: {old_avg_time}")
 
     def get_avg_run_time(self, search_function):
         context = {
@@ -64,3 +86,16 @@ class TestRestrictedSearchPerformance:
             context,
             q="title:Dataset"
         )
+
+    def _perform_old_search(self, context):
+        return helpers.call_action(
+            'package_search_old',
+            context,
+            q="title:Dataset"
+        )
+
+
+def package_search_old(context, data_dict):
+    return {
+        'count': 299
+    }
