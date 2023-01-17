@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 def import_performance_data(clean_db, clean_index):
     raw_db_url = config['sqlalchemy.url']
     sql_file = '/usr/lib/ckan/submodules/ckanext-restricted/ckanext/restricted/tests/performance_test_data.sql'
-    cmd = [f"psql",  f"{raw_db_url}", "-f", f"{sql_file}", "> /dev/null"]
+    cmd = ["psql",  f"{raw_db_url}", "-f", f"{sql_file}", "> /dev/null"]
 
     log.info(f"Loading performance data using: '{cmd}'")
     subprocess.run(cmd)
