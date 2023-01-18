@@ -10,6 +10,7 @@ import subprocess
 
 import ckanext.restricted.action
 import ckanext.restricted.plugin
+import ckanext.restricted.tests.old_action
 
 
 log = logging.getLogger(__name__)
@@ -43,7 +44,7 @@ class Helper:
                 'resource_search': ckanext.restricted.action.restricted_resource_search,
                 'package_search': ckanext.restricted.action.restricted_package_search,
                 'restricted_check_access': ckanext.restricted.action.restricted_check_access,
-                'package_search_old': package_search_old}
+                'package_search_old': ckanext.restricted.tests.old_action.restricted_package_search}
 
 
 @pytest.mark.usefixtures(u'add_old_search_action')
@@ -92,9 +93,3 @@ class TestRestrictedSearchPerformance:
             context,
             q="title:Dataset"
         )
-
-
-def package_search_old(context, data_dict):
-    return {
-        'count': 299
-    }
