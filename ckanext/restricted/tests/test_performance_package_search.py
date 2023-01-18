@@ -33,7 +33,7 @@ def import_performance_data(clean_db, clean_index):
 
 
 def get_ckan_binary_path():
-    candidates = ['/usr/local/bin/ckan', '/srv/app/ckan']
+    candidates = ['/usr/local/bin/ckan', '/usr/bin/ckan']
 
     for file_path in candidates:
         if os.path.isfile(file_path):
