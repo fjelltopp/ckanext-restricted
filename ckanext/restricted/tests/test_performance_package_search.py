@@ -1,5 +1,6 @@
 # encoding: utf-8
 import time
+import os.path
 
 from ckan.tests import helpers
 import logging
@@ -26,9 +27,17 @@ def import_performance_data(clean_db, clean_index):
     subprocess.run(cmd)
     ini_file = "/usr/lib/ckan/submodules/ckanext-restricted/test.ini"
 
-    cmd = ['/usr/lib/adx/venv/bin/ckan', '-c', ini_file, 'search-index', 'rebuild']
+    cmd = [get_ckan_binary_path(), '-c', ini_file, 'search-index', 'rebuild']
     log.info(f"Rebuild indexes: {cmd}")
     subprocess.run(cmd)
+
+
+def get_ckan_binary_path():
+    candidates = ['/usr/local/bin/ckan', '/srv/app/ckan']
+
+    for file_path in candidates:
+        if os.path.isfile(file_path):
+            return file_path
 
 
 @pytest.fixture(autouse=True)
