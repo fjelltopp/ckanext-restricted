@@ -26,7 +26,7 @@ def import_performance_data(clean_db, clean_index):
     subprocess.run(cmd)
     ini_file = "/usr/lib/ckan/submodules/ckanext-restricted/test.ini"
 
-    cmd = ['/usr/local/bin/ckan', '-c', ini_file, 'search-index', 'rebuild']
+    cmd = ['/usr/lib/adx/venv/bin/ckan', '-c', ini_file, 'search-index', 'rebuild']
     log.info(f"Rebuild indexes: {cmd}")
     subprocess.run(cmd)
 
