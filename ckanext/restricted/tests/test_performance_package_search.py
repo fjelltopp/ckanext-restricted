@@ -26,7 +26,7 @@ def import_performance_data(clean_db, clean_index):
 
     log.info(f"Loading performance data using: '{cmd}'")
     subprocess.run(cmd)
-    ini_file = f"{ckan_dir}/ckan/test.ini"
+    ini_file = f"{ckan_dir}/ckan-restricted/test.ini"
 
     cmd = [get_ckan_binary_path(), '-c', ini_file, 'search-index', 'rebuild']
     log.info(f"Rebuild indexes: {cmd}")
