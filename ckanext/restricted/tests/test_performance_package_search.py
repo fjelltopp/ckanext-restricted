@@ -21,12 +21,12 @@ log = logging.getLogger(__name__)
 def import_performance_data(clean_db, clean_index):
     raw_db_url = config['sqlalchemy.url']
     ckan_dir = get_ckan_directory()
-    sql_file = f'{ckan_dir}/ckanext/restricted/tests/performance_test_data.sql'
+    sql_file = f'{ckan_dir}/ckanext-restricted/ckanext/restricted/tests/performance_test_data.sql'
     cmd = ['psql',  f'{raw_db_url}', "-f", f'{sql_file}', '> /dev/null']
 
     log.info(f"Loading performance data using: '{cmd}'")
     subprocess.run(cmd)
-    ini_file = f"{ckan_dir}/test.ini"
+    ini_file = f"{ckan_dir}/ckan/test.ini"
 
     cmd = [get_ckan_binary_path(), '-c', ini_file, 'search-index', 'rebuild']
     log.info(f"Rebuild indexes: {cmd}")
@@ -34,7 +34,7 @@ def import_performance_data(clean_db, clean_index):
 
 
 def get_ckan_directory():
-    candidates = ['/usr/lib/ckan/submodules/ckanext-restricted', '/srv/app/src/ckan']
+    candidates = ['/usr/lib/ckan/submodules', '/srv/app/src']
 
     for dir_path in candidates:
         if os.path.isdir(dir_path):
