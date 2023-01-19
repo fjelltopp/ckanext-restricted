@@ -23,7 +23,6 @@ def import_performance_data(clean_db, clean_index):
     ckan_dir = get_ckan_directory()
     sql_file = f'{ckan_dir}/ckanext-restricted/ckanext/restricted/tests/performance_test_data.sql'
     cmd = ['psql',  f'{raw_db_url}', "-f", f'{sql_file}', '> /dev/null']
-    cmd = ["find", "/", "-iname", "performance_test_data.sql"]
 
     log.info(f"Loading performance data using: '{cmd}'")
     subprocess.run(cmd)
@@ -35,7 +34,7 @@ def import_performance_data(clean_db, clean_index):
 
 
 def get_ckan_directory():
-    candidates = ['/usr/lib/ckan/submodules', '/srv/app/src']
+    candidates = ['/usr/lib/ckan/submodules', '/__w/ckanext-restricted']
 
     for dir_path in candidates:
         if os.path.isdir(dir_path):
