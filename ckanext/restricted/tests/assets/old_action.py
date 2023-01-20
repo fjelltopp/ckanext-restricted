@@ -6,20 +6,15 @@ import six
 
 import ckan.authz as authz
 from ckan import model
-from ckan.common import _
 
 import ckan.lib.base as base
-from ckan.lib.mailer import mail_recipient
-from ckan.lib.mailer import MailerException
 import ckan.logic
 import ckan.plugins as p
-from ckan.logic.action.create import user_create
 from ckan.logic.action.get import package_search
 from ckan.logic.action.get import package_show
-from ckan.logic.action.get import resource_search
 from ckan.plugins import toolkit
 
-import ckanext.restricted.tests.old_logic as old_logic
+import ckanext.restricted.tests.assets.old_logic as old_logic
 import json
 
 try:
