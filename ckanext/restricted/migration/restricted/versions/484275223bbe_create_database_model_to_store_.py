@@ -26,6 +26,14 @@ def upgrade():
 
 
 def update_schema():
+    # TODO: Might require adding additional index on restricted_resource_user_access_control.user_id and
+    #  restricted_resource_org_access_control.org_id. These columns are part of a composite primary key. On Oracle
+    #  in such case when a query was against these columns (not the whole key) primary key index wasn't used, since
+    #  this column was first one. Need to check psql EXPLAIN to be sure about query plan.
+
+    # TODO: Using user_name and org_name as keys in table could be also used - would improve readability,
+    #  but I'm not sure if we can trust it. I prefer ids instead.
+
     op.create_table(
         'restricted_resource_access_control',
         Column('resource_id', String,
@@ -63,6 +71,11 @@ def downgrade():
 
 
 def migrate_restricted_schema():
+    # TODO: Acutally this code didn't work well in my env, because I couldn't run 'adx demodata'
+    #  due to some weird errors with dependencies.
+    #  Since I didn't have 'unaids' organization my migration was breaking.
+    #  When I specifically not migrated 'unaids' it worked ok though.
+
     all_resources = model.Session.query(Resource).all()
 
     for resource in all_resources:

@@ -128,6 +128,7 @@ def restricted_package_show(context, data_dict, package_metadata=None):
 
 
 def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None):
+    # TODO: Same comment as for '_restricted_resource_list_hide_fields'
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
@@ -223,6 +224,14 @@ def restricted_check_access(context, data_dict):
 
 
 def _restricted_resource_list_hide_fields(context, resource_list):
+    # TODO: query db here to get:
+    #  a. All from restricted_resource_access_control where level == 'restricted'
+    #  and store it in a dict, with resource_id as a key
+    #  b. All from restricted_resource_user_access_control where user_id == current_user_id and
+    #  store in a dict, with resource_id as a key
+    #  c. All from restricted_resource_org_access where org_id in (list of ids of all orgs user belongs to)
+    #  and store in a dict, with resorce_id as a key
+    #  pass results of above-mentioned queries to functions checking access
     restricted_resources_list = []
     for resource in resource_list:
         # copy original resource
