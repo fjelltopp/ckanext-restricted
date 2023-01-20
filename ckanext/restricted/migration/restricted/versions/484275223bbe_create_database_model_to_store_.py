@@ -25,23 +25,29 @@ def update_schema():
     op.create_table(
         'restricted_resource_access_control',
         Column('resource_id', String,
-                  ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'),
-                  primary_key=True),
+               ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'),
+               primary_key=True),
         Column('level', String, nullable=False)
     )
     op.create_table(
         'restricted_resource_user_access_control',
         Column('resource_id', String,
-                  ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'),
-                  primary_key=True),
+               ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE')),
         Column('user_id', String, ForeignKey('user.id', onupdate='CASCADE', ondelete='CASCADE'))
+    )
+    op.create_primary_key(
+        'restricted_resource_user_access_control_pk', 'restricted_resource_user_access_control',
+        ['resource_id', 'user_id']
     )
     op.create_table(
         'restricted_resource_org_access_control',
         Column('resource_id', String,
-                  ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'),
-                  primary_key=True),
+               ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE')),
         Column('org_id', String, ForeignKey('group.id', onupdate='CASCADE', ondelete='CASCADE'))
+    )
+    op.create_primary_key(
+        'restricted_resource_org_access_control_pk', 'restricted_resource_org_access_control',
+        ['resource_id', 'org_id']
     )
 
 

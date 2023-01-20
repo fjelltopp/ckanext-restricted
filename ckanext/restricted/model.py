@@ -1,4 +1,4 @@
-from sqlalchemy import Column, types, ForeignKey
+from sqlalchemy import Column, types, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy.ext.declarative import declarative_base
 
 from ckan.model.meta import metadata
@@ -25,6 +25,9 @@ class ResourceUserAccessControl(Base):
     """
 
     __tablename__ = 'restricted_resource_user_access_control'
+    __table_args__ = (
+        PrimaryKeyConstraint('resource_id', 'user_id'),
+    )
 
     resource_id = Column(types.UnicodeText,
                          ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'))
@@ -38,6 +41,9 @@ class ResourceOrgAccessControl(Base):
     """
 
     __tablename__ = 'restricted_resource_org_access_control'
+    __table_args__ = (
+        PrimaryKeyConstraint('resource_id', 'org_id'),
+    )
 
     resource_id = Column(types.UnicodeText,
                          ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
