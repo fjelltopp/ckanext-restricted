@@ -21,12 +21,15 @@ log = logging.getLogger(__name__)
 def import_performance_data(clean_db, clean_index):
     raw_db_url = config['sqlalchemy.url']
     ckan_dir = get_ckan_directory()
-    sql_file = f'{ckan_dir}/ckanext-restricted/ckanext/restricted/tests/performance_test_data.sql'
-    cmd = ['psql',  f'{raw_db_url}', "-f", f'{sql_file}', '> /dev/null']
+    sql_file = f'{ckan_dir}/ckanext/restricted/tests/performance_test_data.sql'
+    cmd = ['psql', f'{raw_db_url}', "-f", f'{sql_file}']
 
     log.info(f"Loading performance data using: '{cmd}'")
-    subprocess.run(cmd)
-    ini_file = f"{ckan_dir}/ckanext-restricted/test.ini"
+    completed_process = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    if completed_process.returncode != 0:
+        pytest.fail(f"Couldn't import performance data from file {sql_file}")
+
+    ini_file = f"{ckan_dir}/test.ini"
 
     cmd = [get_ckan_binary_path(), '-c', ini_file, 'search-index', 'rebuild']
     log.info(f"Rebuild indexes: {cmd}")
@@ -34,13 +37,13 @@ def import_performance_data(clean_db, clean_index):
 
 
 def get_ckan_directory():
-    candidates = ['/usr/lib/ckan/submodules', '/__w/ckanext-restricted']
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    dirname = os.path.normpath(current_directory + "../../../../")
 
-    for dir_path in candidates:
-        if os.path.isdir(dir_path):
-            return dir_path
+    if not os.path.isdir(dirname):
+        raise FileNotFoundError(f"Expected ckanext-restricted sources at '{dirname}' not found")
 
-    raise FileNotFoundError('Cannot find ckan directory')
+    return dirname
 
 
 def get_ckan_binary_path():
@@ -69,13 +72,13 @@ class Helper:
                 'package_search_old': ckanext.restricted.tests.old_action.restricted_package_search}
 
 
-@pytest.mark.usefixtures(u'add_old_search_action')
-@pytest.mark.usefixtures(u'clean_db')
-@pytest.mark.usefixtures(u'clean_index')
-@pytest.mark.ckan_config(u'ckan.plugins', u'restricted')
-@pytest.mark.usefixtures(u'with_plugins')
-@pytest.mark.usefixtures(u'with_request_context')
-@pytest.mark.usefixtures(u'import_performance_data')
+@pytest.mark.usefixtures('add_old_search_action')
+@pytest.mark.usefixtures('clean_db')
+@pytest.mark.usefixtures('clean_index')
+@pytest.mark.ckan_config('ckan.plugins', u'restricted')
+@pytest.mark.usefixtures('with_plugins')
+@pytest.mark.usefixtures('with_request_context')
+@pytest.mark.usefixtures('import_performance_data')
 class TestRestrictedSearchPerformance:
 
     def test_performance(self):
