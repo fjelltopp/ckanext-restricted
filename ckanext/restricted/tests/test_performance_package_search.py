@@ -5,7 +5,6 @@ import os.path
 from ckan.tests import helpers
 import logging
 import pytest
-from assertpy import assert_that
 from ckan.common import config
 import subprocess
 
@@ -101,7 +100,7 @@ class TestRestrictedSearchPerformance:
             result = search_function(context)
             end = time.perf_counter()
             cumulative_time += end - start
-            assert_that(result['count']).is_equal_to(299)
+            assert result['count'] == 299
 
         return cumulative_time / iter_count
 
