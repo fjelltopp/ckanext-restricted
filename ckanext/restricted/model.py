@@ -14,7 +14,7 @@ class ResourceAccessControl(Base):
 
     __tablename__ = 'restricted_resource_access_control'
 
-    resource_id = Column(types.Integer,
+    resource_id = Column(types.UnicodeText,
                          ForeignKey('resource.id', onupdate='CASCADE', ondelete='CASCADE'), primary_key=True)
     level = Column(types.UnicodeText, nullable=False)
 
