@@ -90,7 +90,7 @@ def add_user_level_access_if_present(resource_dict, restricted_data, session):
                 user_data = toolkit.get_action('user_show')(context, {'id': user})
 
                 if not user_data:
-                    raise Exception(f"Cannot find organization {user} defined as having access via restricted plugin")
+                    raise Exception(f"Cannot find user {user} defined as having access via restricted plugin")
 
                 user_id = user_data['id']
                 session.add(ResourceUserAccessControl(resource_id=resource_dict['id'], user_id=user_id))
