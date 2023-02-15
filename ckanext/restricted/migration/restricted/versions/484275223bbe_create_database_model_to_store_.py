@@ -5,9 +5,10 @@ Revises:
 Create Date: 2023-01-17 16:50:23.131955
 
 """
+import logging
+
 from alembic import op
-from ckan import model
-from sqlalchemy import ForeignKey, Column, String, orm
+from sqlalchemy import orm
 
 # revision identifiers, used by Alembic.
 from ckan.model import Resource
@@ -50,16 +51,11 @@ def downgrade():
 
 
 def migrate_restricted_schema(session):
-    # TODO: Acutally this code didn't work well in my env, because I couldn't run 'adx demodata'
-    #  due to some weird errors with dependencies.
-    #  Since I didn't have 'unaids' organization my migration was breaking.
-    #  When I specifically not migrated 'unaids' it worked ok though.
-
     all_resources = session.query(Resource).all()
 
     for resource in all_resources:
         resource_dict = resource.as_dict()
-        restricted_data = logic.restricted_get_restricted_dict(resource_dict)
+        restricted_data = extract_restricted_data(resource_dict)
 
         if resource_has_defined_restrictions(restricted_data):
             migrate_resource_information(resource_dict, restricted_data, session)
@@ -67,12 +63,33 @@ def migrate_restricted_schema(session):
     session.commit()
 
 
+def convert_from_demodata(resource_dict):
+    restricted_dict = {'level': 'public'}
+
+    if resource_dict['restricted_allowed_orgs'] or resource_dict['restricted_allowed_users']:
+        restricted_dict = {'level': 'restricted',
+                           'allowed_organizations': resource_dict['restricted_allowed_orgs'].split(','),
+                           'allowed_users': resource_dict['restricted_allowed_users'].split(',')}
+
+    return restricted_dict
+
+
+def extract_restricted_data(resource_dict):
+    restricted_dict = {'level': 'public'}
+
+    if resource_dict:
+        if 'restricted_allowed_orgs' in resource_dict or 'restricted_allowed_users' in resource_dict:
+            restricted_dict = convert_from_demodata(resource_dict)
+        elif ('extras' in resource_dict and 'restricted' in resource_dict['extras']) or 'restricted' in resource_dict:
+            restricted_dict = logic.restricted_get_restricted_dict(resource_dict)
+
+    return restricted_dict
+
+
 def migrate_resource_information(resource_dict, restricted_data, session):
     from ckanext.restricted.model import ResourceAccessControl
 
-    rac = ResourceAccessControl(resource_id=resource_dict['id'], level='restricted')
-
-    session.add(rac)
+    session.add(ResourceAccessControl(resource_id=resource_dict['id'], level='restricted'))
 
     add_user_level_access_if_present(resource_dict, restricted_data, session)
     add_org_level_access_if_present(resource_dict, restricted_data, session)
@@ -84,7 +101,8 @@ def add_user_level_access_if_present(resource_dict, restricted_data, session):
     context = {
         'ignore_auth': True
     }
-    if restricted_data['allowed_users']:
+
+    if 'allowed_users' in restricted_data:
         for user in restricted_data['allowed_users']:
             if user:
                 user_data = toolkit.get_action('user_show')(context, {'id': user})
@@ -93,13 +111,13 @@ def add_user_level_access_if_present(resource_dict, restricted_data, session):
                     raise Exception(f"Cannot find user {user} defined as having access via restricted plugin")
 
                 user_id = user_data['id']
-                session.add(ResourceUserAccessControl(resource_id=resource_dict['id'], user_id=user_id))
+                session.add(ResourceUserAccessControl(resource_id=(resource_dict['id']), user_id=user_id))
 
 
 def add_org_level_access_if_present(resource_dict, restricted_data, session):
     from ckanext.restricted.model import ResourceOrgAccessControl
 
-    if restricted_data['allowed_organizations']:
+    if 'allowed_organizations' in restricted_data:
         for org in restricted_data['allowed_organizations']:
             if org:
                 org_data = toolkit.get_action('organization_show')({'ignore_auth': True}, {'id': org})
@@ -112,4 +130,4 @@ def add_org_level_access_if_present(resource_dict, restricted_data, session):
 
 
 def resource_has_defined_restrictions(restricted_data):
-    return restricted_data and restricted_data['level'] and restricted_data['level'] == 'restricted'
+    return restricted_data['level'] == 'restricted'
