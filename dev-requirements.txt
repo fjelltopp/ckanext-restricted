@@ -3,3 +3,4 @@ pytest-cov
 factory-boy>=2
 mock
 ckantoolkit
+assertpy
