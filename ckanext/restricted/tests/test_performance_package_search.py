@@ -1,17 +1,16 @@
 # encoding: utf-8
 import time
 import os.path
-
-from ckan.tests import helpers
 import logging
-import pytest
-from ckan.common import config
 import subprocess
 
+import pytest
+
+from ckan.tests import helpers
+from ckan.common import config
 import ckanext.restricted.action
 import ckanext.restricted.plugin
 import ckanext.restricted.tests.assets.old_action
-
 
 log = logging.getLogger(__name__)
 
@@ -81,12 +80,18 @@ class Helper:
 class TestRestrictedSearchPerformance:
 
     def test_performance(self):
-        avg_time = self.get_avg_run_time(self._perform_search)
-        old_avg_time = self.get_avg_run_time(self._perform_old_search)
+        avg_time = self.get_avg_run_time(self._perform_search, False)
+        old_avg_time = self.get_avg_run_time(self._perform_old_search, False)
 
-        log.warning(f"Avg time: {avg_time}, old avg time: {old_avg_time}")
+        assert 5 * avg_time <= old_avg_time
 
-    def get_avg_run_time(self, search_function):
+    def test_performance_hide_enabled(self):
+        avg_time = self.get_avg_run_time(self._perform_search, True)
+        old_avg_time = self.get_avg_run_time(self._perform_old_search, True)
+
+        assert 9 * avg_time <= old_avg_time
+
+    def get_avg_run_time(self, search_function, hide_inaccessible_resources):
         context = {
             'ignore_auth': False,
             'user': 'test_user_00'
@@ -97,23 +102,23 @@ class TestRestrictedSearchPerformance:
 
         for i in range(0, iter_count):
             start = time.perf_counter()
-            result = search_function(context)
+            result = search_function(context, hide_inaccessible_resources)
             end = time.perf_counter()
             cumulative_time += end - start
             assert result['count'] == 299
 
         return cumulative_time / iter_count
 
-    def _perform_search(self, context):
+    def _perform_search(self, context, hide_inaccessible_resources):
         return helpers.call_action(
             'package_search',
             context,
-            q="title:Dataset"
+            q="title:Dataset", hide_inaccessible_resources=hide_inaccessible_resources
         )
 
-    def _perform_old_search(self, context):
+    def _perform_old_search(self, context, hide_inaccessible_resources=False):
         return helpers.call_action(
             'package_search_old',
             context,
-            q="title:Dataset"
+            q="title:Dataset", hide_inaccessible_resources=hide_inaccessible_resources
         )
