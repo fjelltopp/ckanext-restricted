@@ -117,8 +117,6 @@ def restricted_package_show(context, data_dict, package_metadata=None,
     else:
         restricted_package_metadata = dict(package_metadata.for_json())
 
-    # restricted_package_metadata['resources'] = _restricted_resource_list_url(
-    #     context, restricted_package_metadata.get('resources', []))
     resources = restricted_package_metadata.get('resources', [])
     if hide_inaccessible_resources:
         resources = _restricted_resource_list_accessible_by_user(context, resources, package_dict=package_metadata,
@@ -155,7 +153,6 @@ def _restricted_resource_list_accessible_by_user(context, resource_list, user_is
         if user_has_resource_access:
             restricted_resources_list.append(resource_dict)
     return restricted_resources_list
-
 
 
 @toolkit.side_effect_free
@@ -228,17 +225,6 @@ def restricted_check_access(context, data_dict):
     resource_dict = ckan.logic.get_action('resource_show')(dict(context, return_type='dict'), {'id': resource_id})
 
     return logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict)
-
-# def _restricted_resource_list_url(context, resource_list):
-#     restricted_resources_list = []
-#     for resource in resource_list:
-#         authorized = auth.restricted_resource_show(
-#             context, {'id': resource.get('id'), 'resource': resource}).get('success', False)
-#         restricted_resource = dict(resource)
-#         if not authorized:
-#             restricted_resource['url'] = _('Not Authorized')
-#         restricted_resources_list += [restricted_resource]
-#     return restricted_resources_list
 
 
 def is_authorized_to_do_package_update(context, package_id):
