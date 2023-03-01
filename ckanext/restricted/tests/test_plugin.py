@@ -7,6 +7,8 @@ import logging
 from ckan.lib.base import render_snippet
 from pprint import pformat
 import pytest
+from unittest.mock import patch, MagicMock
+from ckanext.restricted.auth import restricted_resource_show
 
 log = logging.getLogger(__name__)
 
@@ -321,7 +323,6 @@ class TestRestrictedPlugin(object):
                 datasets_count += 1
         assert datasets_count == 1
 
-
     @pytest.mark.ckan_config(u'ckan.auth.allow_dataset_collaborators', 'true')
     def test_collaborator_overrides_restricted_settings(self):
         dataset, other, other_resource, org_resource = self._two_users_one_package_two_resources_one_restricted()
@@ -476,3 +477,33 @@ class TestRestrictedPlugin(object):
             '{}">{}</a>'.format(org['name'], org['title'])
         )
         assert expected in html4
+
+    @patch('ckanext.restricted.auth.authz')
+    @patch('ckanext.restricted.auth.logic_auth')
+    def test_user_can_check_access_for_resource_within_activity(self, logic_auth, authz):
+        res = {'package_id': '42'}
+        logic_auth.get_resource_object = MagicMock(return_value=res)
+        authz.is_authorized = MagicMock(return_value={'success': True})
+        context = {}
+        data_dict = {'id': '14aeaaa7-730e-4197-9a90-18f4a8509ce3/984412af-c948-459c-815a-84ad3a635163'}
+
+        expected_data_dict = {'id': '14aeaaa7-730e-4197-9a90-18f4a8509ce3'}
+
+        assert restricted_resource_show(context, data_dict) == {'success': True}
+        logic_auth.get_resource_object.assert_called_once_with(context, expected_data_dict)
+        authz.is_authorized.assert_called_once_with('package_update', context, {'id': '42'})
+
+    @patch('ckanext.restricted.auth.authz')
+    @patch('ckanext.restricted.auth.logic_auth')
+    def test_user_can_check_access_for_resource(self, logic_auth, authz):
+        res = {'package_id': '42'}
+        logic_auth.get_resource_object = MagicMock(return_value=res)
+        authz.is_authorized = MagicMock(return_value={'success': True})
+        context = {}
+        data_dict = {'id': '14aeaaa7-730e-4197-9a90-18f4a8509ce3'}
+
+        expected_data_dict = {'id': '14aeaaa7-730e-4197-9a90-18f4a8509ce3'}
+
+        assert restricted_resource_show(context, data_dict) == {'success': True}
+        logic_auth.get_resource_object.assert_called_once_with(context, expected_data_dict)
+        authz.is_authorized.assert_called_once_with('package_update', context, {'id': '42'})
