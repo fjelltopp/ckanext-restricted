@@ -6,20 +6,15 @@ import six
 
 import ckan.authz as authz
 from ckan import model
-from ckan.common import _
 
 import ckan.lib.base as base
-from ckan.lib.mailer import mail_recipient
-from ckan.lib.mailer import MailerException
 import ckan.logic
 import ckan.plugins as p
-from ckan.logic.action.create import user_create
 from ckan.logic.action.get import package_search
 from ckan.logic.action.get import package_show
-from ckan.logic.action.get import resource_search
 from ckan.plugins import toolkit
 
-from ckanext.restricted import logic
+import ckanext.restricted.tests.assets.old_logic as old_logic
 import json
 
 try:
@@ -41,52 +36,6 @@ log = getLogger(__name__)
 _get_or_bust = ckan.logic.get_or_bust
 
 NotFound = ckan.logic.NotFound
-
-
-def restricted_user_create_and_notify(context, data_dict):
-
-    def body_from_user_dict(user_dict):
-        body = ''
-        for key, value in user_dict.items():
-            body += '* {0}: {1}\n'.format(
-                key.upper(), value if isinstance(value, str) else str(value))
-        return body
-
-    user_dict = user_create(context, data_dict)
-
-    # Send your email, check ckan.lib.mailer for params
-    try:
-        name = _('CKAN System Administrator')
-        email = config.get('email_to')
-        if not email:
-            raise MailerException('Missing "email-to" in config')
-
-        subject = _('New Registration: {0} ({1})').format(
-            user_dict.get('name', _(u'new user')), user_dict.get('email'))
-
-        extra_vars = {
-            'site_title': config.get('ckan.site_title'),
-            'site_url': config.get('ckan.site_url'),
-            'user_info': body_from_user_dict(user_dict)}
-
-        body = render(
-            'restricted/emails/restricted_user_registered.txt', extra_vars)
-
-        mail_recipient(name, email, subject, body)
-
-    except MailerException:
-        log.exception("Cannot send email after registration for user: {}".format(user_dict['name']))
-
-    return (user_dict)
-
-
-@toolkit.chained_action
-@toolkit.side_effect_free
-def resource_view_list(resource_view_list, context, data_dict):
-    try:
-        return resource_view_list(context, data_dict)
-    except toolkit.NotAuthorized:
-        return []
 
 
 @toolkit.side_effect_free
@@ -114,8 +63,6 @@ def restricted_package_show(context, data_dict, package_metadata=None):
     else:
         restricted_package_metadata = dict(package_metadata.for_json())
 
-    # restricted_package_metadata['resources'] = _restricted_resource_list_url(
-    #     context, restricted_package_metadata.get('resources', []))
     resources = restricted_package_metadata.get('resources', [])
     if hide_inaccessible_resources:
         resources = _restricted_resource_list_accessible_by_user(context, resources, package_dict=package_metadata)
@@ -129,39 +76,23 @@ def restricted_package_show(context, data_dict, package_metadata=None):
 
 def _restricted_resource_list_accessible_by_user(context, resource_list, package_dict=None):
     restricted_resources_list = []
-    user_name = logic.restricted_get_username_from_context(context)
+    user_name = old_logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
     for resource in resource_list:
         resource_dict = dict(resource)
         if not package_dict:
             package_dict = package_show(context, {'id': resource_dict['package_id']})
-        user_has_resource_access = logic.restricted_check_user_resource_access(
+        user_has_resource_access = old_logic.restricted_check_user_resource_access(
             user_name,
             resource_dict,
             package_dict,
             user_obj=user_obj,
             check_access_package_show=False,
-            user_organization_dict=logic.get_organization_dict(user_name)
+            user_organization_dict=old_logic.get_organization_dict(user_name)
         ).get('success', False)
         if user_has_resource_access:
             restricted_resources_list.append(resource_dict)
     return restricted_resources_list
-
-
-
-@toolkit.side_effect_free
-def restricted_resource_search(context, data_dict):
-    hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
-
-    resource_search_result = resource_search(context, data_dict)
-    results = resource_search_result['results']
-    if hide_inaccessible_resources:
-        results = _restricted_resource_list_accessible_by_user(context, results)
-    results = _restricted_resource_list_hide_fields(context, results)
-    count = len(results)
-
-    resource_search_result.update({'count': count, 'results': results})
-    return resource_search_result
 
 
 @toolkit.side_effect_free
@@ -194,7 +125,7 @@ def restricted_check_access(context, data_dict):
     package_id = data_dict.get('package_id', False)
     resource_id = data_dict.get('resource_id', False)
 
-    user_name = logic.restricted_get_username_from_context(context)
+    user_name = old_logic.restricted_get_username_from_context(context)
 
     if not package_id:
         raise ckan.logic.ValidationError('Missing package_id')
@@ -208,18 +139,7 @@ def restricted_check_access(context, data_dict):
     log.debug("checking resource")
     resource_dict = ckan.logic.get_action('resource_show')(dict(context, return_type='dict'), {'id': resource_id})
 
-    return logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict)
-
-# def _restricted_resource_list_url(context, resource_list):
-#     restricted_resources_list = []
-#     for resource in resource_list:
-#         authorized = auth.restricted_resource_show(
-#             context, {'id': resource.get('id'), 'resource': resource}).get('success', False)
-#         restricted_resource = dict(resource)
-#         if not authorized:
-#             restricted_resource['url'] = _('Not Authorized')
-#         restricted_resources_list += [restricted_resource]
-#     return restricted_resources_list
+    return old_logic.restricted_check_user_resource_access(user_name, resource_dict, package_dict)
 
 
 def _restricted_resource_list_hide_fields(context, resource_list):
@@ -229,14 +149,14 @@ def _restricted_resource_list_hide_fields(context, resource_list):
         restricted_resource = dict(resource)
 
         # get the restricted fields
-        restricted_dict = logic.restricted_get_restricted_dict(restricted_resource)
+        restricted_dict = old_logic.restricted_get_restricted_dict(restricted_resource)
 
         # hide other fields in restricted to everyone but dataset owner(s)
         if not authz.is_authorized(
                 'package_update', context, {'id': resource.get('package_id')}
                 ).get('success'):
 
-            user_name = logic.restricted_get_username_from_context(context)
+            user_name = old_logic.restricted_get_username_from_context(context)
 
             # hide partially other allowed user_names (keep own)
             allowed_users = []
