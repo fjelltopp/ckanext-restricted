@@ -76,10 +76,13 @@ def restricted_get_restricted_dict(resource_dict):
     return restricted_dict
 
 
-def restricted_check_user_resource_access(user, resource_dict, package_dict, user_is_package_collaborator_cache={},
+def restricted_check_user_resource_access(user, resource_dict, package_dict, user_is_package_collaborator_cache=None,
                                           user_obj=None, check_access_package_show=True,
                                           user_organization_dict=None):
     # Check access to package
+    if user_is_package_collaborator_cache is None:
+        user_is_package_collaborator_cache = {}
+
     package_id = package_dict['id']
     if check_access_package_show:
         logic.check_access('package_show', {'user': user}, {'id': package_id})
@@ -113,7 +116,7 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict, use
     if user in allowed_users:
         return {'success': True}
 
-    if not user_organization_dict:
+    if user_organization_dict is None:
         user_organization_dict = get_organization_dict(user_id)
 
     pkg_organization_id = package_dict.get('owner_org', '')

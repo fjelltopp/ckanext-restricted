@@ -90,8 +90,17 @@ def resource_view_list(resource_view_list, context, data_dict):
 
 @toolkit.side_effect_free
 def restricted_package_show(context, data_dict, package_metadata=None,
-                            user_is_package_collaborator_cache={}, user_can_update_package_cache={},
-                            user_organization_dict={}):
+                            user_is_package_collaborator_cache=None, user_can_update_package_cache=None,
+                            user_organization_dict=None):
+    if user_is_package_collaborator_cache is None:
+        user_is_package_collaborator_cache = {}
+
+    if user_can_update_package_cache is None:
+        user_can_update_package_cache = {}
+
+    if user_organization_dict is None:
+        user_organization_dict = {}
+
     hide_inaccessible_resources = p.toolkit.asbool(data_dict.get('hide_inaccessible_resources', False))
     if not package_metadata:
         package_metadata = package_show(context, data_dict)
@@ -130,13 +139,15 @@ def restricted_package_show(context, data_dict, package_metadata=None,
     return (restricted_package_metadata)
 
 
-def _restricted_resource_list_accessible_by_user(context, resource_list, user_is_package_collaborator_cache={},
+def _restricted_resource_list_accessible_by_user(context, resource_list, user_is_package_collaborator_cache=None,
                                                  package_dict=None, user_organization_dict=None):
     restricted_resources_list = []
     user_name = logic.restricted_get_username_from_context(context)
     user_obj = context.get('auth_user_obj')
-    if not user_organization_dict:
+    if user_organization_dict is None:
         user_organization_dict = logic.get_organization_dict(user_name)
+    if user_is_package_collaborator_cache is None:
+        user_is_package_collaborator_cache = {}
     for resource in resource_list:
         resource_dict = dict(resource)
         if not package_dict:
@@ -206,7 +217,6 @@ def restricted_package_search(context, data_dict):
 
 @toolkit.side_effect_free
 def restricted_check_access(context, data_dict):
-
     package_id = data_dict.get('package_id', False)
     resource_id = data_dict.get('resource_id', False)
 
@@ -231,8 +241,11 @@ def is_authorized_to_do_package_update(context, package_id):
     return authz.is_authorized('package_update', context, {'id': package_id}).get('success')
 
 
-def _restricted_resource_list_hide_fields(context, resource_list, user_can_update_package_cache={}):
+def _restricted_resource_list_hide_fields(context, resource_list, user_can_update_package_cache=None):
     restricted_resources_list = []
+    if user_can_update_package_cache is None:
+        user_can_update_package_cache = {}
+
     for resource in resource_list:
         # copy original resource
         restricted_resource = dict(resource)
