@@ -1,15 +1,17 @@
 # coding: utf8
 
 from __future__ import unicode_literals
+
+import json
+
+import six
+
 import ckan.authz as authz
 from ckan.common import _
-
 import ckan.lib.base as base
 import ckan.lib.mailer as mailer
 import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
-import json
-import six
 
 try:
     # CKAN 2.7 and later
@@ -74,13 +76,16 @@ def restricted_get_restricted_dict(resource_dict):
     return restricted_dict
 
 
-def restricted_check_user_resource_access(user, resource_dict, package_dict,
+def restricted_check_user_resource_access(user, resource_dict, package_dict, user_is_package_collaborator_cache=None,
                                           user_obj=None, check_access_package_show=True,
                                           user_organization_dict=None):
     # Check access to package
+    if user_is_package_collaborator_cache is None:
+        user_is_package_collaborator_cache = {}
+
+    package_id = package_dict['id']
     if check_access_package_show:
-        logic.check_access('package_show', {'user': user},
-                           {'id': package_dict['id']})
+        logic.check_access('package_show', {'user': user}, {'id': package_id})
 
     restricted_dict = restricted_get_restricted_dict(resource_dict)
 
@@ -89,7 +94,11 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict,
             user_id = user_obj.id
         else:
             user_id = toolkit.get_action('user_show')({'ignore_auth': True}, {'id': user})['id']
-        if authz.user_is_collaborator_on_dataset(user_id, package_dict['id']):
+
+        if package_id not in user_is_package_collaborator_cache:
+            user_is_package_collaborator_cache[package_id] = authz.user_is_collaborator_on_dataset(user_id, package_id)
+
+        if user_is_package_collaborator_cache[package_id]:
             return {'success': True}
 
     restricted_level = restricted_dict.get('level', 'restricted')
@@ -107,7 +116,7 @@ def restricted_check_user_resource_access(user, resource_dict, package_dict,
     if user in allowed_users:
         return {'success': True}
 
-    if not user_organization_dict:
+    if user_organization_dict is None:
         user_organization_dict = get_organization_dict(user_id)
 
     pkg_organization_id = package_dict.get('owner_org', '')
