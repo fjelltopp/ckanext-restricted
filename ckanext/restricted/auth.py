@@ -15,7 +15,7 @@ def restricted_resource_show(context, data_dict=None):
     # Ensure user who can edit the package can see the resource
     resource = data_dict.get('resource', context.get('resource', {}))
     if not resource:
-        extract_id_from_id_contactenated_with_activity_id(data_dict)
+        extract_id_from_id_concatenated_with_activity_id(data_dict)
         resource = logic_auth.get_resource_object(context, data_dict)
     if type(resource) is not dict:
         resource = resource.as_dict()
@@ -37,8 +37,8 @@ def restricted_resource_show(context, data_dict=None):
         user_name, resource, package))
 
 
-def extract_id_from_id_contactenated_with_activity_id(data_dict):
-    if 'id' in data_dict and '/' in data_dict['id']:
+def extract_id_from_id_concatenated_with_activity_id(data_dict):
+    if '/' in data_dict.get('id', ''):
         data_dict['id'] = data_dict['id'].split('/')[0]
 
 
