@@ -321,7 +321,6 @@ class TestRestrictedPlugin(object):
                 datasets_count += 1
         assert datasets_count == 1
 
-
     @pytest.mark.ckan_config(u'ckan.auth.allow_dataset_collaborators', 'true')
     def test_collaborator_overrides_restricted_settings(self):
         dataset, other, other_resource, org_resource = self._two_users_one_package_two_resources_one_restricted()
