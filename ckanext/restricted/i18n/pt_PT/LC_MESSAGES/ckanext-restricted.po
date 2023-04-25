@@ -51,10 +51,9 @@ msgid "Unauthorized"
 msgstr "Não autorizado"
 
 #: ckanext/restricted/views.py:25
-#, fuzzy
 #| msgid "Dataset not found"
 msgid "Request not found"
-msgstr "Conjunto de dados não encontrado"
+msgstr "Solicitação não encontrada"
 
 #: ckanext/restricted/views.py:85
 msgid "Access Request to resource {0} ({1}) from {2}"
@@ -537,7 +536,6 @@ msgid "The contact person of the package has granted you access."
 msgstr "A pessoa de contacto do pacote concedeu-lhe o acesso."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:6
-#, fuzzy
 #| msgid "Please click the following link"
 msgid "Please click the following link to access the resource"
 msgstr "Por favor, clique no seguinte link"
