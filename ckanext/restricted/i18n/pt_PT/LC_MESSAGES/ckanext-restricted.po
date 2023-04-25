@@ -51,7 +51,6 @@ msgid "Unauthorized"
 msgstr "Não autorizado"
 
 #: ckanext/restricted/views.py:25
-#| msgid "Dataset not found"
 msgid "Request not found"
 msgstr "Solicitação não encontrada"
 
@@ -536,7 +535,6 @@ msgid "The contact person of the package has granted you access."
 msgstr "A pessoa de contacto do pacote concedeu-lhe o acesso."
 
 #: ckanext/restricted/templates/restricted/emails/restricted_user_allowed.txt:6
-#| msgid "Please click the following link"
 msgid "Please click the following link to access the resource"
 msgstr "Por favor, clique no seguinte link"
 
