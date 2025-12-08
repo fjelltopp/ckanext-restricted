@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        python-version: [ 3.9, "3.10" ]
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
       - name: Install requirements
         run: pip install flake8 pycodestyle
       - name: Check syntax
@@ -23,15 +25,19 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ckan-container-version: "2.9"
+          - ckan-version: "ckan-dev:2.9-py3.9"
             ckan-postgres-version: "2.9"
             ckan-solr-version: "2.9-solr8"
-          - ckan-container-version: "2.10"
+          - ckan-version: "ckan-dev:2.10-py3.10"
             ckan-postgres-version: "2.10"
             ckan-solr-version: "2.10"
+          - ckan-version: "ckan-dev:2.11-py3.10"
+            ckan-postgres-version: "2.11"
+            ckan-solr-version: "2.11-solr9"
 
     container:
-      image: openknowledge/ckan-dev:${{ matrix.ckan-container-version }}
+      image: ckan/${{ matrix.ckan-version }}
+      options: --user root
     services:
       solr:
         image: ckan/ckan-solr:${{ matrix.ckan-solr-version }}
@@ -52,7 +58,7 @@ jobs:
       CKAN_REDIS_URL: redis://redis:6379/1
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - name: Install requirements
       run: |
         pip install -r requirements.txt
