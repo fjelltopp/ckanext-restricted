@@ -17,32 +17,17 @@ log = logging.getLogger(__name__)
 
 @pytest.fixture
 def import_performance_data(clean_db, clean_index):
-    from sqlalchemy import create_engine, text
-    
     raw_db_url = config['sqlalchemy.url']
     ckan_dir = get_ckan_directory()
     sql_file = f'{ckan_dir}/ckanext/restricted/tests/assets/performance_test_data.sql'
     
-    log.info(f"Loading performance data from: '{sql_file}'")
-    
-    # Read the SQL file
-    try:
-        with open(sql_file, 'r') as f:
-            sql_content = f.read()
-    except FileNotFoundError:
-        pytest.fail(f"Couldn't find performance data file {sql_file}")
-    
-    # Execute the SQL using SQLAlchemy
-    engine = create_engine(raw_db_url)
-    try:
-        with engine.connect() as connection:
-            # Execute the SQL statements
-            connection.execute(text(sql_content))
-            connection.commit()
-    except Exception as e:
-        pytest.fail(f"Couldn't import performance data from file {sql_file}: {str(e)}")
-    finally:
-        engine.dispose()
+    # Use psql with the connection URI and -f flag for file input
+    cmd = ['psql', '-d', raw_db_url, '-f', sql_file]
+
+    log.info(f"Loading performance data using: '{cmd}'")
+    completed_process = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+    if completed_process.returncode != 0:
+        pytest.fail(f"Couldn't import performance data from file {sql_file}")
 
     ini_file = f"{ckan_dir}/test.ini"
 
