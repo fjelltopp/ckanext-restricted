@@ -20,7 +20,9 @@ def import_performance_data(clean_db, clean_index):
     raw_db_url = config['sqlalchemy.url']
     ckan_dir = get_ckan_directory()
     sql_file = f'{ckan_dir}/ckanext/restricted/tests/assets/performance_test_data.sql'
-    cmd = ['psql', f'{raw_db_url}', "-f", f'{sql_file}']
+    
+    # Use psql with the connection URI and -f flag for file input
+    cmd = ['psql', '-d', raw_db_url, '-f', sql_file]
 
     log.info(f"Loading performance data using: '{cmd}'")
     completed_process = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
