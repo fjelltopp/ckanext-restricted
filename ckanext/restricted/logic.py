@@ -33,7 +33,12 @@ log = getLogger(__name__)
 def restricted_get_username_from_context(context):
     auth_user_obj = context.get('auth_user_obj', None)
     user_name = ''
-    if auth_user_obj:
+    # In CKAN 2.11.4, auth_user_obj is always set (either User or AnonymousUser)
+    # Check is_authenticated to handle AnonymousUser which doesn't have as_dict()
+    if auth_user_obj and hasattr(auth_user_obj, 'is_authenticated') and auth_user_obj.is_authenticated:
+        user_name = auth_user_obj.as_dict().get('name', '')
+    elif auth_user_obj and hasattr(auth_user_obj, 'as_dict'):
+        # Fallback for older CKAN versions or different user objects
         user_name = auth_user_obj.as_dict().get('name', '')
     else:
         if authz.get_user_id_for_username(context.get('user'), allow_none=True):
