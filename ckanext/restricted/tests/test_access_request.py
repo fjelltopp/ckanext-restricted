@@ -15,11 +15,6 @@ class TestAccessRequest(object):
 
     @mock.patch('ckan.lib.mailer.mail_recipient')
     def test_request_access_all_admins_are_emailed(self, mocked_mail_recipient, app):
-        
-        print("\n=== DEBUG: Test started ===")
-        print(f"DEBUG: app type: {type(app)}")
-        import ckan.plugins as p
-        print(f"DEBUG: Loaded plugins in test: {list(p.core._PLUGINS.keys())}")
 
         admin_1 = factories.User(email='admin_1@example.com')
         admin_2 = factories.User(email='admin_2@example.com')
