@@ -7,13 +7,19 @@ import mock
 
 @pytest.mark.usefixtures(u'clean_db')
 @pytest.mark.usefixtures(u'clean_index')
-@pytest.mark.ckan_config(u'ckan.plugins', u'restricted image_view recline_view')
+# Match plugins from test.ini to ensure all necessary core functions are available
+@pytest.mark.ckan_config(u'ckan.plugins', u'stats text_view image_view webpage_view datastore datapusher restricted')
 @pytest.mark.usefixtures(u'with_plugins')
 @pytest.mark.usefixtures(u'with_request_context')
 class TestAccessRequest(object):
 
     @mock.patch('ckan.lib.mailer.mail_recipient')
     def test_request_access_all_admins_are_emailed(self, mocked_mail_recipient, app):
+        
+        print("\n=== DEBUG: Test started ===")
+        print(f"DEBUG: app type: {type(app)}")
+        import ckan.plugins as p
+        print(f"DEBUG: Loaded plugins in test: {list(p.core._PLUGINS.keys())}")
 
         admin_1 = factories.User(email='admin_1@example.com')
         admin_2 = factories.User(email='admin_2@example.com')

@@ -1,0 +1,693 @@
+time="2026-01-09T12:19:15+03:00" level=info msg="Using docker host 'unix:///var/run/docker.sock', and daemon socket 'unix:///var/run/docker.sock'"
+[Tests/CKAN 2.11] ⭐ Run Set up job
+[Tests/CKAN 2.11] 🚀  Start image=ckan/ckan-dev:2.11-py3.10
+[Tests/CKAN 2.11]   🐳  docker pull image=ckan/ckan-solr:2.11-solr9 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker pull image=redis:3 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker pull image=ckan/ckan-postgres-dev:2.11 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker pull image=ckan/ckan-dev:2.11-py3.10 platform= username= forcePull=false
+[Tests/CKAN 2.11] Cleaning up services for job CKAN 2.11
+[Tests/CKAN 2.11] Cleaning up network for job CKAN 2.11, and network name is: act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network
+[Tests/CKAN 2.11]   🐳  docker pull image=ckan/ckan-solr:2.11-solr9 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker pull image=ckan/ckan-postgres-dev:2.11 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker pull image=redis:3 platform= username= forcePull=false
+[Tests/CKAN 2.11]   🐳  docker create image=redis:3 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker create image=ckan/ckan-solr:2.11-solr9 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker create image=ckan/ckan-postgres-dev:2.11 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker run image=redis:3 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker run image=ckan/ckan-postgres-dev:2.11 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker run image=ckan/ckan-solr:2.11-solr9 platform= entrypoint=[] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker exec cmd=[chown -R 8983:8983 /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted] user=0 workdir=
+[Tests/CKAN 2.11]   🐳  docker create image=ckan/ckan-dev:2.11-py3.10 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11]   🐳  docker run image=ckan/ckan-dev:2.11-py3.10 platform= entrypoint=["tail" "-f" "/dev/null"] cmd=[] network="act-Tests-CKAN-2-11-3cbeefd0cda845de956083c07bb298fc3aba023d340d02103a2fe01c3780f54a-test-network"
+[Tests/CKAN 2.11] container health of 063bc46f536486a1f13a9c7606500771fc8fba44d3566ddc8638c8deb8d60add (ckan/ckan-postgres-dev:2.11) is starting
+[Tests/CKAN 2.11] container health of 063bc46f536486a1f13a9c7606500771fc8fba44d3566ddc8638c8deb8d60add (ckan/ckan-postgres-dev:2.11) is starting
+[Tests/CKAN 2.11] container health of 063bc46f536486a1f13a9c7606500771fc8fba44d3566ddc8638c8deb8d60add (ckan/ckan-postgres-dev:2.11) is starting
+[Tests/CKAN 2.11] container health of 063bc46f536486a1f13a9c7606500771fc8fba44d3566ddc8638c8deb8d60add (ckan/ckan-postgres-dev:2.11) is starting
+[Tests/CKAN 2.11] container health of 063bc46f536486a1f13a9c7606500771fc8fba44d3566ddc8638c8deb8d60add (ckan/ckan-postgres-dev:2.11) is healthy
+[Tests/CKAN 2.11]   🐳  docker exec cmd=[node --no-warnings -e console.log(process.execPath)] user= workdir=
+[Tests/CKAN 2.11]   ✅  Success - Set up job
+[Tests/CKAN 2.11] ⭐ Run Main actions/checkout@v6
+[Tests/CKAN 2.11]   🐳  docker cp src=/home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/. dst=/home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   ✅  Success - Main actions/checkout@v6 [27.172844ms]
+[Tests/CKAN 2.11] ⭐ Run Main Install requirements
+[Tests/CKAN 2.11]   🐳  docker exec cmd=[sh -e /var/run/act/workflow/1.sh] user= workdir=
+[Tests/CKAN 2.11]   | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Tests/CKAN 2.11]   | Collecting pytest-ckan (from -r dev-requirements.txt (line 1))
+[Tests/CKAN 2.11]   |   Downloading pytest_ckan-0.0.12-py2.py3-none-any.whl.metadata (2.6 kB)
+[Tests/CKAN 2.11]   | Requirement already satisfied: pytest-cov in /usr/local/lib/python3.10/site-packages (from -r dev-requirements.txt (line 2)) (6.0.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: factory-boy>=2 in /usr/local/lib/python3.10/site-packages (from -r dev-requirements.txt (line 3)) (3.3.0)
+[Tests/CKAN 2.11]   | Collecting mock (from -r dev-requirements.txt (line 4))
+[Tests/CKAN 2.11]   |   Downloading mock-5.2.0-py3-none-any.whl.metadata (3.1 kB)
+[Tests/CKAN 2.11]   | Requirement already satisfied: ckantoolkit in /usr/local/lib/python3.10/site-packages (from -r dev-requirements.txt (line 5)) (0.0.7)
+[Tests/CKAN 2.11]   | Collecting assertpy (from -r dev-requirements.txt (line 6))
+[Tests/CKAN 2.11]   |   Downloading assertpy-1.1.tar.gz (25 kB)
+[Tests/CKAN 2.11]   |   Installing build dependencies: started
+[Tests/CKAN 2.11]   |   Installing build dependencies: finished with status 'done'
+[Tests/CKAN 2.11]   |   Getting requirements to build wheel: started
+[Tests/CKAN 2.11]   |   Getting requirements to build wheel: finished with status 'done'
+[Tests/CKAN 2.11]   |   Preparing metadata (pyproject.toml): started
+[Tests/CKAN 2.11]   |   Preparing metadata (pyproject.toml): finished with status 'done'
+[Tests/CKAN 2.11]   | Requirement already satisfied: pytest in /usr/local/lib/python3.10/site-packages (from pytest-ckan->-r dev-requirements.txt (line 1)) (8.3.4)
+[Tests/CKAN 2.11]   | Requirement already satisfied: coverage>=7.5 in /usr/local/lib/python3.10/site-packages (from coverage[toml]>=7.5->pytest-cov->-r dev-requirements.txt (line 2)) (7.7.1)
+[Tests/CKAN 2.11]   | Requirement already satisfied: Faker>=0.7.0 in /usr/local/lib/python3.10/site-packages (from factory-boy>=2->-r dev-requirements.txt (line 3)) (26.0.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: six in /usr/local/lib/python3.10/site-packages (from ckantoolkit->-r dev-requirements.txt (line 5)) (1.16.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: tomli in /usr/local/lib/python3.10/site-packages (from coverage[toml]>=7.5->pytest-cov->-r dev-requirements.txt (line 2)) (2.0.1)
+[Tests/CKAN 2.11]   | Requirement already satisfied: python-dateutil>=2.4 in /usr/local/lib/python3.10/site-packages (from Faker>=0.7.0->factory-boy>=2->-r dev-requirements.txt (line 3)) (2.9.0.post0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /usr/local/lib/python3.10/site-packages (from pytest->pytest-ckan->-r dev-requirements.txt (line 1)) (1.3.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: iniconfig in /usr/local/lib/python3.10/site-packages (from pytest->pytest-ckan->-r dev-requirements.txt (line 1)) (2.3.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: packaging in /usr/local/lib/python3.10/site-packages (from pytest->pytest-ckan->-r dev-requirements.txt (line 1)) (24.1)
+[Tests/CKAN 2.11]   | Requirement already satisfied: pluggy<2,>=1.5 in /usr/local/lib/python3.10/site-packages (from pytest->pytest-ckan->-r dev-requirements.txt (line 1)) (1.6.0)
+[Tests/CKAN 2.11]   | Requirement already satisfied: typing-extensions>=4.6.0 in /usr/local/lib/python3.10/site-packages (from exceptiongroup>=1.0.0rc8->pytest->pytest-ckan->-r dev-requirements.txt (line 1)) (4.12.2)
+[Tests/CKAN 2.11]   | Downloading pytest_ckan-0.0.12-py2.py3-none-any.whl (6.0 kB)
+[Tests/CKAN 2.11]   | Downloading mock-5.2.0-py3-none-any.whl (31 kB)
+[Tests/CKAN 2.11]   | Building wheels for collected packages: assertpy
+[Tests/CKAN 2.11]   |   Building wheel for assertpy (pyproject.toml): started
+[Tests/CKAN 2.11]   |   Building wheel for assertpy (pyproject.toml): finished with status 'done'
+[Tests/CKAN 2.11]   |   Created wheel for assertpy: filename=assertpy-1.1-py3-none-any.whl size=42984 sha256=289a50605e5d53ac84a831c4e6b5c4bc33d088ee81a90d434d6fb9de3f5da16d
+[Tests/CKAN 2.11]   |   Stored in directory: /root/.cache/pip/wheels/af/56/e7/175b60f695bb1520ccdcc66a6d0dbdbf124f6e14cad04703c9
+[Tests/CKAN 2.11]   | Successfully built assertpy
+[Tests/CKAN 2.11]   | Installing collected packages: assertpy, mock, pytest-ckan
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | Successfully installed assertpy-1.1 mock-5.2.0 pytest-ckan-0.0.12
+[Tests/CKAN 2.11]   | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Tests/CKAN 2.11]   | Obtaining file:///home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   |   Installing build dependencies: started
+[Tests/CKAN 2.11]   |   Installing build dependencies: finished with status 'done'
+[Tests/CKAN 2.11]   |   Checking if build backend supports build_editable: started
+[Tests/CKAN 2.11]   |   Checking if build backend supports build_editable: finished with status 'done'
+[Tests/CKAN 2.11]   |   Getting requirements to build editable: started
+[Tests/CKAN 2.11]   |   Getting requirements to build editable: finished with status 'done'
+[Tests/CKAN 2.11]   |   Preparing editable metadata (pyproject.toml): started
+[Tests/CKAN 2.11]   |   Preparing editable metadata (pyproject.toml): finished with status 'done'
+[Tests/CKAN 2.11]   | Building wheels for collected packages: ckanext-restricted
+[Tests/CKAN 2.11]   |   Building editable for ckanext-restricted (pyproject.toml): started
+[Tests/CKAN 2.11]   |   Building editable for ckanext-restricted (pyproject.toml): finished with status 'done'
+[Tests/CKAN 2.11]   |   Created wheel for ckanext-restricted: filename=ckanext_restricted-0.0.4-0.editable-py3-none-any.whl size=18582 sha256=d8670e3ba7ce48ff9700326de1fbd3570009d1f07bb4289c025fb0c0fb1d9f5b
+[Tests/CKAN 2.11]   |   Stored in directory: /tmp/pip-ephem-wheel-cache-vmhp5cv8/wheels/8a/c9/f5/be47d6c54e4daad29385ebb2902f59293937c4810bc4d4edfc
+[Tests/CKAN 2.11]   | Successfully built ckanext-restricted
+[Tests/CKAN 2.11]   | Installing collected packages: ckanext-restricted
+[Tests/CKAN 2.11]   | Successfully installed ckanext-restricted-0.0.4
+[Tests/CKAN 2.11]   | WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Tests/CKAN 2.11]   ✅  Success - Main Install requirements [8.487681173s]
+[Tests/CKAN 2.11] ⭐ Run Main Setup extension
+[Tests/CKAN 2.11]   🐳  docker exec cmd=[sh -e /var/run/act/workflow/2.sh] user= workdir=
+[Tests/CKAN 2.11]   | /srv/app/src/ckan/ckan/cli/cli.py:7: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[Tests/CKAN 2.11]   |   from pkg_resources import iter_entry_points
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:40,505 INFO  [ckan.cli] Using configuration file /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/test.ini
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:40,506 INFO  [ckan.config.environment] Loading static files from public
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:40,832 WARNI [ckan.common] Option lang is not declared
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:40,974 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:41,131 WARNI [ckan.config.middleware.flask_app] Extensions are excluded from CSRF protection! We allow extensions to run without CSRF protection but it will be forced future releases. Read the documentation for more information on how to add CSRF protection to your extension.
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:42,951 INFO  [ckan.model] CKAN database version upgraded: base -> 4a5e3465beb6 (head)
+[Tests/CKAN 2.11]   | Upgrading DB: SUCCESS
+[Tests/CKAN 2.11]   ✅  Success - Main Setup extension [3.219758328s]
+[Tests/CKAN 2.11] ⭐ Run Main Run tests
+[Tests/CKAN 2.11]   🐳  docker exec cmd=[sh -e /var/run/act/workflow/3.sh] user= workdir=
+[Tests/CKAN 2.11]   | /srv/app/src/ckan/ckan/plugins/core.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[Tests/CKAN 2.11]   |   from pkg_resources import iter_entry_points
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,001 INFO  [ckan.cli] Using configuration file /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/test.ini
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,001 INFO  [ckan.config.environment] Loading static files from public
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,203 WARNI [ckan.common] Option lang is not declared
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,263 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,443 WARNI [ckan.config.middleware.flask_app] Extensions are excluded from CSRF protection! We allow extensions to run without CSRF protection but it will be forced future releases. Read the documentation for more information on how to add CSRF protection to your extension.
+[Tests/CKAN 2.11]   | ============================= test session starts ==============================
+[Tests/CKAN 2.11]   | platform linux -- Python 3.10.19, pytest-8.3.4, pluggy-1.6.0
+[Tests/CKAN 2.11]   | rootdir: /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   | plugins: ckan-0.0.12, rerunfailures-15.0, Faker-26.0.0, split-0.10.0, cov-6.0.0, factoryboy-2.7.0, freezegun-0.4.2, retry-1.7.0, ckan-2.11.4
+[Tests/CKAN 2.11]   | collected 2 items
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:45,574 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_auth.py ..                                 [100%]
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ---------- coverage: platform linux, python 3.10.19-final-0 ----------
+[Tests/CKAN 2.11]   | Name                                                              Stmts   Miss  Cover
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | ckanext/restricted/__init__.py                                        0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/action.py                                        176    136    23%
+[Tests/CKAN 2.11]   | ckanext/restricted/auth.py                                           32     12    62%
+[Tests/CKAN 2.11]   | ckanext/restricted/helpers.py                                         7      3    57%
+[Tests/CKAN 2.11]   | ckanext/restricted/logic.py                                         121     99    18%
+[Tests/CKAN 2.11]   | ckanext/restricted/plugin.py                                         55     18    67%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/__init__.py                                  0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/__init__.py                           0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_action.py                       110    110     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_logic.py                         82     82     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/conftest.py                                 18     10    44%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request.py                      61     61     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request_email_templates.py      40     40     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_allowed_user_email_templates.py        20     20     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_auth.py                                33      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py          74     74     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_plugin.py                             190    190     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/views.py                                         219    184    16%
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | TOTAL                                                              1238   1039    16%
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ======================== 2 passed, 10 warnings in 3.63s ========================
+[Tests/CKAN 2.11]   | /srv/app/src/ckan/ckan/plugins/core.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[Tests/CKAN 2.11]   |   from pkg_resources import iter_entry_points
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,064 INFO  [ckan.cli] Using configuration file /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/test.ini
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,065 INFO  [ckan.config.environment] Loading static files from public
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,248 WARNI [ckan.common] Option lang is not declared
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,306 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,478 WARNI [ckan.config.middleware.flask_app] Extensions are excluded from CSRF protection! We allow extensions to run without CSRF protection but it will be forced future releases. Read the documentation for more information on how to add CSRF protection to your extension.
+[Tests/CKAN 2.11]   | ============================= test session starts ==============================
+[Tests/CKAN 2.11]   | platform linux -- Python 3.10.19, pytest-8.3.4, pluggy-1.6.0
+[Tests/CKAN 2.11]   | rootdir: /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   | plugins: ckan-0.0.12, rerunfailures-15.0, Faker-26.0.0, split-0.10.0, cov-6.0.0, factoryboy-2.7.0, freezegun-0.4.2, retry-1.7.0, ckan-2.11.4
+[Tests/CKAN 2.11]   | collected 14 items
+[Tests/CKAN 2.11]   | 2026-01-09 09:19:50,653 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_plugin.py ..............                   [100%]
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ---------- coverage: platform linux, python 3.10.19-final-0 ----------
+[Tests/CKAN 2.11]   | Name                                                              Stmts   Miss  Cover
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | ckanext/restricted/__init__.py                                        0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/action.py                                        176     30    83%
+[Tests/CKAN 2.11]   | ckanext/restricted/auth.py                                           32      5    84%
+[Tests/CKAN 2.11]   | ckanext/restricted/helpers.py                                         7      3    57%
+[Tests/CKAN 2.11]   | ckanext/restricted/logic.py                                         121     37    69%
+[Tests/CKAN 2.11]   | ckanext/restricted/plugin.py                                         55     13    76%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/__init__.py                                  0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/__init__.py                           0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_action.py                       110    110     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_logic.py                         82     82     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/conftest.py                                 18     10    44%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request.py                      61     61     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request_email_templates.py      40     40     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_allowed_user_email_templates.py        20     20     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_auth.py                                33     33     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py          74     74     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_plugin.py                             190      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/views.py                                         219    184    16%
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | TOTAL                                                              1238    702    43%
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ======================= 14 passed, 99 warnings in 22.64s =======================
+[Tests/CKAN 2.11]   | /srv/app/src/ckan/ckan/plugins/core.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[Tests/CKAN 2.11]   |   from pkg_resources import iter_entry_points
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,123 INFO  [ckan.cli] Using configuration file /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/test.ini
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,123 INFO  [ckan.config.environment] Loading static files from public
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,310 WARNI [ckan.common] Option lang is not declared
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,370 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,526 WARNI [ckan.config.middleware.flask_app] Extensions are excluded from CSRF protection! We allow extensions to run without CSRF protection but it will be forced future releases. Read the documentation for more information on how to add CSRF protection to your extension.
+[Tests/CKAN 2.11]   | ============================= test session starts ==============================
+[Tests/CKAN 2.11]   | platform linux -- Python 3.10.19, pytest-8.3.4, pluggy-1.6.0
+[Tests/CKAN 2.11]   | rootdir: /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   | plugins: ckan-0.0.12, rerunfailures-15.0, Faker-26.0.0, split-0.10.0, cov-6.0.0, factoryboy-2.7.0, freezegun-0.4.2, retry-1.7.0, ckan-2.11.4
+[Tests/CKAN 2.11]   | collected 1 item
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:14,651 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_allowed_user_email_templates.py .          [100%]
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ---------- coverage: platform linux, python 3.10.19-final-0 ----------
+[Tests/CKAN 2.11]   | Name                                                              Stmts   Miss  Cover
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | ckanext/restricted/__init__.py                                        0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/action.py                                        176     96    45%
+[Tests/CKAN 2.11]   | ckanext/restricted/auth.py                                           32     21    34%
+[Tests/CKAN 2.11]   | ckanext/restricted/helpers.py                                         7      3    57%
+[Tests/CKAN 2.11]   | ckanext/restricted/logic.py                                         121     82    32%
+[Tests/CKAN 2.11]   | ckanext/restricted/plugin.py                                         55     17    69%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/__init__.py                                  0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/__init__.py                           0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_action.py                       110    110     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_logic.py                         82     82     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/conftest.py                                 18     10    44%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request.py                      61     61     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request_email_templates.py      40     40     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_allowed_user_email_templates.py        20      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_auth.py                                33     33     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py          74     74     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_plugin.py                             190    190     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/views.py                                         219    184    16%
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | TOTAL                                                              1238   1003    19%
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ======================== 1 passed, 8 warnings in 3.71s =========================
+[Tests/CKAN 2.11]   | /srv/app/src/ckan/ckan/plugins/core.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+[Tests/CKAN 2.11]   |   from pkg_resources import iter_entry_points
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,222 INFO  [ckan.cli] Using configuration file /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/test.ini
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,222 INFO  [ckan.config.environment] Loading static files from public
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,396 WARNI [ckan.common] Option lang is not declared
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,451 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,607 WARNI [ckan.config.middleware.flask_app] Extensions are excluded from CSRF protection! We allow extensions to run without CSRF protection but it will be forced future releases. Read the documentation for more information on how to add CSRF protection to your extension.
+[Tests/CKAN 2.11]   | ============================= test session starts ==============================
+[Tests/CKAN 2.11]   | platform linux -- Python 3.10.19, pytest-8.3.4, pluggy-1.6.0
+[Tests/CKAN 2.11]   | rootdir: /home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted
+[Tests/CKAN 2.11]   | plugins: ckan-0.0.12, rerunfailures-15.0, Faker-26.0.0, split-0.10.0, cov-6.0.0, factoryboy-2.7.0, freezegun-0.4.2, retry-1.7.0, ckan-2.11.4
+[Tests/CKAN 2.11]   | collected 2 items
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:19,745 INFO  [ckan.config.environment] Loading templates from /srv/app/src/ckan/ckan/templates
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py EE           [100%]
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ==================================== ERRORS ====================================
+[Tests/CKAN 2.11]   | ______ ERROR at setup of TestRestrictedSearchPerformance.test_performance ______
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | clean_db = None, clean_index = None
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   |     @pytest.fixture
+[Tests/CKAN 2.11]   |     def import_performance_data(clean_db, clean_index):
+[Tests/CKAN 2.11]   |         raw_db_url = config['sqlalchemy.url']
+[Tests/CKAN 2.11]   |         ckan_dir = get_ckan_directory()
+[Tests/CKAN 2.11]   |         sql_file = f'{ckan_dir}/ckanext/restricted/tests/assets/performance_test_data.sql'
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         # Use psql with the connection URI and -f flag for file input
+[Tests/CKAN 2.11]   |         cmd = ['psql', '-d', raw_db_url, '-f', sql_file]
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         log.info(f"Loading performance data using: '{cmd}'")
+[Tests/CKAN 2.11]   | >       completed_process = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py:28: 
+[Tests/CKAN 2.11]   | _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:503: in run
+[Tests/CKAN 2.11]   |     with Popen(*popenargs, **kwargs) as process:
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:971: in __init__
+[Tests/CKAN 2.11]   |     self._execute_child(args, executable, preexec_fn, close_fds,
+[Tests/CKAN 2.11]   | _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | self = <Popen: returncode: 255 args: ['psql', '-d', 'postgresql://ckan_default:pass...>
+[Tests/CKAN 2.11]   | args = ['psql', '-d', 'postgresql://ckan_default:pass@postgres/ckan_test', '-f', '/home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/ckanext/restricted/tests/assets/performance_test_data.sql']
+[Tests/CKAN 2.11]   | executable = b'psql', preexec_fn = None, close_fds = True, pass_fds = ()
+[Tests/CKAN 2.11]   | cwd = None, env = None, startupinfo = None, creationflags = 0, shell = False
+[Tests/CKAN 2.11]   | p2cread = -1, p2cwrite = -1, c2pread = -1, c2pwrite = 16, errread = -1
+[Tests/CKAN 2.11]   | errwrite = 16, restore_signals = True, gid = None, gids = None, uid = None
+[Tests/CKAN 2.11]   | umask = -1, start_new_session = False
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   |     def _execute_child(self, args, executable, preexec_fn, close_fds,
+[Tests/CKAN 2.11]   |                        pass_fds, cwd, env,
+[Tests/CKAN 2.11]   |                        startupinfo, creationflags, shell,
+[Tests/CKAN 2.11]   |                        p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                        c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                        errread, errwrite,
+[Tests/CKAN 2.11]   |                        restore_signals,
+[Tests/CKAN 2.11]   |                        gid, gids, uid, umask,
+[Tests/CKAN 2.11]   |                        start_new_session):
+[Tests/CKAN 2.11]   |         """Execute program (POSIX version)"""
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if isinstance(args, (str, bytes)):
+[Tests/CKAN 2.11]   |             args = [args]
+[Tests/CKAN 2.11]   |         elif isinstance(args, os.PathLike):
+[Tests/CKAN 2.11]   |             if shell:
+[Tests/CKAN 2.11]   |                 raise TypeError('path-like args is not allowed when '
+[Tests/CKAN 2.11]   |                                 'shell is true')
+[Tests/CKAN 2.11]   |             args = [args]
+[Tests/CKAN 2.11]   |         else:
+[Tests/CKAN 2.11]   |             args = list(args)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if shell:
+[Tests/CKAN 2.11]   |             # On Android the default shell is at '/system/bin/sh'.
+[Tests/CKAN 2.11]   |             unix_shell = ('/system/bin/sh' if
+[Tests/CKAN 2.11]   |                       hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+[Tests/CKAN 2.11]   |             args = [unix_shell, "-c"] + args
+[Tests/CKAN 2.11]   |             if executable:
+[Tests/CKAN 2.11]   |                 args[0] = executable
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if executable is None:
+[Tests/CKAN 2.11]   |             executable = args[0]
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         sys.audit("subprocess.Popen", executable, args, cwd, env)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if (_USE_POSIX_SPAWN
+[Tests/CKAN 2.11]   |                 and os.path.dirname(executable)
+[Tests/CKAN 2.11]   |                 and preexec_fn is None
+[Tests/CKAN 2.11]   |                 and not close_fds
+[Tests/CKAN 2.11]   |                 and not pass_fds
+[Tests/CKAN 2.11]   |                 and cwd is None
+[Tests/CKAN 2.11]   |                 and (p2cread == -1 or p2cread > 2)
+[Tests/CKAN 2.11]   |                 and (c2pwrite == -1 or c2pwrite > 2)
+[Tests/CKAN 2.11]   |                 and (errwrite == -1 or errwrite > 2)
+[Tests/CKAN 2.11]   |                 and not start_new_session
+[Tests/CKAN 2.11]   |                 and gid is None
+[Tests/CKAN 2.11]   |                 and gids is None
+[Tests/CKAN 2.11]   |                 and uid is None
+[Tests/CKAN 2.11]   |                 and umask < 0):
+[Tests/CKAN 2.11]   |             self._posix_spawn(args, executable, env, restore_signals,
+[Tests/CKAN 2.11]   |                               p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                               c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                               errread, errwrite)
+[Tests/CKAN 2.11]   |             return
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         orig_executable = executable
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         # For transferring possible exec failure from child to parent.
+[Tests/CKAN 2.11]   |         # Data format: "exception name:hex errno:description"
+[Tests/CKAN 2.11]   |         # Pickle is not used; it is complex and involves memory allocation.
+[Tests/CKAN 2.11]   |         errpipe_read, errpipe_write = os.pipe()
+[Tests/CKAN 2.11]   |         # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+[Tests/CKAN 2.11]   |         low_fds_to_close = []
+[Tests/CKAN 2.11]   |         while errpipe_write < 3:
+[Tests/CKAN 2.11]   |             low_fds_to_close.append(errpipe_write)
+[Tests/CKAN 2.11]   |             errpipe_write = os.dup(errpipe_write)
+[Tests/CKAN 2.11]   |         for low_fd in low_fds_to_close:
+[Tests/CKAN 2.11]   |             os.close(low_fd)
+[Tests/CKAN 2.11]   |         try:
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 # We must avoid complex work that could involve
+[Tests/CKAN 2.11]   |                 # malloc or free in the child process to avoid
+[Tests/CKAN 2.11]   |                 # potential deadlocks, thus we do all this here.
+[Tests/CKAN 2.11]   |                 # and pass it to fork_exec()
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |                 if env is not None:
+[Tests/CKAN 2.11]   |                     env_list = []
+[Tests/CKAN 2.11]   |                     for k, v in env.items():
+[Tests/CKAN 2.11]   |                         k = os.fsencode(k)
+[Tests/CKAN 2.11]   |                         if b'=' in k:
+[Tests/CKAN 2.11]   |                             raise ValueError("illegal environment variable name")
+[Tests/CKAN 2.11]   |                         env_list.append(k + b'=' + os.fsencode(v))
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     env_list = None  # Use execv instead of execve.
+[Tests/CKAN 2.11]   |                 executable = os.fsencode(executable)
+[Tests/CKAN 2.11]   |                 if os.path.dirname(executable):
+[Tests/CKAN 2.11]   |                     executable_list = (executable,)
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     # This matches the behavior of os._execvpe().
+[Tests/CKAN 2.11]   |                     executable_list = tuple(
+[Tests/CKAN 2.11]   |                         os.path.join(os.fsencode(dir), executable)
+[Tests/CKAN 2.11]   |                         for dir in os.get_exec_path(env))
+[Tests/CKAN 2.11]   |                 fds_to_keep = set(pass_fds)
+[Tests/CKAN 2.11]   |                 fds_to_keep.add(errpipe_write)
+[Tests/CKAN 2.11]   |                 self.pid = _posixsubprocess.fork_exec(
+[Tests/CKAN 2.11]   |                         args, executable_list,
+[Tests/CKAN 2.11]   |                         close_fds, tuple(sorted(map(int, fds_to_keep))),
+[Tests/CKAN 2.11]   |                         cwd, env_list,
+[Tests/CKAN 2.11]   |                         p2cread, p2cwrite, c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                         errread, errwrite,
+[Tests/CKAN 2.11]   |                         errpipe_read, errpipe_write,
+[Tests/CKAN 2.11]   |                         restore_signals, start_new_session,
+[Tests/CKAN 2.11]   |                         gid, gids, uid, umask,
+[Tests/CKAN 2.11]   |                         preexec_fn)
+[Tests/CKAN 2.11]   |                 self._child_created = True
+[Tests/CKAN 2.11]   |             finally:
+[Tests/CKAN 2.11]   |                 # be sure the FD is closed no matter what
+[Tests/CKAN 2.11]   |                 os.close(errpipe_write)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             self._close_pipe_fds(p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                                  c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                                  errread, errwrite)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             # Wait for exec to fail or succeed; possibly raising an
+[Tests/CKAN 2.11]   |             # exception (limited in size)
+[Tests/CKAN 2.11]   |             errpipe_data = bytearray()
+[Tests/CKAN 2.11]   |             while True:
+[Tests/CKAN 2.11]   |                 part = os.read(errpipe_read, 50000)
+[Tests/CKAN 2.11]   |                 errpipe_data += part
+[Tests/CKAN 2.11]   |                 if not part or len(errpipe_data) > 50000:
+[Tests/CKAN 2.11]   |                     break
+[Tests/CKAN 2.11]   |         finally:
+[Tests/CKAN 2.11]   |             # be sure the FD is closed no matter what
+[Tests/CKAN 2.11]   |             os.close(errpipe_read)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if errpipe_data:
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 pid, sts = os.waitpid(self.pid, 0)
+[Tests/CKAN 2.11]   |                 if pid == self.pid:
+[Tests/CKAN 2.11]   |                     self._handle_exitstatus(sts)
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     self.returncode = sys.maxsize
+[Tests/CKAN 2.11]   |             except ChildProcessError:
+[Tests/CKAN 2.11]   |                 pass
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 exception_name, hex_errno, err_msg = (
+[Tests/CKAN 2.11]   |                         errpipe_data.split(b':', 2))
+[Tests/CKAN 2.11]   |                 # The encoding here should match the encoding
+[Tests/CKAN 2.11]   |                 # written in by the subprocess implementations
+[Tests/CKAN 2.11]   |                 # like _posixsubprocess
+[Tests/CKAN 2.11]   |                 err_msg = err_msg.decode()
+[Tests/CKAN 2.11]   |             except ValueError:
+[Tests/CKAN 2.11]   |                 exception_name = b'SubprocessError'
+[Tests/CKAN 2.11]   |                 hex_errno = b'0'
+[Tests/CKAN 2.11]   |                 err_msg = 'Bad exception data from child: {!r}'.format(
+[Tests/CKAN 2.11]   |                               bytes(errpipe_data))
+[Tests/CKAN 2.11]   |             child_exception_type = getattr(
+[Tests/CKAN 2.11]   |                     builtins, exception_name.decode('ascii'),
+[Tests/CKAN 2.11]   |                     SubprocessError)
+[Tests/CKAN 2.11]   |             if issubclass(child_exception_type, OSError) and hex_errno:
+[Tests/CKAN 2.11]   |                 errno_num = int(hex_errno, 16)
+[Tests/CKAN 2.11]   |                 child_exec_never_called = (err_msg == "noexec")
+[Tests/CKAN 2.11]   |                 if child_exec_never_called:
+[Tests/CKAN 2.11]   |                     err_msg = ""
+[Tests/CKAN 2.11]   |                     # The error must be from chdir(cwd).
+[Tests/CKAN 2.11]   |                     err_filename = cwd
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     err_filename = orig_executable
+[Tests/CKAN 2.11]   |                 if errno_num != 0:
+[Tests/CKAN 2.11]   |                     err_msg = os.strerror(errno_num)
+[Tests/CKAN 2.11]   | >               raise child_exception_type(errno_num, err_msg, err_filename)
+[Tests/CKAN 2.11]   | E               FileNotFoundError: [Errno 2] No such file or directory: 'psql'
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:1863: FileNotFoundError
+[Tests/CKAN 2.11]   | ---------------------------- Captured stdout setup -----------------------------
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:20,106 INFO  [ckan.model] Database tables dropped
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,094 INFO  [ckan.model] CKAN database version upgraded: base -> 4a5e3465beb6 (head)
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,094 INFO  [ckan.model] Database initialised
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,094 INFO  [ckan.model] Database rebuilt
+[Tests/CKAN 2.11]   | ------------------------------ Captured log setup ------------------------------
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:244 Database tables dropped
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:376 CKAN database version upgraded: base -> 4a5e3465beb6 (head)
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:228 Database initialised
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:266 Database rebuilt
+[Tests/CKAN 2.11]   | _ ERROR at setup of TestRestrictedSearchPerformance.test_performance_hide_enabled _
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | clean_db = None, clean_index = None
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   |     @pytest.fixture
+[Tests/CKAN 2.11]   |     def import_performance_data(clean_db, clean_index):
+[Tests/CKAN 2.11]   |         raw_db_url = config['sqlalchemy.url']
+[Tests/CKAN 2.11]   |         ckan_dir = get_ckan_directory()
+[Tests/CKAN 2.11]   |         sql_file = f'{ckan_dir}/ckanext/restricted/tests/assets/performance_test_data.sql'
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         # Use psql with the connection URI and -f flag for file input
+[Tests/CKAN 2.11]   |         cmd = ['psql', '-d', raw_db_url, '-f', sql_file]
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         log.info(f"Loading performance data using: '{cmd}'")
+[Tests/CKAN 2.11]   | >       completed_process = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py:28: 
+[Tests/CKAN 2.11]   | _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:503: in run
+[Tests/CKAN 2.11]   |     with Popen(*popenargs, **kwargs) as process:
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:971: in __init__
+[Tests/CKAN 2.11]   |     self._execute_child(args, executable, preexec_fn, close_fds,
+[Tests/CKAN 2.11]   | _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | self = <Popen: returncode: 255 args: ['psql', '-d', 'postgresql://ckan_default:pass...>
+[Tests/CKAN 2.11]   | args = ['psql', '-d', 'postgresql://ckan_default:pass@postgres/ckan_test', '-f', '/home/toavina/fjelltopp/adx/adx_develop/submodules/ckanext-restricted/ckanext/restricted/tests/assets/performance_test_data.sql']
+[Tests/CKAN 2.11]   | executable = b'psql', preexec_fn = None, close_fds = True, pass_fds = ()
+[Tests/CKAN 2.11]   | cwd = None, env = None, startupinfo = None, creationflags = 0, shell = False
+[Tests/CKAN 2.11]   | p2cread = -1, p2cwrite = -1, c2pread = -1, c2pwrite = 16, errread = -1
+[Tests/CKAN 2.11]   | errwrite = 16, restore_signals = True, gid = None, gids = None, uid = None
+[Tests/CKAN 2.11]   | umask = -1, start_new_session = False
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   |     def _execute_child(self, args, executable, preexec_fn, close_fds,
+[Tests/CKAN 2.11]   |                        pass_fds, cwd, env,
+[Tests/CKAN 2.11]   |                        startupinfo, creationflags, shell,
+[Tests/CKAN 2.11]   |                        p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                        c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                        errread, errwrite,
+[Tests/CKAN 2.11]   |                        restore_signals,
+[Tests/CKAN 2.11]   |                        gid, gids, uid, umask,
+[Tests/CKAN 2.11]   |                        start_new_session):
+[Tests/CKAN 2.11]   |         """Execute program (POSIX version)"""
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if isinstance(args, (str, bytes)):
+[Tests/CKAN 2.11]   |             args = [args]
+[Tests/CKAN 2.11]   |         elif isinstance(args, os.PathLike):
+[Tests/CKAN 2.11]   |             if shell:
+[Tests/CKAN 2.11]   |                 raise TypeError('path-like args is not allowed when '
+[Tests/CKAN 2.11]   |                                 'shell is true')
+[Tests/CKAN 2.11]   |             args = [args]
+[Tests/CKAN 2.11]   |         else:
+[Tests/CKAN 2.11]   |             args = list(args)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if shell:
+[Tests/CKAN 2.11]   |             # On Android the default shell is at '/system/bin/sh'.
+[Tests/CKAN 2.11]   |             unix_shell = ('/system/bin/sh' if
+[Tests/CKAN 2.11]   |                       hasattr(sys, 'getandroidapilevel') else '/bin/sh')
+[Tests/CKAN 2.11]   |             args = [unix_shell, "-c"] + args
+[Tests/CKAN 2.11]   |             if executable:
+[Tests/CKAN 2.11]   |                 args[0] = executable
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if executable is None:
+[Tests/CKAN 2.11]   |             executable = args[0]
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         sys.audit("subprocess.Popen", executable, args, cwd, env)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if (_USE_POSIX_SPAWN
+[Tests/CKAN 2.11]   |                 and os.path.dirname(executable)
+[Tests/CKAN 2.11]   |                 and preexec_fn is None
+[Tests/CKAN 2.11]   |                 and not close_fds
+[Tests/CKAN 2.11]   |                 and not pass_fds
+[Tests/CKAN 2.11]   |                 and cwd is None
+[Tests/CKAN 2.11]   |                 and (p2cread == -1 or p2cread > 2)
+[Tests/CKAN 2.11]   |                 and (c2pwrite == -1 or c2pwrite > 2)
+[Tests/CKAN 2.11]   |                 and (errwrite == -1 or errwrite > 2)
+[Tests/CKAN 2.11]   |                 and not start_new_session
+[Tests/CKAN 2.11]   |                 and gid is None
+[Tests/CKAN 2.11]   |                 and gids is None
+[Tests/CKAN 2.11]   |                 and uid is None
+[Tests/CKAN 2.11]   |                 and umask < 0):
+[Tests/CKAN 2.11]   |             self._posix_spawn(args, executable, env, restore_signals,
+[Tests/CKAN 2.11]   |                               p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                               c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                               errread, errwrite)
+[Tests/CKAN 2.11]   |             return
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         orig_executable = executable
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         # For transferring possible exec failure from child to parent.
+[Tests/CKAN 2.11]   |         # Data format: "exception name:hex errno:description"
+[Tests/CKAN 2.11]   |         # Pickle is not used; it is complex and involves memory allocation.
+[Tests/CKAN 2.11]   |         errpipe_read, errpipe_write = os.pipe()
+[Tests/CKAN 2.11]   |         # errpipe_write must not be in the standard io 0, 1, or 2 fd range.
+[Tests/CKAN 2.11]   |         low_fds_to_close = []
+[Tests/CKAN 2.11]   |         while errpipe_write < 3:
+[Tests/CKAN 2.11]   |             low_fds_to_close.append(errpipe_write)
+[Tests/CKAN 2.11]   |             errpipe_write = os.dup(errpipe_write)
+[Tests/CKAN 2.11]   |         for low_fd in low_fds_to_close:
+[Tests/CKAN 2.11]   |             os.close(low_fd)
+[Tests/CKAN 2.11]   |         try:
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 # We must avoid complex work that could involve
+[Tests/CKAN 2.11]   |                 # malloc or free in the child process to avoid
+[Tests/CKAN 2.11]   |                 # potential deadlocks, thus we do all this here.
+[Tests/CKAN 2.11]   |                 # and pass it to fork_exec()
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |                 if env is not None:
+[Tests/CKAN 2.11]   |                     env_list = []
+[Tests/CKAN 2.11]   |                     for k, v in env.items():
+[Tests/CKAN 2.11]   |                         k = os.fsencode(k)
+[Tests/CKAN 2.11]   |                         if b'=' in k:
+[Tests/CKAN 2.11]   |                             raise ValueError("illegal environment variable name")
+[Tests/CKAN 2.11]   |                         env_list.append(k + b'=' + os.fsencode(v))
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     env_list = None  # Use execv instead of execve.
+[Tests/CKAN 2.11]   |                 executable = os.fsencode(executable)
+[Tests/CKAN 2.11]   |                 if os.path.dirname(executable):
+[Tests/CKAN 2.11]   |                     executable_list = (executable,)
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     # This matches the behavior of os._execvpe().
+[Tests/CKAN 2.11]   |                     executable_list = tuple(
+[Tests/CKAN 2.11]   |                         os.path.join(os.fsencode(dir), executable)
+[Tests/CKAN 2.11]   |                         for dir in os.get_exec_path(env))
+[Tests/CKAN 2.11]   |                 fds_to_keep = set(pass_fds)
+[Tests/CKAN 2.11]   |                 fds_to_keep.add(errpipe_write)
+[Tests/CKAN 2.11]   |                 self.pid = _posixsubprocess.fork_exec(
+[Tests/CKAN 2.11]   |                         args, executable_list,
+[Tests/CKAN 2.11]   |                         close_fds, tuple(sorted(map(int, fds_to_keep))),
+[Tests/CKAN 2.11]   |                         cwd, env_list,
+[Tests/CKAN 2.11]   |                         p2cread, p2cwrite, c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                         errread, errwrite,
+[Tests/CKAN 2.11]   |                         errpipe_read, errpipe_write,
+[Tests/CKAN 2.11]   |                         restore_signals, start_new_session,
+[Tests/CKAN 2.11]   |                         gid, gids, uid, umask,
+[Tests/CKAN 2.11]   |                         preexec_fn)
+[Tests/CKAN 2.11]   |                 self._child_created = True
+[Tests/CKAN 2.11]   |             finally:
+[Tests/CKAN 2.11]   |                 # be sure the FD is closed no matter what
+[Tests/CKAN 2.11]   |                 os.close(errpipe_write)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             self._close_pipe_fds(p2cread, p2cwrite,
+[Tests/CKAN 2.11]   |                                  c2pread, c2pwrite,
+[Tests/CKAN 2.11]   |                                  errread, errwrite)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             # Wait for exec to fail or succeed; possibly raising an
+[Tests/CKAN 2.11]   |             # exception (limited in size)
+[Tests/CKAN 2.11]   |             errpipe_data = bytearray()
+[Tests/CKAN 2.11]   |             while True:
+[Tests/CKAN 2.11]   |                 part = os.read(errpipe_read, 50000)
+[Tests/CKAN 2.11]   |                 errpipe_data += part
+[Tests/CKAN 2.11]   |                 if not part or len(errpipe_data) > 50000:
+[Tests/CKAN 2.11]   |                     break
+[Tests/CKAN 2.11]   |         finally:
+[Tests/CKAN 2.11]   |             # be sure the FD is closed no matter what
+[Tests/CKAN 2.11]   |             os.close(errpipe_read)
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |         if errpipe_data:
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 pid, sts = os.waitpid(self.pid, 0)
+[Tests/CKAN 2.11]   |                 if pid == self.pid:
+[Tests/CKAN 2.11]   |                     self._handle_exitstatus(sts)
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     self.returncode = sys.maxsize
+[Tests/CKAN 2.11]   |             except ChildProcessError:
+[Tests/CKAN 2.11]   |                 pass
+[Tests/CKAN 2.11]   |     
+[Tests/CKAN 2.11]   |             try:
+[Tests/CKAN 2.11]   |                 exception_name, hex_errno, err_msg = (
+[Tests/CKAN 2.11]   |                         errpipe_data.split(b':', 2))
+[Tests/CKAN 2.11]   |                 # The encoding here should match the encoding
+[Tests/CKAN 2.11]   |                 # written in by the subprocess implementations
+[Tests/CKAN 2.11]   |                 # like _posixsubprocess
+[Tests/CKAN 2.11]   |                 err_msg = err_msg.decode()
+[Tests/CKAN 2.11]   |             except ValueError:
+[Tests/CKAN 2.11]   |                 exception_name = b'SubprocessError'
+[Tests/CKAN 2.11]   |                 hex_errno = b'0'
+[Tests/CKAN 2.11]   |                 err_msg = 'Bad exception data from child: {!r}'.format(
+[Tests/CKAN 2.11]   |                               bytes(errpipe_data))
+[Tests/CKAN 2.11]   |             child_exception_type = getattr(
+[Tests/CKAN 2.11]   |                     builtins, exception_name.decode('ascii'),
+[Tests/CKAN 2.11]   |                     SubprocessError)
+[Tests/CKAN 2.11]   |             if issubclass(child_exception_type, OSError) and hex_errno:
+[Tests/CKAN 2.11]   |                 errno_num = int(hex_errno, 16)
+[Tests/CKAN 2.11]   |                 child_exec_never_called = (err_msg == "noexec")
+[Tests/CKAN 2.11]   |                 if child_exec_never_called:
+[Tests/CKAN 2.11]   |                     err_msg = ""
+[Tests/CKAN 2.11]   |                     # The error must be from chdir(cwd).
+[Tests/CKAN 2.11]   |                     err_filename = cwd
+[Tests/CKAN 2.11]   |                 else:
+[Tests/CKAN 2.11]   |                     err_filename = orig_executable
+[Tests/CKAN 2.11]   |                 if errno_num != 0:
+[Tests/CKAN 2.11]   |                     err_msg = os.strerror(errno_num)
+[Tests/CKAN 2.11]   | >               raise child_exception_type(errno_num, err_msg, err_filename)
+[Tests/CKAN 2.11]   | E               FileNotFoundError: [Errno 2] No such file or directory: 'psql'
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | /usr/local/lib/python3.10/subprocess.py:1863: FileNotFoundError
+[Tests/CKAN 2.11]   | ---------------------------- Captured stdout setup -----------------------------
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,224 INFO  [ckan.model] Database table data deleted
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,224 INFO  [ckan.model] Database initialised
+[Tests/CKAN 2.11]   | 2026-01-09 09:20:22,224 INFO  [ckan.model] Database rebuilt
+[Tests/CKAN 2.11]   | ------------------------------ Captured log setup ------------------------------
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:291 Database table data deleted
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:228 Database initialised
+[Tests/CKAN 2.11]   | INFO     ckan.model:__init__.py:266 Database rebuilt
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | ---------- coverage: platform linux, python 3.10.19-final-0 ----------
+[Tests/CKAN 2.11]   | Name                                                              Stmts   Miss  Cover
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | ckanext/restricted/__init__.py                                        0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/action.py                                        176    136    23%
+[Tests/CKAN 2.11]   | ckanext/restricted/auth.py                                           32     21    34%
+[Tests/CKAN 2.11]   | ckanext/restricted/helpers.py                                         7      3    57%
+[Tests/CKAN 2.11]   | ckanext/restricted/logic.py                                         121     99    18%
+[Tests/CKAN 2.11]   | ckanext/restricted/plugin.py                                         55     18    67%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/__init__.py                                  0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/__init__.py                           0      0   100%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_action.py                       110     82    25%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/assets/old_logic.py                         82     63    23%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/conftest.py                                 18     10    44%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request.py                      61     61     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_access_request_email_templates.py      40     40     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_allowed_user_email_templates.py        20     20     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_auth.py                                33     33     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_performance_package_search.py          74     31    58%
+[Tests/CKAN 2.11]   | ckanext/restricted/tests/test_plugin.py                             190    190     0%
+[Tests/CKAN 2.11]   | ckanext/restricted/views.py                                         219    184    16%
+[Tests/CKAN 2.11]   | -------------------------------------------------------------------------------------
+[Tests/CKAN 2.11]   | TOTAL                                                              1238    991    20%
+[Tests/CKAN 2.11]   | 
+[Tests/CKAN 2.11]   | =========================== short test summary info ============================
+[Tests/CKAN 2.11]   | ERROR ckanext/restricted/tests/test_performance_package_search.py::TestRestrictedSearchPerformance::test_performance - FileNotFoundError: [Errno 2] No such file or directory: 'psql'
+[Tests/CKAN 2.11]   | ERROR ckanext/restricted/tests/test_performance_package_search.py::TestRestrictedSearchPerformance::test_performance_hide_enabled - FileNotFoundError: [Errno 2] No such file or directory: 'psql'
+[Tests/CKAN 2.11]   | ======================== 6 warnings, 2 errors in 2.78s =========================
+[Tests/CKAN 2.11]   ❌  Failure - Main Run tests [39.393645036s]
+[Tests/CKAN 2.11] exitcode '1': failure
+[Tests/CKAN 2.11] ⭐ Run Complete job
+[Tests/CKAN 2.11]   ✅  Success - Complete job
+[Tests/CKAN 2.11] 🏁  Job failed
+Error: Job 'CKAN 2.11' failed

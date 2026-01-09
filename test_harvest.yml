@@ -1,4 +1,3 @@
-name: Tests
 on: [pull_request]
 jobs:
   lint:
@@ -12,7 +11,7 @@ jobs:
         run: pip install flake8 pycodestyle
       - name: Check syntax
         run: |
-          flake8 . --count --select=E901,E999,F821,F822,F823 --show-source --statistics --exclude ckan
+          flake8 . --count --max-line-length=127 --show-source --statistics
 
   test:
     name: CKAN 2.11
@@ -51,13 +50,7 @@ jobs:
     - name: Setup extension
       run: |
         ckan -c test.ini db init
+        ckan -c test.ini harvester initdb
     - name: Run tests
       run: |
-        # Run one test file at a time to debug issues
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_auth.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_plugin.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_allowed_user_email_templates.py
-        # Skipping tests with site_read authorization issue - needs further investigation
-        # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request.py
-        # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request_email_templates.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_performance_package_search.py
+        pytest --ckan-ini=test.ini --cov=ckanext.harvest --disable-warnings ckanext/harvest/tests/
