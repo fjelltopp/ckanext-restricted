@@ -54,12 +54,4 @@ jobs:
         ckan -c test.ini db init
     - name: Run tests
       run: |
-        # Run one test file at a time to debug issues
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_auth.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_plugin.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_allowed_user_email_templates.py
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_performance_package_search.py
-        # Testing site_read authorization issue - one test at a time
-        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request.py::TestAccessRequest::test_request_access_all_admins_are_emailed
-        # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request.py
-        # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request_email_templates.py
+        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/
