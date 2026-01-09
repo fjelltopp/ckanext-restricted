@@ -106,13 +106,13 @@ pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/r
 
 ## Current Status
 
-### Passing Tests (16/24 total)
+### Passing Tests (17/24 total)
 - ✅ `test_auth.py` - 2 tests passing
 - ✅ `test_plugin.py` - 14 tests passing
+- ✅ `test_allowed_user_email_templates.py` - 1 test passing
 
 ### Remaining Test Files to Enable
-- `test_allowed_user_email_templates.py` - next to test
-- `test_access_request.py`
+- `test_access_request.py` - next to test
 - `test_access_request_email_templates.py`
 - `test_performance_package_search.py` - requires psql command
 

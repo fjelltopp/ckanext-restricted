@@ -56,7 +56,7 @@ jobs:
         # Run one test file at a time to debug issues
         pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_auth.py
         pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_plugin.py
-        # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_allowed_user_email_templates.py
+        pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_allowed_user_email_templates.py
         # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request.py
         # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_access_request_email_templates.py
         # pytest --ckan-ini=test.ini --cov=ckanext.restricted --disable-warnings ckanext/restricted/tests/test_performance_package_search.py
