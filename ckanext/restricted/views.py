@@ -43,7 +43,7 @@ def before_request():
     except ValueError:
         # site_read auth function may not be available in test environments
         # with custom plugin configurations. Allow access in this case.
-        pass
+        log.debug("site_read auth function not available, allowing access")
     except logic.NotAuthorized:
         toolkit.abort(401, not_auth_message)
 
