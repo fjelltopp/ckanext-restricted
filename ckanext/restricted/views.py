@@ -217,8 +217,8 @@ def restricted_request_access_form(package_id, resource_id, data=None, errors=No
         if userobj:
             user_id = getattr(userobj, 'name', None)
 
-    if not user_id:
-        # Fallback to REMOTE_USER from environ (for test environments)
+    if not user_id and toolkit.config.get('testing'):
+        # ckan/config/middleware/flask_app.py uses the same guard for REMOTE_USER in tests.
         user_id = toolkit.request.environ.get('REMOTE_USER')
 
     if not user_id:
@@ -407,8 +407,8 @@ def restricted_request_organization_form(data=None, errors=None,
         if userobj:
             user_id = getattr(userobj, 'name', None)
 
-    if not user_id:
-        # Fallback to REMOTE_USER from environ (for test environments)
+    if not user_id and toolkit.config.get('testing'):
+        # ckan/config/middleware/flask_app.py uses the same guard for REMOTE_USER in tests.
         user_id = toolkit.request.environ.get('REMOTE_USER')
 
     if not user_id:
