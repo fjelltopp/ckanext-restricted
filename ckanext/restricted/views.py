@@ -40,9 +40,9 @@ def before_request():
                'user': toolkit.g.get('user') or toolkit.g.get('author')}
     try:
         toolkit.check_access('site_read', context)
-    except ValueError:
-        # site_read auth function may not be available in test environments
-        # with custom plugin configurations. Allow access in this case.
+    except ValueError as e:
+        if 'Authorization function not found' not in str(e):
+            raise
         log.debug("site_read auth function not available, allowing access")
     except logic.NotAuthorized:
         toolkit.abort(401, not_auth_message)
