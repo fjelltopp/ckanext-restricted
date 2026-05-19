@@ -7,7 +7,8 @@ import mock
 
 @pytest.mark.usefixtures(u'clean_db')
 @pytest.mark.usefixtures(u'clean_index')
-@pytest.mark.ckan_config(u'ckan.plugins', u'restricted image_view recline_view')
+# Match plugins from test.ini to ensure all necessary core functions are available
+@pytest.mark.ckan_config(u'ckan.plugins', u'stats text_view image_view webpage_view datastore datapusher restricted')
 @pytest.mark.usefixtures(u'with_plugins')
 @pytest.mark.usefixtures(u'with_request_context')
 class TestAccessRequest(object):
