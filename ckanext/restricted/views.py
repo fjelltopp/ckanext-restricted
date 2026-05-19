@@ -42,10 +42,14 @@ def before_request():
         toolkit.check_access('site_read', context)
     except ValueError as e:
         # ckan/authz.py raises ValueError('Authorization function not found: <action>')
-        # when the auth function is not registered. Only swallow that specific error.
+        # when the auth function is not registered. Only tolerate this in testing,
+        # where the auth registry may not yet be wired up; in production, missing
+        # auth functions must fail closed rather than silently grant access.
         if 'Authorization function not found' not in str(e):
             raise
-        log.debug("site_read auth function not available, allowing access")
+        if not toolkit.config.get('testing'):
+            raise
+        log.debug("site_read auth function not available in testing, allowing access")
     except logic.NotAuthorized:
         toolkit.abort(401, not_auth_message)
 
@@ -210,7 +214,7 @@ def restricted_request_access_form(package_id, resource_id, data=None, errors=No
     # - toolkit.c.user (CKAN 2.10 compatibility)
     # - toolkit.g.userobj.name (if userobj exists)
     # - REMOTE_USER environ (test environments where g.user isn't populated yet)
-    user_id = toolkit.g.user or toolkit.c.user
+    user_id = getattr(toolkit.g, 'user', None) or getattr(toolkit.c, 'user', None)
 
     if not user_id:
         userobj = getattr(toolkit.g, 'userobj', None)
@@ -400,7 +404,7 @@ def restricted_request_organization_form(data=None, errors=None,
     # - toolkit.c.user (CKAN 2.10 compatibility)
     # - toolkit.g.userobj.name (if userobj exists)
     # - REMOTE_USER environ (test environments where g.user isn't populated yet)
-    user_id = toolkit.g.user or toolkit.c.user
+    user_id = getattr(toolkit.g, 'user', None) or getattr(toolkit.c, 'user', None)
 
     if not user_id:
         userobj = getattr(toolkit.g, 'userobj', None)

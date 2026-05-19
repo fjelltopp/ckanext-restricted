@@ -1,6 +1,5 @@
 """Tests for logic.py functions."""
 # encoding: utf-8
-import pytest
 import ckan.model as model
 from ckanext.restricted.logic import restricted_get_username_from_context
 
