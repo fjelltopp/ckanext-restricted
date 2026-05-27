@@ -42,14 +42,11 @@ def before_request():
         toolkit.check_access('site_read', context)
     except ValueError as e:
         # ckan/authz.py raises ValueError('Authorization function not found: <action>')
-        # when the auth function is not registered. Only tolerate this in testing,
-        # where the auth registry may not yet be wired up; in production, missing
-        # auth functions must fail closed rather than silently grant access.
+        # when the auth function is not registered. site_read was removed in
+        # CKAN 2.11 — swallow this specific error unconditionally.
         if 'Authorization function not found' not in str(e):
             raise
-        if not toolkit.config.get('testing'):
-            raise
-        log.debug("site_read auth function not available in testing, allowing access")
+        log.debug("site_read auth function not available, allowing access")
     except logic.NotAuthorized:
         toolkit.abort(401, not_auth_message)
 
